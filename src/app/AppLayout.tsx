@@ -75,16 +75,6 @@ export default function AppLayout() {
       <main className="flex flex-1 flex-col pt-16">
         <Outlet />
       </main>
-      <footer className="border-t border-stone-200 bg-stone-50 py-6">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6">
-          <p className="text-sm text-stone-500 text-center">
-            Cette application est un assistant pédagogique pour réviser le code de la route à Madagascar.{' '}
-            <span className="font-medium text-stone-700">
-              Elle ne remplacera jamais l’étude en auto-école, mais peut aider ceux qui en ont besoin.
-            </span>
-          </p>
-        </div>
-      </footer>
     </div>
   );
 }

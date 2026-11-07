@@ -16,8 +16,8 @@ export default function RegisterPage() {
 
   return (
     <AuthShell
-      title="Créer un compte"
-      subtitle="Préparez votre code de la route, à votre rythme."
+      title="Bienvenue sur E-Torolalana"
+      subtitle="Créez votre compte pour commencer à réviser le code de la route à Madagascar."
       footer={
         <>
           Vous avez déjà un compte ?{' '}
@@ -47,7 +47,7 @@ export default function RegisterPage() {
         />
         <Input
           id="password"
-          label="Mot de passe (8 caractères minimum)"
+          label="Mot de passe"
           type="password"
           autoComplete="new-password"
           required
@@ -55,6 +55,9 @@ export default function RegisterPage() {
           value={form.password}
           onChange={(e) => setForm({ ...form, password: e.target.value })}
         />
+        <p className="text-xs text-muted-foreground">
+          Utilisez au moins 8 caractères. Après l’inscription, vous pourrez commencer vos révisions.
+        </p>
         {register.error && (
           <p role="alert" className="rounded-lg bg-red-50 px-3 py-2 text-sm text-red-700">
             {register.error.message}
