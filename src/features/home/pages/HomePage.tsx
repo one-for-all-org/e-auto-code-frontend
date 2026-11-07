@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { ThemeToggle } from "@/components/theme/ThemeToggle";
+import VISUELLE from "@/assets/visuelle.jpg"
 
 const features = [
   {
@@ -53,9 +54,9 @@ export default function HomePage() {
             <div className="relative">
               <div className="absolute inset-0 bg-gradient-to-br from-teal-500/10 to-amber-400/10 rounded-3xl blur-xl"></div>
               <img
-                src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=800&q=80"
+                src={VISUELLE}
                 alt="Étudiant en train d'étudier en classe"
-                className="relative z-10 w-full rounded-3xl border border-stone-200 shadow-lg object-cover"
+                className="relative z-10 w-full rounded-2xl border border-stone-200 shadow-lg object-cover"
               />
             </div>
             <div className="text-center lg:text-left space-y-6">
