@@ -20,7 +20,7 @@ export default function AppLayout() {
   return (
     <div className="flex min-h-screen flex-col">
       <Toaster />
-      <header className="sticky top-0 z-30 border-b border-stone-200 bg-white/95 backdrop-blur">
+      <header className="fixed top-0 z-50 w-full border-b border-stone-200 bg-white/95 backdrop-blur-md shadow-sm">
         <div className="mx-auto flex w-full max-w-6xl flex-col gap-2 px-3 py-2 sm:h-16 sm:flex-row sm:items-center sm:justify-between sm:gap-4 sm:px-6 sm:py-0">
           <Link to="/" className="flex min-w-0 items-center gap-3 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600">
             <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-teal-700 text-white shadow-sm">
@@ -72,9 +72,19 @@ export default function AppLayout() {
           </nav>
         </div>
       </header>
-      <main className="flex flex-1 flex-col">
+      <main className="flex flex-1 flex-col pt-16">
         <Outlet />
       </main>
+      <footer className="border-t border-stone-200 bg-stone-50 py-6">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6">
+          <p className="text-sm text-stone-500 text-center">
+            Cette application est un assistant pédagogique pour réviser le code de la route à Madagascar.{' '}
+            <span className="font-medium text-stone-700">
+              Elle ne remplacera jamais l’étude en auto-école, mais peut aider ceux qui en ont besoin.
+            </span>
+          </p>
+        </div>
+      </footer>
     </div>
   );
 }
