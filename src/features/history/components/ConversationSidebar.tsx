@@ -26,7 +26,7 @@ export function ConversationSidebar({ activeId, onDone }: Props) {
   };
 
   return (
-    <div className="flex h-full flex-col">
+    <div className="flex h-full flex-col mt-24 sm:mt-0">
       <div className="flex items-center justify-between gap-2 border-b border-stone-200 px-4 py-3">
         <h2 className="text-sm font-semibold text-stone-900">Historique</h2>
         <div className="flex items-center gap-1">
