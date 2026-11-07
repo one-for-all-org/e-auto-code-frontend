@@ -10,7 +10,7 @@ const ACCEPTED_TYPES: Record<string, string> = {
   jpeg: 'image/jpeg',
 };
 const MAX_FILE_SIZE = 1024 * 1024;
-const MAX_TEXTAREA_HEIGHT = 192;
+const MAX_TEXTAREA_HEIGHT = 224;
 
 const formatSize = (bytes: number) => `${Math.max(1, Math.round(bytes / 1024))} Ko`;
 
@@ -80,8 +80,8 @@ export function Composer({ disabled, onSend }: Props) {
       className="border-t border-stone-200 p-3 sm:p-4 bg-white"
     >
       {file && (
-        <div className="mb-2 flex items-center gap-2 rounded-lg bg-amber-50 px-3 py-2 text-sm text-amber-700 border border-amber-100">
-          <FileText size={16} className="shrink-0 text-amber-600" />
+        <div className="mb-2 flex items-center gap-2 rounded-lg bg-amber-50 px-3 py-1 text-sm text-amber-700 border border-amber-100">
+          <FileText size={14} className="shrink-0 text-amber-600" />
           <span className="min-w-0 truncate">{file.name}</span>
           <span className="shrink-0 text-amber-500">{formatSize(file.size)}</span>
           <button
@@ -122,23 +122,23 @@ export function Composer({ disabled, onSend }: Props) {
           value={text}
           onChange={(event) => setText(event.target.value)}
           onKeyDown={handleKeyDown}
-          rows={1}
+          rows={2}
           placeholder="Posez une question sur le code de la route à Madagascar…"
           aria-label="Votre question"
-          className="min-h-[44px] flex-1 resize-none overflow-y-hidden rounded-xl border border-stone-300 bg-white px-4 py-2.5 text-sm leading-5 text-stone-800 placeholder:text-stone-400 transition-[height] duration-100 focus:border-teal-600 focus:outline-none focus:ring-2 focus:ring-teal-600/25"
+          className="min-h-[56px] flex-1 resize-none overflow-y-hidden rounded-xl border border-stone-300 bg-white px-4 py-3 text-sm leading-5 text-stone-800 placeholder:text-stone-400 transition-[height] duration-100 focus:border-teal-600 focus:outline-none focus:ring-2 focus:ring-teal-600/25"
         />
         <Button
           type="submit"
           variant="primary"
-          size="icon"
+          size="md"
           aria-label="Envoyer"
           disabled={!canSend}
-          className="rounded-full bg-teal-600 hover:bg-teal-700 disabled:bg-teal-200 disabled:text-stone-400 disabled:cursor-not-allowed"
+          className="rounded-full bg-teal-600 hover:bg-teal-700 disabled:bg-teal-200 disabled:text-stone-400 disabled:cursor-not-allowed py-y"
         >
-          <Send size={18} />
+          <Send size={24} />
         </Button>
       </div>
-      <p className="mt-2 text-xs text-stone-500">Un fichier de 1 Mo maximum : .txt, .pdf, .png ou .jpg</p>
+      <p className="mt-1 text-xs text-stone-500">Un fichier de 1 Mo maximum : .txt, .pdf, .png ou .jpg</p>
     </form>
   );
 }
