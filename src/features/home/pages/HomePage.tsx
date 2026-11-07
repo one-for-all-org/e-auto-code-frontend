@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
+import { ThemeToggle } from "@/components/theme/ThemeToggle";
 
 const features = [
   {
@@ -40,6 +41,7 @@ export default function HomePage() {
               >
                 Inscription
               </Link>
+              <div className="absolute right-4 top-4"><ThemeToggle /></div>
             </Button>
           </div>
         </div>
