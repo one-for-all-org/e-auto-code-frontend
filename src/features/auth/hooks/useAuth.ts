@@ -42,6 +42,9 @@ export function useLogout() {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   return async () => {
+    if (!window.confirm('Êtes-vous sûr de vouloir vous déconnecter ?')) {
+      return;
+    }
     try {
       await logout();
     } catch {
