@@ -157,6 +157,18 @@ export async function mockRequest<T>({ method, path, body, token }: MockCall): P
     throw new ApiError('Introuvable', 404);
   }
 
+  if (root === 'admin' && id === 'lessons' && sub === 'analyze' && method === 'POST') {
+    const form = body as FormData;
+    const file = form.get('file');
+    const question = String(form.get('question') ?? '').trim();
+    if (!(file instanceof File) || !question) throw new ApiError('Sélectionnez un fichier et saisissez une question.', 400);
+    return {
+      success: true,
+      data: { answer: mockAnswer(question, file.name) },
+      message: 'Réponse générée.',
+    } as T;
+  }
+
   if (root === 'conversations') {
     if (!id) {
       return (method === 'GET' ? listConversations(userId) : createConversation(userId)) as T;

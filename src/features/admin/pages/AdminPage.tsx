@@ -22,12 +22,15 @@ export default function AdminPage() {
   const users: User[] = usersQuery.data ?? [];
 
   return (
-    <div className="mx-auto w-full max-w-6xl px-4 py-8 sm:px-6 sm:py-10">
-      <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 mb-6">
+    <div className="mx-auto w-full max-w-7xl px-4 py-8 sm:px-6 sm:py-10">
+      <div className="mb-6">
         <div>
           <h1 className="text-2xl font-semibold text-stone-900">Administration</h1>
           <p className="mt-1 text-sm text-stone-500">Gérez les comptes et les leçons partagées avec l’assistant.</p>
         </div>
+      </div>
+
+      <div className="mb-6">
         <AdminUserForm />
       </div>
 

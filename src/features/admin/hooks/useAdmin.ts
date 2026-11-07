@@ -1,6 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import {
   createUser,
+  askGeminiAboutFile,
   deleteLesson,
   deleteUser,
   listLessons,
@@ -51,6 +52,10 @@ export function useUploadLesson() {
     mutationFn: uploadLesson,
     onSuccess: () => queryClient.invalidateQueries({ queryKey: lessonsKey }),
   });
+}
+
+export function useAskGeminiAboutFile() {
+  return useMutation({ mutationFn: askGeminiAboutFile });
 }
 
 export function useDeleteLesson() {

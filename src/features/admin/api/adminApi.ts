@@ -53,6 +53,17 @@ export const uploadLesson = async (file: File) => {
   return res.data.lesson;
 };
 
+export const askGeminiAboutFile = async (input: { file: File; question: string }) => {
+  const body = new FormData();
+  body.append('file', input.file);
+  body.append('question', input.question);
+  const res = await request<{ success: boolean; data: { answer: string }; message: string }>(
+    '/admin/lessons/analyze',
+    { method: 'POST', body },
+  );
+  return res.data.answer;
+};
+
 export const deleteLesson = async (lessonId: string) =>
   request<{ success: boolean; data: { id: string }; message: string }>(`/admin/lessons/${lessonId}`, {
     method: 'DELETE',

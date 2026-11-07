@@ -1,59 +1,45 @@
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/Button';
-import { toast } from '@/lib/toast';
-import { useRegister } from '@/features/auth/hooks/useAuth';
-import { Card } from '@/components/ui/Card';
+import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/Button";
+import { Card } from "@/components/ui/Card";
 
 const features = [
   {
     number: 1,
-    title: 'Rapide',
-    text: 'Des résumés courts pour apprendre en quelques minutes.',
+    title: "Rapide",
+    text: "Des résumés courts pour apprendre en quelques minutes.",
   },
   {
     number: 2,
-    title: 'Spécifique Madagascar',
-    text: 'Priorités, panneaux et règles locales expliquées simplement.',
+    title: "Spécifique Madagascar",
+    text: "Priorités, panneaux et règles locales expliquées simplement.",
   },
   {
     number: 3,
-    title: 'Pièges d\'examen',
-    text: 'Les erreurs fréquentes à éviter le jour J.',
+    title: "Pièges d'examen",
+    text: "Les erreurs fréquentes à éviter le jour J.",
   },
 ];
 
 export default function HomePage() {
-  const register = useRegister();
-
-  const handleQuickRegister = () => {
-    register.mutate(
-      {
-        name: 'Nouvel utilisateur',
-        email: `user_${Date.now()}@example.com`,
-        password: 'Motdepasse1234',
-      },
-      {
-        onSuccess: () => toast('success', 'Compte créé avec succès !'),
-        onError: () => toast('error', 'Impossible de créer le compte'),
-      }
-    );
-  };
 
   return (
     <div className="min-h-screen flex flex-col bg-stone-50">
       <nav className="border-b border-stone-200 bg-white/80 backdrop-blur">
         <div className="mx-auto max-w-6xl px-4 py-4 flex items-center justify-between">
-          <Link to="/" className="flex items-center gap-2 font-bold text-teal-700 text-lg">
+          <Link
+            to="/"
+            className="flex items-center gap-2 font-bold text-teal-700 text-lg"
+          >
             🚦 Code de la route · Madagascar
           </Link>
           <div className="flex gap-4 items-center">
-            <Link to="/login" className="text-sm text-stone-600 hover:text-teal-700">Connexion</Link>
-            <Button
-              onClick={handleQuickRegister}
-              loading={register.isPending}
-              disabled={register.isPending}
-            >
-              S'inscrire
+            <Button>
+              <Link
+                to="/register"
+                className="text-sm text-white hover:text-white/80"
+              >
+                Inscription
+              </Link>
             </Button>
           </div>
         </div>
@@ -75,13 +61,21 @@ export default function HomePage() {
                 Réviser le code de la route
               </h1>
               <p className="text-lg text-stone-600 max-w-xl mx-auto lg:mx-0">
-                Assistant pédagogique pour le code de la route à Madagascar : panneaux, priorités, sanctions et pièges d'examen. Réponses simples, en français, en MARKDOWN.
+                Assistant pédagogique pour le code de la route à Madagascar :
+                panneaux, priorités, sanctions et pièges d'examen. Réponses
+                simples, en français, en MARKDOWN.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-                <Link to="/chat" className="flex-1 rounded-xl bg-teal-700 px-8 py-4 text-lg font-semibold text-white text-center hover:bg-teal-800">
+                <Link
+                  to="/chat"
+                  className="flex-1 rounded-xl bg-teal-700 px-8 py-4 text-lg font-semibold text-white text-center hover:bg-teal-800"
+                >
                   Commencer à réviser
                 </Link>
-                <Link to="/login" className="flex-1 rounded-xl border border-stone-300 bg-white px-8 py-4 text-lg font-semibold text-stone-700 text-center hover:bg-stone-50">
+                <Link
+                  to="/login"
+                  className="flex-1 rounded-xl border border-stone-300 bg-white px-8 py-4 text-lg font-semibold text-stone-700 text-center hover:bg-stone-50"
+                >
                   Se connecter
                 </Link>
               </div>
@@ -99,8 +93,12 @@ export default function HomePage() {
                   <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-amber-100 text-amber-700 mb-4 shrink-0">
                     {i + 1}
                   </div>
-                  <h3 className="text-lg font-semibold text-stone-900 mb-2">{item.title}</h3>
-                  <p className="text-sm text-stone-600 leading-relaxed flex-1">{item.text}</p>
+                  <h3 className="text-lg font-semibold text-stone-900 mb-2">
+                    {item.title}
+                  </h3>
+                  <p className="text-sm text-stone-600 leading-relaxed flex-1">
+                    {item.text}
+                  </p>
                 </Card>
               ))}
             </div>
