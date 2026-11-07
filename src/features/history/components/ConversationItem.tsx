@@ -55,7 +55,7 @@ export function ConversationItem({ conversation, active, onOpen }: Props) {
           onChange={(e) => setTitle(e.target.value)}
           maxLength={80}
           aria-label="Nouveau titre"
-          className="min-w-0 flex-1 rounded-md border border-stone-300 bg-white px-2 py-1 text-sm text-stone-800 focus:outline-none focus:ring-2 focus:ring-teal-600/25"
+          className="min-w-0 flex-1 rounded-md border border-stone-300 bg-white px-2 py-2 text-sm text-stone-800 focus:outline-none focus:ring-2 focus:ring-teal-600/25"
         />
         <Button type="submit" size="icon" aria-label="Enregistrer" loading={rename.isPending}>
           <Check size={16} />

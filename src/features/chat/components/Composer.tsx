@@ -1,4 +1,4 @@
-import { useRef, useState, type ChangeEvent, type KeyboardEvent } from 'react';
+import { useEffect, useRef, useState, type ChangeEvent, type KeyboardEvent } from 'react';
 import { FileText, Paperclip, Send, X } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 
@@ -10,6 +10,7 @@ const ACCEPTED_TYPES: Record<string, string> = {
   jpeg: 'image/jpeg',
 };
 const MAX_FILE_SIZE = 1024 * 1024;
+const MAX_TEXTAREA_HEIGHT = 192;
 
 const formatSize = (bytes: number) => `${Math.max(1, Math.round(bytes / 1024))} Ko`;
 
@@ -23,7 +24,18 @@ export function Composer({ disabled, onSend }: Props) {
   const [file, setFile] = useState<File | null>(null);
   const [fileError, setFileError] = useState('');
   const fileInput = useRef<HTMLInputElement>(null);
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
   const canSend = !disabled && (text.trim() !== '' || file !== null);
+
+  useEffect(() => {
+    const textarea = textareaRef.current;
+    if (!textarea) return;
+
+    textarea.style.height = 'auto';
+    const height = Math.min(textarea.scrollHeight, MAX_TEXTAREA_HEIGHT);
+    textarea.style.height = `${height}px`;
+    textarea.style.overflowY = textarea.scrollHeight > MAX_TEXTAREA_HEIGHT ? 'auto' : 'hidden';
+  }, [text]);
 
   const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
     const picked = event.target.files?.[0];
@@ -106,13 +118,14 @@ export function Composer({ disabled, onSend }: Props) {
           <Paperclip size={18} />
         </Button>
         <textarea
+          ref={textareaRef}
           value={text}
           onChange={(event) => setText(event.target.value)}
           onKeyDown={handleKeyDown}
           rows={1}
           placeholder="Posez une question sur le code de la route à Madagascar…"
           aria-label="Votre question"
-          className="max-h-40 min-h-[44px] flex-1 resize-none rounded-xl border border-stone-300 bg-white px-4 py-2.5 text-sm text-stone-800 placeholder:text-stone-400 focus:border-teal-600 focus:outline-none focus:ring-2 focus:ring-teal-600/25"
+          className="min-h-[44px] flex-1 resize-none overflow-y-hidden rounded-xl border border-stone-300 bg-white px-4 py-2.5 text-sm leading-5 text-stone-800 placeholder:text-stone-400 transition-[height] duration-100 focus:border-teal-600 focus:outline-none focus:ring-2 focus:ring-teal-600/25"
         />
         <Button
           type="submit"
