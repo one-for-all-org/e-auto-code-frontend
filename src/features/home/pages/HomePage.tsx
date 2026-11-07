@@ -33,7 +33,7 @@ export default function HomePage() {
           >
             🚦 Code de la route · Madagascar
           </Link>
-          <div className="flex gap-4 items-center">
+          <div className="flex gap-4 items-center justify-between">
             <Button>
               <Link
                 to="/register"
@@ -41,8 +41,8 @@ export default function HomePage() {
               >
                 Inscription
               </Link>
-              <div className="absolute right-4 top-4"><ThemeToggle /></div>
             </Button>
+            <ThemeToggle />
           </div>
         </div>
       </nav>
