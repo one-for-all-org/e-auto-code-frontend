@@ -1,15 +1,22 @@
 import { createBrowserRouter, Navigate } from 'react-router-dom';
 import AppLayout from '@/app/AppLayout';
 import RequireAuth from '@/app/RequireAuth';
+import RequireAdmin from '@/app/RequireAdmin';
+import HomePage from '@/features/home/pages/HomePage';
 import LoginPage from '@/features/auth/pages/LoginPage';
 import RegisterPage from '@/features/auth/pages/RegisterPage';
+import ForgotPasswordPage from '@/features/auth/pages/ForgotPasswordPage';
+import ResetPasswordPage from '@/features/auth/pages/ResetPasswordPage';
 import ChatPage from '@/features/chat/pages/ChatPage';
 import ProfilePage from '@/features/profile/pages/ProfilePage';
+import AdminPage from '@/features/admin/pages/AdminPage';
 
 export const router = createBrowserRouter([
-  { path: '/', element: <Navigate to="/chat" replace /> },
+  { path: '/', element: <HomePage /> },
   { path: '/register', element: <RegisterPage /> },
   { path: '/login', element: <LoginPage /> },
+  { path: '/forgot-password', element: <ForgotPasswordPage /> },
+  { path: '/reset-password', element: <ResetPasswordPage /> },
   {
     element: <RequireAuth />,
     children: [
@@ -18,9 +25,13 @@ export const router = createBrowserRouter([
         children: [
           { path: '/chat/:conversationId?', element: <ChatPage /> },
           { path: '/profile', element: <ProfilePage /> },
+          {
+            element: <RequireAdmin />,
+            children: [{ path: '/admin', element: <AdminPage /> }],
+          },
         ],
       },
     ],
   },
-  { path: '*', element: <Navigate to="/chat" replace /> },
+  { path: '*', element: <Navigate to="/" replace /> },
 ]);

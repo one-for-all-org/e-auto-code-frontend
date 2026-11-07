@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react';
 import { Signpost } from 'lucide-react';
 import { Card } from '@/components/ui/Card';
+import { ThemeToggle } from '@/components/theme/ThemeToggle';
 
 type Props = {
   title: string;
@@ -11,7 +12,8 @@ type Props = {
 
 export function AuthShell({ title, subtitle, children, footer }: Props) {
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center px-4 py-10">
+    <div className="relative flex min-h-screen flex-col items-center justify-center px-4 py-10">
+      <div className="absolute right-4 top-4"><ThemeToggle /></div>
       <div className="w-full max-w-md">
         <div className="mb-8 flex flex-col items-center text-center">
           <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-teal-700 text-white shadow-sm">

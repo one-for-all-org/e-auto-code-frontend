@@ -13,9 +13,9 @@ const conversations: StoredConversation[] = [];
 let messages: Message[] = [];
 
 const delay = () => new Promise((resolve) => setTimeout(resolve, 400));
-const now = () => new Date().toISOString();
+const now = () => Date.now();
 const uid = () => crypto.randomUUID();
-const toUser = ({ id, name, email }: StoredUser): User => ({ id, name, email });
+const toUser = ({ id, name, email, role, isOk, isBlocked, createdAt }: StoredUser): User => ({ id, name, email, role, isOk, isBlocked, createdAt });
 
 function findUser(userId: string): StoredUser {
   const user = users.find((u) => u.id === userId);
@@ -25,8 +25,9 @@ function findUser(userId: string): StoredUser {
 
 function openSession(user: StoredUser): AuthResponse {
   const token = uid();
+  const refreshToken = uid();
   sessions.set(token, user.id);
-  return { token, user: toUser(user) };
+  return { token, refreshToken, user: toUser(user) };
 }
 
 function requireConversation(userId: string, id: string): StoredConversation {
@@ -58,7 +59,7 @@ Vous avez demandé : *${question || 'votre fichier'}*
 function authRoute<T>(action: string | undefined, body: Record<string, string>): T {
   if (action === 'register') {
     if (users.some((u) => u.email === body.email)) throw new ApiError('Cet email est déjà utilisé', 409);
-    const user: StoredUser = { id: uid(), name: body.name, email: body.email, password: body.password };
+    const user: StoredUser = { id: uid(), name: body.name, email: body.email, password: body.password, role: 'USER', isOk: false, isBlocked: false, createdAt: now() };
     users.push(user);
     return openSession(user) as T;
   }
@@ -73,7 +74,7 @@ function authRoute<T>(action: string | undefined, body: Record<string, string>):
 function listConversations(userId: string): Conversation[] {
   return conversations
     .filter((c) => c.userId === userId)
-    .sort((a, b) => b.updatedAt.localeCompare(a.updatedAt));
+    .sort((a, b) => b.updatedAt - a.updatedAt);
 }
 
 function createConversation(userId: string): Conversation {
@@ -92,6 +93,7 @@ function createConversation(userId: string): Conversation {
 function renameConversation(userId: string, id: string, title: string): Conversation {
   const conversation = requireConversation(userId, id);
   conversation.title = title.trim() || DEFAULT_TITLE;
+  conversation.updatedAt = now();
   return conversation;
 }
 
@@ -103,7 +105,7 @@ function deleteConversation(userId: string, id: string): void {
 
 function listMessages(userId: string, id: string): Message[] {
   requireConversation(userId, id);
-  return messages.filter((m) => m.conversationId === id);
+  return messages.filter((m) => m.conversationId === id).sort((a, b) => a.createdAt - b.createdAt);
 }
 
 function postMessage(userId: string, id: string, form: FormData): SendMessageResponse {
@@ -114,12 +116,13 @@ function postMessage(userId: string, id: string, form: FormData): SendMessageRes
   if (!content && !fileName) throw new ApiError('Le message est vide', 400);
 
   const timestamp = now();
-  const userMessage: Message = { id: uid(), conversationId: id, role: 'user', content, fileName, createdAt: timestamp };
+  const userMessage: Message = { id: uid(), conversationId: id, role: 'user', content, attachmentName: fileName ?? null, createdAt: timestamp };
   const assistantMessage: Message = {
     id: uid(),
     conversationId: id,
     role: 'assistant',
     content: mockAnswer(content, fileName),
+    attachmentName: null,
     createdAt: timestamp,
   };
   messages.push(userMessage, assistantMessage);
@@ -142,11 +145,16 @@ export async function mockRequest<T>({ method, path, body, token }: MockCall): P
   if (!userId) throw new ApiError('Session expirée, reconnectez-vous', 401);
 
   if (root === 'me') {
-    if (method === 'GET') return toUser(findUser(userId)) as T;
+    if (method === 'GET') return { success: true, data: { user: toUser(findUser(userId)) }, message: 'Profil' } as T;
     const user = findUser(userId);
     if (data.name) user.name = data.name;
     if (data.password) user.password = data.password;
-    return toUser(user) as T;
+    return { success: true, data: { user: toUser(user) }, message: 'Profil mis à jour' } as T;
+  }
+
+  if (root === 'admin' && id === 'users') {
+    if (method === 'GET') return { users: users.map(toUser) } as T;
+    throw new ApiError('Introuvable', 404);
   }
 
   if (root === 'conversations') {

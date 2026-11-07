@@ -23,7 +23,7 @@ export function MessageList({ messages, pending }: Props) {
           key={message.id}
           role={message.role}
           content={message.content}
-          fileName={message.fileName}
+          fileName={message.attachmentName}
         />
       ))}
       {pending && (

@@ -46,10 +46,10 @@ export function ConversationSidebar({ activeId, onDone }: Props) {
           <Spinner className="mx-auto mt-6" />
         ) : conversations.isError ? (
           <p className="p-3 text-sm text-red-700">Impossible de charger l'historique.</p>
-        ) : conversations.data.length === 0 ? (
+        ) : (conversations.data ?? []).length === 0 ? (
           <EmptyState icon={History} title="Aucune conversation" description="Créez-en une pour commencer." />
         ) : (
-          conversations.data.map((conversation) => (
+          (conversations.data ?? []).map((conversation) => (
             <ConversationItem
               key={conversation.id}
               conversation={conversation}

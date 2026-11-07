@@ -65,18 +65,18 @@ export function Composer({ disabled, onSend }: Props) {
         event.preventDefault();
         void submit();
       }}
-      className="border-t border-stone-200 p-3 sm:p-4"
+      className="border-t border-stone-200 p-3 sm:p-4 bg-white"
     >
       {file && (
-        <div className="mb-2 flex items-center gap-2 rounded-lg bg-stone-100 px-3 py-2 text-sm text-stone-700">
-          <FileText size={16} className="shrink-0 text-teal-700" />
+        <div className="mb-2 flex items-center gap-2 rounded-lg bg-amber-50 px-3 py-2 text-sm text-amber-700 border border-amber-100">
+          <FileText size={16} className="shrink-0 text-amber-600" />
           <span className="min-w-0 truncate">{file.name}</span>
-          <span className="shrink-0 text-stone-500">{formatSize(file.size)}</span>
+          <span className="shrink-0 text-amber-500">{formatSize(file.size)}</span>
           <button
             type="button"
             aria-label="Retirer le fichier"
             onClick={() => setFile(null)}
-            className="ml-auto rounded p-1 text-stone-500 hover:bg-stone-200 hover:text-stone-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600"
+            className="ml-auto rounded p-1 text-amber-500 hover:bg-amber-100 hover:text-amber-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-600"
           >
             <X size={14} />
           </button>
@@ -112,9 +112,16 @@ export function Composer({ disabled, onSend }: Props) {
           rows={1}
           placeholder="Posez une question sur le code de la route à Madagascar…"
           aria-label="Votre question"
-          className="max-h-40 min-h-10 flex-1 resize-none rounded-lg border border-stone-300 bg-white px-3 py-2 text-sm text-stone-800 placeholder:text-stone-400 focus:border-teal-600 focus:outline-none focus:ring-2 focus:ring-teal-600/25"
+          className="max-h-40 min-h-[44px] flex-1 resize-none rounded-xl border border-stone-300 bg-white px-4 py-2.5 text-sm text-stone-800 placeholder:text-stone-400 focus:border-teal-600 focus:outline-none focus:ring-2 focus:ring-teal-600/25"
         />
-        <Button type="submit" size="icon" aria-label="Envoyer" disabled={!canSend}>
+        <Button
+          type="submit"
+          variant="primary"
+          size="icon"
+          aria-label="Envoyer"
+          disabled={!canSend}
+          className="rounded-full bg-teal-600 hover:bg-teal-700 disabled:bg-teal-200 disabled:text-stone-400 disabled:cursor-not-allowed"
+        >
           <Send size={18} />
         </Button>
       </div>

@@ -1,7 +1,7 @@
 import { API_URL, USE_MOCK } from '@/lib/env';
 import { ApiError } from '@/lib/errors';
 import { mockRequest } from '@/lib/mock';
-import { clearToken, getToken } from '@/lib/tokenStorage';
+import { clearAuth, getRefreshToken, getToken, setToken } from '@/lib/tokenStorage';
 
 type Method = 'GET' | 'POST' | 'PATCH' | 'DELETE';
 type RequestOptions = { method?: Method; body?: unknown };
@@ -18,7 +18,7 @@ async function send<T>(path: string, method: Method, body: unknown, token: strin
     payload = JSON.stringify(body);
   }
 
-  const response = await fetch(`${API_URL}${path}`, { method, headers, body: payload });
+  const response = await fetch(`${API_URL}${path}`, { method, headers, body: payload, credentials: 'include' });
   const data = await response.json().catch(() => null);
   if (!response.ok) {
     throw new ApiError(data?.message ?? 'Une erreur est survenue, réessayez.', response.status);
@@ -34,9 +34,34 @@ export async function request<T>(path: string, { method = 'GET', body }: Request
       : await send<T>(path, method, body, token);
   } catch (error) {
     if (error instanceof ApiError && error.status === 401 && !path.startsWith('/auth')) {
-      clearToken();
-      window.location.assign('/login');
+      try {
+        const refreshedToken = await refreshAccessToken();
+        return await send<T>(path, method, body, refreshedToken);
+      } catch {
+        clearAuth();
+        window.location.assign('/login');
+      }
     }
     throw error;
   }
+}
+
+export async function refreshAccessToken(): Promise<string> {
+  const refreshToken = getRefreshToken();
+  if (!refreshToken) throw new ApiError('Aucun token de rafraîchissement', 401);
+  const response = await fetch(`${API_URL}/auth/refresh`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    credentials: 'include',
+    body: JSON.stringify({ refreshToken }),
+  });
+  const data = await response.json().catch(() => null);
+  if (!response.ok) {
+    clearAuth();
+    throw new ApiError(data?.message ?? 'Session expirée, reconnectez-vous.', response.status);
+  }
+  const token = data?.data?.token;
+  if (!token) throw new ApiError('Réponse de rafraîchissement invalide', 500);
+  setToken(token);
+  return token;
 }

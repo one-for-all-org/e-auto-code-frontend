@@ -62,7 +62,7 @@ export default function ChatPage() {
   };
 
   return (
-    <div className="mx-auto flex h-[calc(100dvh-4rem)] w-full max-w-6xl gap-6 p-4 sm:p-6">
+    <div className="mx-auto flex h-[calc(100dvh-6rem)] w-full max-w-6xl gap-3 p-2 sm:h-[calc(100dvh-4rem)] sm:gap-6 sm:p-6">
       <div className="hidden w-72 shrink-0 overflow-hidden rounded-lg border border-stone-200 bg-white shadow-sm md:block">
         <ConversationSidebar activeId={conversationId} />
       </div>

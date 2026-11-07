@@ -2,6 +2,7 @@ import { useState, type FormEvent } from 'react';
 import { Check, MessageSquare, Pencil, Trash2, X } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/Button';
+import { ConfirmDialog } from '@/components/ui/ConfirmDialog';
 import { useDeleteConversation, useRenameConversation } from '@/features/history/hooks/useConversations';
 import type { Conversation } from '@/types';
 
@@ -15,7 +16,8 @@ export function ConversationItem({ conversation, active, onOpen }: Props) {
   const navigate = useNavigate();
   const rename = useRenameConversation();
   const remove = useDeleteConversation();
-  const [mode, setMode] = useState<'view' | 'rename' | 'confirm'>('view');
+  const [mode, setMode] = useState<'view' | 'rename'>('view');
+  const [confirmOpen, setConfirmOpen] = useState(false);
   const [title, setTitle] = useState(conversation.title);
 
   const startRename = () => {
@@ -33,12 +35,14 @@ export function ConversationItem({ conversation, active, onOpen }: Props) {
     rename.mutate({ id: conversation.id, title: next }, { onSuccess: () => setMode('view') });
   };
 
-  const confirmDelete = async () => {
+  const handleDelete = async () => {
     try {
       await remove.mutateAsync(conversation.id);
       if (active) navigate('/chat');
     } catch {
       return;
+    } finally {
+      setConfirmOpen(false);
     }
   };
 
@@ -63,23 +67,6 @@ export function ConversationItem({ conversation, active, onOpen }: Props) {
     );
   }
 
-  if (mode === 'confirm') {
-    return (
-      <div className="space-y-3 rounded-lg border border-red-200 bg-red-50 p-3">
-        <p className="text-sm text-stone-800">Supprimer « {conversation.title} » ? Cette action est définitive.</p>
-        {remove.isError && <p className="text-sm text-red-700">Suppression impossible, réessayez.</p>}
-        <div className="flex gap-2">
-          <Button size="sm" variant="danger" loading={remove.isPending} onClick={confirmDelete}>
-            Supprimer
-          </Button>
-          <Button size="sm" variant="secondary" onClick={() => setMode('view')}>
-            Annuler
-          </Button>
-        </div>
-      </div>
-    );
-  }
-
   return (
     <div
       className={`group flex items-center gap-1 rounded-lg pr-1 transition-colors ${
@@ -101,10 +88,19 @@ export function ConversationItem({ conversation, active, onOpen }: Props) {
         <Button variant="ghost" size="icon" aria-label="Renommer" onClick={startRename}>
           <Pencil size={14} />
         </Button>
-        <Button variant="ghost" size="icon" aria-label="Supprimer" onClick={() => setMode('confirm')}>
+        <Button variant="ghost" size="icon" aria-label="Supprimer" onClick={() => setConfirmOpen(true)}>
           <Trash2 size={14} />
         </Button>
       </div>
+
+      <ConfirmDialog
+        open={confirmOpen}
+        onConfirm={handleDelete}
+        onCancel={() => setConfirmOpen(false)}
+        title="Supprimer la conversation"
+        description={`« ${conversation.title} » sera définitivement supprimée. Cette action est irréversible.`}
+        destructive
+      />
     </div>
   );
 }

@@ -14,7 +14,7 @@ export default function ProfilePage() {
         <h1 className="text-2xl font-semibold text-stone-900">Mon profil</h1>
         <p className="mt-1 text-sm text-stone-500">Gérez vos informations et votre mot de passe.</p>
       </div>
-      {me.isSuccess ? (
+      {me.isSuccess && me.data ? (
         <>
           <NameForm user={me.data} />
           <PasswordForm />

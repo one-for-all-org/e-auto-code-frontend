@@ -1,12 +1,24 @@
-export type User = { id: string; name: string; email: string };
+export type User = {
+  id: string;
+  name: string;
+  email: string;
+  role: 'USER' | 'ADMIN';
+  isOk: boolean;
+  isBlocked: boolean;
+  createdAt: number;
+};
 
-export type AuthResponse = { token: string; user: User };
+export type AuthResponse = {
+  token: string;
+  refreshToken: string;
+  user: User;
+};
 
 export type Conversation = {
   id: string;
   title: string;
-  createdAt: string;
-  updatedAt: string;
+  createdAt: number;
+  updatedAt: number;
 };
 
 export type Message = {
@@ -14,8 +26,8 @@ export type Message = {
   conversationId: string;
   role: 'user' | 'assistant';
   content: string;
-  fileName?: string | null;
-  createdAt: string;
+  attachmentName?: string | null;
+  createdAt: number;
 };
 
 export type SendMessageResponse = {

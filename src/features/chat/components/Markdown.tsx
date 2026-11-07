@@ -18,17 +18,17 @@ const components: Components = {
     </a>
   ),
   blockquote: ({ children }) => (
-    <blockquote className="rounded-r-lg border-l-4 border-amber-400 bg-amber-50 py-2 pl-4 pr-3 text-stone-700">
+    <blockquote className="rounded-r-lg border-l-4 border-amber-400 bg-amber-50 py-2 pl-4 pr-3 text-stone-700 dark:bg-amber-950/30">
       {children}
     </blockquote>
   ),
   pre: ({ children }) => (
-    <pre className="overflow-x-auto rounded-lg bg-stone-900 p-3 text-sm text-stone-100 [&_code]:bg-transparent [&_code]:p-0 [&_code]:text-stone-100">
+    <pre className="max-w-full overflow-x-auto rounded-xl bg-stone-900 p-3 text-sm text-stone-100 [&_code]:bg-transparent [&_code]:p-0 [&_code]:text-stone-100">
       {children}
     </pre>
   ),
   code: ({ children }) => (
-    <code className="rounded bg-stone-100 px-1.5 py-0.5 font-mono text-[0.85em] text-teal-800">{children}</code>
+    <code className="rounded bg-stone-100 px-1.5 py-0.5 font-mono text-[0.85em] text-teal-800 dark:text-teal-200">{children}</code>
   ),
   table: ({ children }) => (
     <div className="overflow-x-auto">
