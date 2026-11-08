@@ -6,7 +6,7 @@ import { ThemeToggle } from '@/components/theme/ThemeToggle';
 import { LanguageSwitcher } from '@/components/LanguageSwitcher';
 import { useTranslation } from 'react-i18next';
 import SOURCE_DOCUMENT from '@/assets/D71-138-VF.pdf?url';
-import VISUELLE from '@/assets/visuelle.jpg';
+import HERO_VIDEO from '@/assets/video_demo.mp4';
 
 type CopyItem = { title: string; text: string };
 const languageFlags = [
@@ -39,16 +39,20 @@ export default function HomePage() {
       </header>
 
       <main>
-        <section className="mx-auto grid max-w-6xl items-center gap-10 px-4 py-12 sm:px-6 sm:py-16 lg:grid-cols-2 lg:gap-14 lg:py-20">
-          <div className="relative order-2 lg:order-1">
-            <div className="absolute -inset-3 rounded-3xl bg-primary/10 blur-xl" aria-hidden="true" />
-            <img
-              src={VISUELLE}
-              alt={t('home.heroImageAlt')}
-              className="relative h-56 w-full rounded-2xl border border-border object-cover shadow-lg sm:h-80 lg:h-[400px]"
-            />
-          </div>
-          <div className="order-1 text-center lg:order-2 lg:text-left">
+        <section className="w-full py-12 sm:py-16 lg:py-20">
+          <div className="mx-auto grid w-full max-w-7xl items-center gap-10 px-4 sm:px-6 lg:grid-cols-2 lg:gap-14">
+            <div className="relative order-2 lg:order-1 rounded-xl">
+              <video
+                src={HERO_VIDEO}
+                autoPlay
+                muted
+                loop
+                playsInline
+                aria-label={t('home.heroImageAlt')}
+                className="block h-56 w-full rounded-xl border-2 border-primary object-contain shadow-lg sm:h-80 lg:h-[400px]"
+              />
+            </div>
+            <div className="order-1 text-center lg:order-2 lg:text-left">
             <p className="text-sm font-semibold uppercase tracking-wider text-primary">{t('common.madagascar')}</p>
             <h1 className="mt-3 text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
               {t('home.heroTitle')}
@@ -69,6 +73,7 @@ export default function HomePage() {
               >
                 {t('home.login')}
               </Link>
+            </div>
             </div>
           </div>
         </section>
