@@ -5,8 +5,10 @@ import { Input } from '@/components/ui/Input';
 import { AuthShell } from '@/features/auth/components/AuthShell';
 import { useResetPassword } from '@/features/auth/hooks/useAuth';
 import { clearAuth } from '@/lib/tokenStorage';
+import { useTranslation } from 'react-i18next';
 
 export default function ResetPasswordPage() {
+  const { t } = useTranslation();
   const resetPassword = useResetPassword();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
@@ -30,19 +32,19 @@ export default function ResetPasswordPage() {
   if (done) {
     return (
       <AuthShell
-        title="Mot de passe réinitialisé"
-        subtitle="Vous pouvez maintenant vous connecter avec votre nouveau mot de passe."
+        title={t('auth.reset.doneTitle')}
+        subtitle={t('auth.reset.doneSubtitle')}
         footer={
           <>
             <Link to="/login" className="font-medium text-teal-700 hover:text-teal-900 hover:underline">
-              Se connecter
+              {t('auth.login.submit')}
             </Link>
           </>
         }
       >
-        <p className="text-sm text-stone-600">Vos sessions de renouvellement ont été révoquées. Reconnectez-vous avec votre nouveau mot de passe.</p>
+        <p className="text-sm text-stone-600">{t('auth.reset.doneHelp')}</p>
         <Button className="mt-5 w-full" onClick={() => navigate('/login')}>
-          Aller à la connexion
+          {t('auth.reset.goToLogin')}
         </Button>
       </AuthShell>
     );
@@ -50,21 +52,18 @@ export default function ResetPasswordPage() {
 
   return (
     <AuthShell
-      title="Réinitialiser le mot de passe"
-      subtitle="Entrez votre email, le code reçu et votre nouveau mot de passe."
+      title={t('auth.reset.title')}
+      subtitle={t('auth.reset.subtitle')}
       footer={
-        <>
-          Retour à la{' '}
-          <Link to="/login" className="font-medium text-teal-700 hover:text-teal-900 hover:underline">
-            connexion
-          </Link>
-        </>
+        <Link to="/login" className="font-medium text-teal-700 hover:text-teal-900 hover:underline">
+          {t('auth.forgot.backToLogin')}
+        </Link>
       }
     >
       <form onSubmit={handleSubmit} className="space-y-5">
         <Input
           id="email"
-          label="Email"
+          label={t('auth.reset.email')}
           type="email"
           autoComplete="email"
           required
@@ -73,7 +72,7 @@ export default function ResetPasswordPage() {
         />
         <Input
           id="code"
-          label="Code à 6 chiffres"
+          label={t('auth.reset.code')}
           maxLength={6}
           inputMode="numeric"
           pattern="[0-9]{6}"
@@ -83,7 +82,7 @@ export default function ResetPasswordPage() {
         />
         <Input
           id="password"
-          label="Nouveau mot de passe (8 caractères minimum)"
+          label={t('auth.reset.password')}
           type="password"
           autoComplete="new-password"
           minLength={8}
@@ -97,7 +96,7 @@ export default function ResetPasswordPage() {
           </p>
         )}
         <Button type="submit" loading={resetPassword.isPending} className="w-full">
-          Réinitialiser
+          {t('auth.reset.submit')}
         </Button>
       </form>
     </AuthShell>

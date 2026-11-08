@@ -4,8 +4,10 @@ import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 import { AuthShell } from '@/features/auth/components/AuthShell';
 import { useForgotPassword } from '@/features/auth/hooks/useAuth';
+import { useTranslation } from 'react-i18next';
 
 export default function ForgotPasswordPage() {
+  const { t } = useTranslation();
   const forgotPassword = useForgotPassword();
   const [email, setEmail] = useState('');
   const [sent, setSent] = useState(false);
@@ -20,22 +22,22 @@ export default function ForgotPasswordPage() {
   if (sent) {
     return (
       <AuthShell
-        title="Vérifiez votre boîte mail"
-        subtitle="Si un compte existe avec cette adresse, un code de réinitialisation a été envoyé."
+        title={t('auth.forgot.sentTitle')}
+        subtitle={t('auth.forgot.sentSubtitle')}
         footer={
           <>
-            Vous vous souvenez de votre mot de passe ?{' '}
+            {t('auth.forgot.remember')}{' '}
             <Link to="/login" className="font-medium text-teal-700 hover:text-teal-900 hover:underline">
-              Connectez-vous
+              {t('auth.login.submit')}
             </Link>
           </>
         }
       >
         <p className="text-sm text-stone-600">
-          Consultez votre boîte de réception. En développement, le code peut également apparaître dans les logs du serveur.
+          {t('auth.forgot.sentHelp')}
         </p>
         <Button asChild className="mt-5 w-full">
-          <Link to={`/reset-password?email=${encodeURIComponent(email)}`}>Saisir le code</Link>
+          <Link to={`/reset-password?email=${encodeURIComponent(email)}`}>{t('auth.forgot.enterCode')}</Link>
         </Button>
       </AuthShell>
     );
@@ -43,21 +45,18 @@ export default function ForgotPasswordPage() {
 
   return (
     <AuthShell
-      title="Mot de passe oublié"
-      subtitle="Indiquez votre email pour recevoir un code de réinitialisation."
+      title={t('auth.forgot.title')}
+      subtitle={t('auth.forgot.subtitle')}
       footer={
-        <>
-          Retour à la{' '}
-          <Link to="/login" className="font-medium text-teal-700 hover:text-teal-900 hover:underline">
-            connexion
-          </Link>
-        </>
+        <Link to="/login" className="font-medium text-teal-700 hover:text-teal-900 hover:underline">
+          {t('auth.forgot.backToLogin')}
+        </Link>
       }
     >
       <form onSubmit={handleSubmit} className="space-y-5">
         <Input
           id="email"
-          label="Email"
+          label={t('auth.forgot.email')}
           type="email"
           autoComplete="email"
           required
@@ -70,7 +69,7 @@ export default function ForgotPasswordPage() {
           </p>
         )}
         <Button type="submit" loading={forgotPassword.isPending} className="w-full">
-          Envoyer le code
+          {t('auth.forgot.submit')}
         </Button>
       </form>
     </AuthShell>

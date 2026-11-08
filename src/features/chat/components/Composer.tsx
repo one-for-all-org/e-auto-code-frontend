@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState, type ChangeEvent, type KeyboardEvent } from 'react';
 import { FileText, Paperclip, Send, X } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
+import { useTranslation } from 'react-i18next';
 
 const ACCEPTED_TYPES: Record<string, string> = {
   txt: 'text/plain',
@@ -20,6 +21,7 @@ type Props = {
 };
 
 export function Composer({ disabled, onSend }: Props) {
+  const { t } = useTranslation();
   const [text, setText] = useState('');
   const [file, setFile] = useState<File | null>(null);
   const [fileError, setFileError] = useState('');
@@ -44,11 +46,11 @@ export function Composer({ disabled, onSend }: Props) {
 
     const expectedType = ACCEPTED_TYPES[picked.name.split('.').pop()?.toLowerCase() ?? ''];
     if (!expectedType || (picked.type !== '' && picked.type !== expectedType)) {
-      setFileError('Format non accepté. Choisissez un fichier .txt, .pdf, .png ou .jpg.');
+      setFileError(t('chat.fileErrorType'));
       return;
     }
     if (picked.size > MAX_FILE_SIZE) {
-      setFileError('Le fichier dépasse 1 Mo.');
+      setFileError(t('chat.fileErrorSize'));
       return;
     }
     setFileError('');
@@ -86,7 +88,7 @@ export function Composer({ disabled, onSend }: Props) {
           <span className="shrink-0 text-amber-500">{formatSize(file.size)}</span>
           <button
             type="button"
-            aria-label="Retirer le fichier"
+            aria-label={t('chat.removeFile')}
             onClick={() => setFile(null)}
             className="ml-auto rounded p-1 text-amber-500 hover:bg-amber-100 hover:text-amber-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-600"
           >
@@ -99,7 +101,7 @@ export function Composer({ disabled, onSend }: Props) {
           {fileError}
         </p>
       )}
-      <div className="flex items-end gap-2">
+      <div className="flex min-w-0 items-end gap-1.5 sm:gap-2">
         <input
           ref={fileInput}
           type="file"
@@ -111,7 +113,8 @@ export function Composer({ disabled, onSend }: Props) {
           type="button"
           variant="secondary"
           size="icon"
-          aria-label="Joindre un fichier"
+          className="shrink-0"
+          aria-label={t('chat.attachFile')}
           disabled={disabled}
           onClick={() => fileInput.current?.click()}
         >
@@ -123,22 +126,22 @@ export function Composer({ disabled, onSend }: Props) {
           onChange={(event) => setText(event.target.value)}
           onKeyDown={handleKeyDown}
           rows={2}
-          placeholder="Posez une question sur le code de la route à Madagascar…"
-          aria-label="Votre question"
-          className="min-h-[56px] flex-1 resize-none overflow-y-hidden rounded-xl border border-stone-300 bg-white px-4 py-3 text-sm leading-5 text-stone-800 placeholder:text-stone-400 transition-[height] duration-100 focus:border-teal-600 focus:outline-none focus:ring-2 focus:ring-teal-600/25"
+          placeholder={t('chat.questionPlaceholder')}
+          aria-label={t('chat.questionLabel')}
+          className="min-h-[56px] min-w-0 flex-1 resize-none overflow-y-hidden rounded-xl border border-stone-300 bg-white px-3 py-3 text-sm leading-5 text-stone-800 placeholder:text-stone-400 transition-[height] duration-100 focus:border-teal-600 focus:outline-none focus:ring-2 focus:ring-teal-600/25 sm:px-4"
         />
         <Button
           type="submit"
           variant="primary"
           size="md"
-          aria-label="Envoyer"
+          aria-label={t('chat.send')}
           disabled={!canSend}
-          className="rounded-full bg-teal-600 hover:bg-teal-700 disabled:bg-teal-200 disabled:text-stone-400 disabled:cursor-not-allowed py-y"
+          className="shrink-0 rounded-full bg-teal-600 px-3 py-3 hover:bg-teal-700 disabled:cursor-not-allowed disabled:bg-teal-200 disabled:text-stone-400 sm:px-4"
         >
           <Send size={24} />
         </Button>
       </div>
-      <p className="mt-1 text-xs text-stone-500">Un fichier de 1 Mo maximum : .txt, .pdf, .png ou .jpg</p>
+      <p className="mt-1 text-xs text-stone-500">{t('chat.fileLimit')}</p>
     </form>
   );
 }

@@ -5,8 +5,10 @@ import { login, register, logout, forgotPassword, resetPassword } from '@/featur
 import { clearAuth, getRefreshToken, getToken, setRefreshToken, setToken } from '@/lib/tokenStorage';
 import { refreshAccessToken } from '@/lib/http';
 import { toast } from '@/lib/toast';
+import { useTranslation } from 'react-i18next';
 
 export function useLogin() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   return useMutation({
@@ -15,14 +17,15 @@ export function useLogin() {
       setToken(token);
       setRefreshToken(refreshToken);
       queryClient.setQueryData(meQueryKey, user);
-      toast('success', 'Connexion réussie');
+      toast('success', t('auth.login.success'));
       navigate('/chat', { replace: true });
     },
-    onError: () => toast('error', 'Identifiants invalides'),
+    onError: () => toast('error', t('auth.login.invalidCredentials')),
   });
 }
 
 export function useRegister() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   return useMutation({
@@ -31,18 +34,19 @@ export function useRegister() {
       setToken(token);
       setRefreshToken(refreshToken);
       queryClient.setQueryData(meQueryKey, user);
-      toast('success', 'Compte créé avec succès');
+      toast('success', t('auth.register.success'));
       navigate('/chat', { replace: true });
     },
-    onError: () => toast('error', 'Impossible de créer le compte'),
+    onError: () => toast('error', t('auth.register.error')),
   });
 }
 
 export function useLogout() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   return async () => {
-    if (!window.confirm('Êtes-vous sûr de vouloir vous déconnecter ?')) {
+    if (!window.confirm(t('common.logoutConfirm'))) {
       return;
     }
     try {
@@ -52,7 +56,7 @@ export function useLogout() {
     }
     clearAuth();
     queryClient.clear();
-    toast('info', 'Déconnecté');
+    toast('info', t('auth.logoutSuccess'));
     navigate('/login', { replace: true });
   };
 }

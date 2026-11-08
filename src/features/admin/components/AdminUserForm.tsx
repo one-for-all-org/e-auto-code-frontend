@@ -3,8 +3,10 @@ import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
 import { Input } from '@/components/ui/Input';
 import { useCreateUser } from '@/features/admin/hooks/useAdmin';
+import { useTranslation } from 'react-i18next';
 
 export function AdminUserForm() {
+  const { t } = useTranslation();
   const createUser = useCreateUser();
   const [form, setForm] = useState({ name: '', email: '', password: '', role: 'USER' as 'USER' | 'ADMIN' });
   const [message, setMessage] = useState('');
@@ -15,7 +17,7 @@ export function AdminUserForm() {
     createUser.mutate(form, {
       onSuccess: () => {
         setForm({ name: '', email: '', password: '', role: 'USER' });
-        setMessage('Utilisateur créé.');
+        setMessage(t('common.admin.created'));
       },
     });
   };
@@ -23,13 +25,13 @@ export function AdminUserForm() {
   return (
     <Card className="w-full max-w-7xl">
       <div>
-        <h2 className="text-base font-semibold text-stone-900">Créer un utilisateur</h2>
-        <p className="mt-1 text-sm text-stone-500">Renseignez les informations du nouveau compte.</p>
+        <h2 className="text-base font-semibold text-stone-900">{t('common.admin.createUser')}</h2>
+        <p className="mt-1 text-sm text-stone-500">{t('common.admin.createUserHint')}</p>
       </div>
       <form onSubmit={handleSubmit} className="mt-5 grid grid-cols-1 gap-x-4 gap-y-4 sm:grid-cols-2">
         <Input
           id="admin-name"
-          label="Nom"
+          label={t('common.admin.name')}
           required
           value={form.name}
           autoComplete="name"
@@ -41,7 +43,7 @@ export function AdminUserForm() {
         />
         <Input
           id="admin-email"
-          label="Email"
+          label={t('common.admin.email')}
           type="email"
           required
           value={form.email}
@@ -54,7 +56,7 @@ export function AdminUserForm() {
         />
         <Input
           id="admin-password"
-          label="Mot de passe"
+          label={t('common.admin.password')}
           type="password"
           minLength={8}
           required
@@ -74,7 +76,7 @@ export function AdminUserForm() {
               checked={form.role === 'ADMIN'}
               onChange={(e) => setForm({ ...form, role: e.target.checked ? 'ADMIN' : 'USER' })}
             />
-            Administrateur
+            {t('common.admin.administrator')}
           </label>
         </div>
         {createUser.error && (
@@ -89,7 +91,7 @@ export function AdminUserForm() {
         )}
         <div className="col-span-full flex justify-end border-t border-stone-200 pt-4">
           <Button type="submit" loading={createUser.isPending} className="w-full sm:w-auto">
-            Créer l’utilisateur
+            {t('common.admin.create')}
           </Button>
         </div>
       </form>

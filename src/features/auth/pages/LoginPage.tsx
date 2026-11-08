@@ -4,8 +4,10 @@ import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 import { AuthShell } from '@/features/auth/components/AuthShell';
 import { useLogin } from '@/features/auth/hooks/useAuth';
+import { useTranslation } from 'react-i18next';
 
 export default function LoginPage() {
+  const { t } = useTranslation();
   const login = useLogin();
   const [form, setForm] = useState({ email: '', password: '' });
 
@@ -16,13 +18,13 @@ export default function LoginPage() {
 
   return (
     <AuthShell
-      title="Connexion"
-      subtitle="Reprenez vos leçons de code de la route."
+      title={t('auth.login.title')}
+      subtitle={t('auth.login.subtitle')}
       footer={
         <>
-          Pas encore de compte ?{' '}
+          {t('auth.login.noAccount')}{' '}
           <Link to="/register" className="font-medium text-teal-700 hover:text-teal-900 hover:underline">
-            Inscrivez-vous
+            {t('auth.login.registerLink')}
           </Link>
         </>
       }
@@ -30,7 +32,7 @@ export default function LoginPage() {
       <form onSubmit={handleSubmit} className="space-y-5">
         <Input
           id="email"
-          label="Email"
+          label={t('auth.login.email')}
           type="email"
           autoComplete="email"
           required
@@ -39,7 +41,7 @@ export default function LoginPage() {
         />
         <Input
           id="password"
-          label="Mot de passe"
+          label={t('auth.login.password')}
           type="password"
           autoComplete="current-password"
           required
@@ -48,7 +50,7 @@ export default function LoginPage() {
         />
         <div className="-mt-2 text-right">
           <Link to="/forgot-password" className="text-sm font-medium text-teal-700 hover:underline">
-            Mot de passe oublié ?
+            {t('auth.login.forgot')}
           </Link>
         </div>
         {login.error && (
@@ -57,7 +59,7 @@ export default function LoginPage() {
           </p>
         )}
         <Button type="submit" loading={login.isPending} className="w-full">
-          Se connecter
+          {t('auth.login.submit')}
         </Button>
       </form>
     </AuthShell>

@@ -5,8 +5,10 @@ import { Input } from '@/components/ui/Input';
 import { Shield, CheckCircle2, AlertCircle, Calendar } from 'lucide-react';
 import { useUpdateMe } from '@/features/profile/hooks/useProfile';
 import type { User } from '@/types';
+import { useTranslation } from 'react-i18next';
 
 export function NameForm({ user }: { user?: User }) {
+  const { t, i18n } = useTranslation();
   const updateMe = useUpdateMe();
   const initialName = user?.name ?? '';
   const [name, setName] = useState(initialName);
@@ -19,7 +21,7 @@ export function NameForm({ user }: { user?: User }) {
   };
 
   const formatDate = (timestamp: number) => {
-    return new Date(timestamp).toLocaleDateString('fr-FR', {
+    return new Date(timestamp).toLocaleDateString(i18n.resolvedLanguage ?? i18n.language, {
       day: '2-digit',
       month: '2-digit',
       year: 'numeric',
@@ -30,7 +32,7 @@ export function NameForm({ user }: { user?: User }) {
 
   return (
     <Card>
-      <h2 className="text-base font-semibold text-stone-900">Informations personnelles</h2>
+      <h2 className="text-base font-semibold text-stone-900">{t('profile.personalInfo')}</h2>
 
       {/* Données du compte */}
       <div className="mt-6 space-y-4">
@@ -50,32 +52,32 @@ export function NameForm({ user }: { user?: User }) {
             ) : (
               <Shield className="h-3 w-3" />
             )}
-            {user?.role}
+            {user?.role === 'ADMIN' ? t('profile.roleAdmin') : t('profile.roleUser')}
           </span>
           <span className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-xs font-medium ${
             user?.isOk ? 'border-teal-200 bg-teal-50 text-teal-700' : 'border-stone-200 bg-stone-50 text-stone-600'
           }`}>
             <CheckCircle2 className="h-3 w-3" />
-            {user?.isOk ? 'RGPD accepté' : 'RGPD non accepté'}
+            {user?.isOk ? t('profile.privacyAccepted') : t('profile.privacyNotAccepted')}
           </span>
           <span className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-xs font-medium ${
             user?.isBlocked ? 'border-red-200 bg-red-50 text-red-700' : 'border-teal-200 bg-teal-50 text-teal-700'
           }`}>
             <AlertCircle className="h-3 w-3" />
-            {user?.isBlocked ? 'Bloqué' : 'Actif'}
+            {user?.isBlocked ? t('profile.blocked') : t('profile.active')}
           </span>
         </div>
 
         <div className="flex items-center gap-3 text-xs text-stone-500 mt-1">
           <Calendar className="h-4 w-4" />
-          <span>Créé le : {user?.createdAt ? formatDate(user.createdAt) : '—'}</span>
+          <span>{t('profile.createdAt', { date: user?.createdAt ? formatDate(user.createdAt) : '—' })}</span>
         </div>
       </div>
 
       {/* Formulaire modification nom */}
       <div className="mt-8 border-t border-stone-200 pt-6 space-y-5">
         <form onSubmit={handleSubmit} className="mt-5 space-y-5">
-          <Input id="profile-name" label="Nom" required value={name} onChange={(e) => setName(e.target.value)} />
+          <Input id="profile-name" label={t('profile.name')} required value={name} onChange={(e) => setName(e.target.value)} />
           {updateMe.error && (
             <p role="alert" className="rounded-lg bg-red-50 px-3 py-2 text-sm text-red-700">
               {updateMe.error.message}
@@ -83,7 +85,7 @@ export function NameForm({ user }: { user?: User }) {
           )}
           {updateMe.isSuccess && !updateMe.isPending && (
             <p role="status" className="rounded-lg bg-teal-50 px-3 py-2 text-sm text-teal-800">
-              Nom mis à jour.
+              {t('profile.nameUpdated')}
             </p>
           )}
           <div className="flex justify-end">
@@ -91,6 +93,7 @@ export function NameForm({ user }: { user?: User }) {
               type="submit"
               loading={updateMe.isPending}
               disabled={!trimmed || trimmed === user?.name}
+              className="w-full sm:w-auto"
             >
               Enregistrer
             </Button>

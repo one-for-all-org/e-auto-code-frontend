@@ -4,8 +4,10 @@ import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 import { AuthShell } from '@/features/auth/components/AuthShell';
 import { useRegister } from '@/features/auth/hooks/useAuth';
+import { useTranslation } from 'react-i18next';
 
 export default function RegisterPage() {
+  const { t } = useTranslation();
   const register = useRegister();
   const [form, setForm] = useState({ name: '', email: '', password: '' });
 
@@ -16,13 +18,13 @@ export default function RegisterPage() {
 
   return (
     <AuthShell
-      title="Bienvenue sur E-Torolalana"
-      subtitle="Créez votre compte pour commencer à réviser le code de la route à Madagascar."
+      title={t('auth.register.title')}
+      subtitle={t('auth.register.subtitle')}
       footer={
         <>
-          Vous avez déjà un compte ?{' '}
+          {t('auth.register.hasAccount')}{' '}
           <Link to="/login" className="font-medium text-teal-700 hover:text-teal-900 hover:underline">
-            Connectez-vous
+            {t('auth.register.loginLink')}
           </Link>
         </>
       }
@@ -30,7 +32,7 @@ export default function RegisterPage() {
       <form onSubmit={handleSubmit} className="space-y-5">
         <Input
           id="name"
-          label="Nom"
+          label={t('auth.register.name')}
           autoComplete="name"
           required
           value={form.name}
@@ -38,7 +40,7 @@ export default function RegisterPage() {
         />
         <Input
           id="email"
-          label="Email"
+          label={t('auth.register.email')}
           type="email"
           autoComplete="email"
           required
@@ -47,7 +49,7 @@ export default function RegisterPage() {
         />
         <Input
           id="password"
-          label="Mot de passe"
+          label={t('auth.register.password')}
           type="password"
           autoComplete="new-password"
           required
@@ -56,7 +58,7 @@ export default function RegisterPage() {
           onChange={(e) => setForm({ ...form, password: e.target.value })}
         />
         <p className="text-xs text-muted-foreground">
-          Utilisez au moins 8 caractères. Après l’inscription, vous pourrez commencer vos révisions.
+          {t('auth.register.passwordHint')}
         </p>
         {register.error && (
           <p role="alert" className="rounded-lg bg-red-50 px-3 py-2 text-sm text-red-700">
@@ -64,7 +66,7 @@ export default function RegisterPage() {
           </p>
         )}
         <Button type="submit" loading={register.isPending} className="w-full">
-          Créer mon compte
+          {t('auth.register.submit')}
         </Button>
       </form>
     </AuthShell>

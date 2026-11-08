@@ -8,8 +8,10 @@ import { meQueryKey } from '@/features/profile/hooks/useProfile';
 import { clearAuth, getToken } from '@/lib/tokenStorage';
 import { refreshAccessToken } from '@/lib/http';
 import { useQueryClient } from '@tanstack/react-query';
+import { useTranslation } from 'react-i18next';
 
 export default function RequireAdmin() {
+  const { t } = useTranslation();
   const queryClient = useQueryClient();
   const me = useMe();
   const [isRefreshing, setIsRefreshing] = useState(false);
@@ -43,7 +45,7 @@ export default function RequireAdmin() {
   if (me.isError) {
     return (
       <div className="mx-auto w-full max-w-xl px-4 py-12">
-        <EmptyState icon={AlertCircle} title="Accès impossible à vérifier" description={me.error.message} />
+        <EmptyState icon={AlertCircle} title={t('common.errors.accessCheck')} description={me.error.message} />
       </div>
     );
   }

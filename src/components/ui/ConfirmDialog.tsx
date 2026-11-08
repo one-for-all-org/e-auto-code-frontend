@@ -1,6 +1,7 @@
-import { useState, type ReactNode } from 'react';
-import { X, Trash2, AlertCircle } from 'lucide-react';
+import type { ReactNode } from 'react';
+import { Trash2, AlertCircle } from 'lucide-react';
 import { Button } from './Button';
+import { useTranslation } from 'react-i18next';
 
 type Props = {
   open: boolean;
@@ -20,11 +21,12 @@ export function ConfirmDialog({
   onCancel,
   title,
   description,
-  confirmLabel = 'Confirmer',
-  cancelLabel = 'Annuler',
+  confirmLabel,
+  cancelLabel,
   destructive = false,
   children,
 }: Props) {
+  const { t } = useTranslation();
   if (!open) return null;
 
   return (
@@ -64,7 +66,7 @@ export function ConfirmDialog({
             onClick={onCancel}
             className="text-stone-600 hover:bg-stone-200"
           >
-            {cancelLabel}
+            {cancelLabel ?? t('common.actions.cancel')}
           </Button>
           <Button
             variant={destructive ? 'danger' : 'primary'}
@@ -72,7 +74,7 @@ export function ConfirmDialog({
             className="flex-1"
           >
             {destructive ? <Trash2 size={16} className="mr-2" /> : null}
-            {confirmLabel}
+            {confirmLabel ?? t('common.actions.confirm')}
           </Button>
         </div>
       </div>

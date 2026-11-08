@@ -3,6 +3,7 @@ import { MessageBubble } from '@/features/chat/components/MessageBubble';
 import { Spinner } from '@/components/ui/Spinner';
 import type { SendInput } from '@/features/chat/hooks/useMessages';
 import type { Message } from '@/types';
+import { useTranslation } from 'react-i18next';
 
 type Props = {
   messages: Message[];
@@ -10,6 +11,7 @@ type Props = {
 };
 
 export function MessageList({ messages, pending }: Props) {
+  const { t } = useTranslation();
   const endRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -31,7 +33,7 @@ export function MessageList({ messages, pending }: Props) {
           <MessageBubble role="user" content={pending.content} fileName={pending.file?.name} />
           <div role="status" className="flex items-center gap-2 pl-11 text-sm text-stone-500">
             <Spinner className="h-4 w-4" />
-            L'IA écrit…
+            {t('chat.writing')}
           </div>
         </>
       )}

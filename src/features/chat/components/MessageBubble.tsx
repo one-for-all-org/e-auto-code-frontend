@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Check, Copy, Paperclip, Signpost } from 'lucide-react';
 import { toast } from '@/lib/toast';
 import { Markdown } from '@/features/chat/components/Markdown';
+import { useTranslation } from 'react-i18next';
 
 type Props = {
   role: 'user' | 'assistant';
@@ -10,6 +11,7 @@ type Props = {
 };
 
 export function MessageBubble({ role, content, fileName }: Props) {
+  const { t } = useTranslation();
   const [copied, setCopied] = useState(false);
   const copiedTimeout = useRef<ReturnType<typeof setTimeout>>();
 
@@ -37,9 +39,9 @@ export function MessageBubble({ role, content, fileName }: Props) {
       setCopied(true);
       clearTimeout(copiedTimeout.current);
       copiedTimeout.current = setTimeout(() => setCopied(false), 2000);
-      toast('success', 'Réponse copiée dans le presse-papiers.');
+      toast('success', t('chat.copySuccess'));
     } catch {
-      toast('error', 'Impossible de copier la réponse. Vérifiez les permissions du navigateur.');
+      toast('error', t('chat.copyError'));
     }
   };
 
@@ -53,11 +55,11 @@ export function MessageBubble({ role, content, fileName }: Props) {
         <button
           type="button"
           onClick={() => void copyResponse()}
-          aria-label={copied ? 'Réponse copiée' : 'Copier la réponse'}
+          aria-label={copied ? t('chat.responseCopied') : t('chat.copyResponse')}
           className="mt-3 inline-flex h-8 items-center gap-1.5 rounded-md px-2 text-xs font-medium text-stone-500 transition-colors hover:bg-stone-100 hover:text-stone-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600"
         >
           {copied ? <Check size={14} /> : <Copy size={14} />}
-          <span>{copied ? 'Copié' : 'Copier'}</span>
+          <span>{copied ? t('common.actions.copied') : t('common.actions.copy')}</span>
         </button>
       </div>
     </div>

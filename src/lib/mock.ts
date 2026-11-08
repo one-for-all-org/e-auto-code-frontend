@@ -1,11 +1,10 @@
 import { ApiError } from '@/lib/errors';
+import i18n, { getAppLanguage } from '@/i18n';
 import type { AuthResponse, Conversation, Message, SendMessageResponse, User } from '@/types';
 
 type MockCall = { method: 'GET' | 'POST' | 'PATCH' | 'DELETE'; path: string; body?: unknown; token: string | null };
 type StoredUser = User & { password: string };
-type StoredConversation = Conversation & { userId: string };
-
-const DEFAULT_TITLE = 'Nouvelle conversation';
+type StoredConversation = Conversation & { userId: string; isUntitled: boolean };
 
 const users: StoredUser[] = [];
 const sessions = new Map<string, string>();
@@ -19,7 +18,7 @@ const toUser = ({ id, name, email, role, isOk, isBlocked, createdAt }: StoredUse
 
 function findUser(userId: string): StoredUser {
   const user = users.find((u) => u.id === userId);
-  if (!user) throw new ApiError('Session expirée, reconnectez-vous', 401);
+  if (!user) throw new ApiError(i18n.t('common.errors.sessionExpired'), 401);
   return user;
 }
 
@@ -32,43 +31,47 @@ function openSession(user: StoredUser): AuthResponse {
 
 function requireConversation(userId: string, id: string): StoredConversation {
   const conversation = conversations.find((c) => c.id === id && c.userId === userId);
-  if (!conversation) throw new ApiError('Conversation introuvable', 404);
+  if (!conversation) throw new ApiError(i18n.t('common.errors.conversationNotFound'), 404);
   return conversation;
 }
 
-function mockAnswer(question: string, fileName?: string): string {
-  const attachment = fileName ? `\n\nJ'ai bien reçu le fichier **${fileName}**.` : '';
-  return `## Réponse à votre question
-
-Vous avez demandé : *${question || 'votre fichier'}*
-
-### Les points essentiels
-
-- À Madagascar, on roule **à droite**.
-- Au carrefour, respectez la **priorité à droite** sauf signalisation contraire.
-- Obéissez toujours aux feux et aux panneaux.
-
-| Élément | À retenir |
-| --- | --- |
-| Circulation | Roulez à droite |
-| Feux | Rouge : arrêt, vert : passage libre |
-
-> Mode démonstration : cette réponse est simulée.${attachment}`;
+function mockAnswer(question: string, fileName: string | undefined, lang: ReturnType<typeof getAppLanguage>): string {
+  const translate = i18n.getFixedT(lang);
+  const t = (key: string, options?: Record<string, string>) => translate(key, options ?? {});
+  const attachment = fileName ? `\n\n${t('chat.demo.fileReceived', { fileName })}` : '';
+  return [
+    `## ${t('chat.demo.answerTitle')}`,
+    '',
+    t('chat.demo.questionIntro', { question: question || t('chat.demo.fileFallback') }),
+    '',
+    `### ${t('chat.demo.keyPoints')}`,
+    '',
+    `- ${t('chat.demo.rightSide')}`,
+    `- ${t('chat.demo.priority')}`,
+    `- ${t('chat.demo.signals')}`,
+    '',
+    `| ${t('chat.demo.tableItem')} | ${t('chat.demo.tableRemember')} |`,
+    '| --- | --- |',
+    `| ${t('chat.demo.traffic')} | ${t('chat.demo.driveRight')} |`,
+    `| ${t('chat.demo.lights')} | ${t('chat.demo.lightRules')} |`,
+    '',
+    `> ${t('chat.demo.simulated')}${attachment}`,
+  ].join('\n');
 }
 
 function authRoute<T>(action: string | undefined, body: Record<string, string>): T {
   if (action === 'register') {
-    if (users.some((u) => u.email === body.email)) throw new ApiError('Cet email est déjà utilisé', 409);
+    if (users.some((u) => u.email === body.email)) throw new ApiError(i18n.t('common.errors.emailInUse'), 409);
     const user: StoredUser = { id: uid(), name: body.name, email: body.email, password: body.password, role: 'USER', isOk: false, isBlocked: false, createdAt: now() };
     users.push(user);
     return openSession(user) as T;
   }
   if (action === 'login') {
     const user = users.find((u) => u.email === body.email && u.password === body.password);
-    if (!user) throw new ApiError('Email ou mot de passe incorrect', 401);
+    if (!user) throw new ApiError(i18n.t('common.errors.invalidCredentials'), 401);
     return openSession(user) as T;
   }
-  throw new ApiError('Introuvable', 404);
+  throw new ApiError(i18n.t('common.errors.notFound'), 404);
 }
 
 function listConversations(userId: string): Conversation[] {
@@ -82,9 +85,10 @@ function createConversation(userId: string): Conversation {
   const conversation: StoredConversation = {
     id: uid(),
     userId,
-    title: DEFAULT_TITLE,
+    title: i18n.t('history.newConversation'),
     createdAt: timestamp,
     updatedAt: timestamp,
+    isUntitled: true,
   };
   conversations.push(conversation);
   return conversation;
@@ -92,7 +96,8 @@ function createConversation(userId: string): Conversation {
 
 function renameConversation(userId: string, id: string, title: string): Conversation {
   const conversation = requireConversation(userId, id);
-  conversation.title = title.trim() || DEFAULT_TITLE;
+  conversation.title = title.trim() || i18n.t('history.newConversation');
+  conversation.isUntitled = !title.trim();
   conversation.updatedAt = now();
   return conversation;
 }
@@ -113,7 +118,7 @@ function postMessage(userId: string, id: string, form: FormData): SendMessageRes
   const content = String(form.get('content') ?? '').trim();
   const file = form.get('file');
   const fileName = file instanceof File ? file.name : undefined;
-  if (!content && !fileName) throw new ApiError('Le message est vide', 400);
+  if (!content && !fileName) throw new ApiError(i18n.t('common.errors.emptyMessage'), 400);
 
   const timestamp = now();
   const userMessage: Message = { id: uid(), conversationId: id, role: 'user', content, attachmentName: fileName ?? null, createdAt: timestamp };
@@ -121,14 +126,15 @@ function postMessage(userId: string, id: string, form: FormData): SendMessageRes
     id: uid(),
     conversationId: id,
     role: 'assistant',
-    content: mockAnswer(content, fileName),
+    content: mockAnswer(content, fileName, getAppLanguage(String(form.get('lang') ?? 'fr'))),
     attachmentName: null,
     createdAt: timestamp,
   };
   messages.push(userMessage, assistantMessage);
 
-  if (conversation.title === DEFAULT_TITLE) {
-    conversation.title = (content || fileName || DEFAULT_TITLE).slice(0, 40);
+  if (conversation.isUntitled) {
+    conversation.title = (content || fileName || i18n.t('history.newConversation')).slice(0, 40);
+    conversation.isUntitled = false;
   }
   conversation.updatedAt = timestamp;
   return { userMessage, assistantMessage };
@@ -142,30 +148,30 @@ export async function mockRequest<T>({ method, path, body, token }: MockCall): P
   if (root === 'auth') return authRoute<T>(id, data);
 
   const userId = token ? sessions.get(token) : undefined;
-  if (!userId) throw new ApiError('Session expirée, reconnectez-vous', 401);
+  if (!userId) throw new ApiError(i18n.t('common.errors.sessionExpired'), 401);
 
   if (root === 'me') {
-    if (method === 'GET') return { success: true, data: { user: toUser(findUser(userId)) }, message: 'Profil' } as T;
+    if (method === 'GET') return { success: true, data: { user: toUser(findUser(userId)) }, message: i18n.t('profile.title') } as T;
     const user = findUser(userId);
     if (data.name) user.name = data.name;
     if (data.password) user.password = data.password;
-    return { success: true, data: { user: toUser(user) }, message: 'Profil mis à jour' } as T;
+    return { success: true, data: { user: toUser(user) }, message: i18n.t('profile.updated') } as T;
   }
 
   if (root === 'admin' && id === 'users') {
     if (method === 'GET') return { users: users.map(toUser) } as T;
-    throw new ApiError('Introuvable', 404);
+    throw new ApiError(i18n.t('common.errors.notFound'), 404);
   }
 
   if (root === 'admin' && id === 'lessons' && sub === 'analyze' && method === 'POST') {
     const form = body as FormData;
     const file = form.get('file');
     const question = String(form.get('question') ?? '').trim();
-    if (!(file instanceof File) || !question) throw new ApiError('Sélectionnez un fichier et saisissez une question.', 400);
+    if (!(file instanceof File) || !question) throw new ApiError(i18n.t('common.errors.selectFileAndQuestion'), 400);
     return {
       success: true,
-      data: { answer: mockAnswer(question, file.name) },
-      message: 'Réponse générée.',
+      data: { answer: mockAnswer(question, file.name, getAppLanguage()) },
+      message: i18n.t('chat.demo.responseGenerated'),
     } as T;
   }
 
@@ -180,5 +186,5 @@ export async function mockRequest<T>({ method, path, body, token }: MockCall): P
     return renameConversation(userId, id, data.title ?? '') as T;
   }
 
-  throw new ApiError('Introuvable', 404);
+  throw new ApiError(i18n.t('common.errors.notFound'), 404);
 }

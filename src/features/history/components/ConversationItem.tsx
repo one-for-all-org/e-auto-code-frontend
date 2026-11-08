@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/Button';
 import { ConfirmDialog } from '@/components/ui/ConfirmDialog';
 import { useDeleteConversation, useRenameConversation } from '@/features/history/hooks/useConversations';
 import type { Conversation } from '@/types';
+import { useTranslation } from 'react-i18next';
 
 type Props = {
   conversation: Conversation;
@@ -13,6 +14,7 @@ type Props = {
 };
 
 export function ConversationItem({ conversation, active, onOpen }: Props) {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const rename = useRenameConversation();
   const remove = useDeleteConversation();
@@ -54,13 +56,13 @@ export function ConversationItem({ conversation, active, onOpen }: Props) {
           value={title}
           onChange={(e) => setTitle(e.target.value)}
           maxLength={80}
-          aria-label="Nouveau titre"
+          aria-label={t('history.newTitle')}
           className="min-w-0 flex-1 rounded-md border border-stone-300 bg-white px-2 py-2 text-sm text-stone-800 focus:outline-none focus:ring-2 focus:ring-teal-600/25"
         />
-        <Button type="submit" size="icon" aria-label="Enregistrer" loading={rename.isPending}>
+        <Button type="submit" size="icon" aria-label={t('history.save')} loading={rename.isPending}>
           <Check size={16} />
         </Button>
-        <Button type="button" variant="ghost" size="icon" aria-label="Annuler" onClick={() => setMode('view')}>
+        <Button type="button" variant="ghost" size="icon" aria-label={t('history.cancel')} onClick={() => setMode('view')}>
           <X size={16} />
         </Button>
       </form>
@@ -85,10 +87,10 @@ export function ConversationItem({ conversation, active, onOpen }: Props) {
         <span className="truncate">{conversation.title}</span>
       </Link>
       <div className="flex shrink-0 transition-opacity md:opacity-0 md:group-focus-within:opacity-100 md:group-hover:opacity-100">
-        <Button variant="ghost" size="icon" aria-label="Renommer" onClick={startRename}>
+        <Button variant="ghost" size="icon" aria-label={t('history.rename')} onClick={startRename}>
           <Pencil size={14} />
         </Button>
-        <Button variant="ghost" size="icon" aria-label="Supprimer" onClick={() => setConfirmOpen(true)}>
+        <Button variant="ghost" size="icon" aria-label={t('history.delete')} onClick={() => setConfirmOpen(true)}>
           <Trash2 size={14} />
         </Button>
       </div>
@@ -97,8 +99,8 @@ export function ConversationItem({ conversation, active, onOpen }: Props) {
         open={confirmOpen}
         onConfirm={handleDelete}
         onCancel={() => setConfirmOpen(false)}
-        title="Supprimer la conversation"
-        description={`« ${conversation.title} » sera définitivement supprimée. Cette action est irréversible.`}
+        title={t('history.deleteTitle')}
+        description={t('history.deleteDescription', { title: conversation.title })}
         destructive
       />
     </div>

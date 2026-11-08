@@ -1,197 +1,174 @@
-import { Link } from "react-router-dom";
-import { Card } from "@/components/ui/Card";
-import { ThemeToggle } from "@/components/theme/ThemeToggle";
-import { BookOpenCheck, FileCheck2, FileText, ShieldCheck, GraduationCap } from "lucide-react";
-import VISUELLE from "@/assets/visuelle.jpg"
-import SOURCE_DOCUMENT from "@/assets/D71-138-VF.pdf?url";
+import { Link } from 'react-router-dom';
+import { BookOpenCheck, Clock3, MessageCircleQuestion, MessagesSquare, ShieldCheck } from 'lucide-react';
+import { FR, GB, MG } from 'country-flag-icons/react/3x2';
+import { Card } from '@/components/ui/Card';
+import { ThemeToggle } from '@/components/theme/ThemeToggle';
+import { LanguageSwitcher } from '@/components/LanguageSwitcher';
+import { useTranslation } from 'react-i18next';
+import SOURCE_DOCUMENT from '@/assets/D71-138-VF.pdf?url';
+import VISUELLE from '@/assets/visuelle.jpg';
 
-const features = [
-  {
-    number: 1,
-    title: "Rapide",
-    text: "Des résumés courts pour apprendre en quelques minutes.",
-  },
-  {
-    number: 2,
-    title: "Spécifique Madagascar",
-    text: "Priorités, panneaux et règles locales expliquées simplement.",
-  },
-  {
-    number: 3,
-    title: "Pièges d'examen",
-    text: "Les erreurs fréquentes à éviter le jour J.",
-  },
-];
+type CopyItem = { title: string; text: string };
+const languageFlags = [
+  { code: 'fr', Flag: FR },
+  { code: 'en', Flag: GB },
+  { code: 'mg', Flag: MG },
+] as const;
+const stepIcons = [MessageCircleQuestion, BookOpenCheck, MessagesSquare];
+const benefitIcons = [Clock3, MessageCircleQuestion, MessagesSquare];
 
 export default function HomePage() {
+  const { t } = useTranslation();
+  const steps = t('home.steps', { returnObjects: true }) as CopyItem[];
+  const benefits = t('home.benefits', { returnObjects: true }) as CopyItem[];
+  const questions = t('home.questions', { returnObjects: true }) as string[];
 
   return (
-    <div className="min-h-screen flex flex-col bg-stone-50">
-      <nav className="sticky top-0 z-40 border-b border-border bg-card/95 backdrop-blur">
-        <div className="mx-auto max-w-6xl px-4 py-4 flex items-center justify-between">
-          <Link
-            to="/"
-            className="flex items-center gap-2 font-bold text-teal-700 text-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-          >
-            🚦 E-Torolalana · Madagascar
+    <div className="min-h-screen bg-background text-foreground">
+      <header className="sticky top-0 z-40 border-b border-border bg-card/95 backdrop-blur">
+        <nav aria-label={t('common.mainNavigation')} className="mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-3 sm:px-6">
+          <Link to="/" className="flex items-center gap-2 font-bold text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
+            <span aria-hidden="true">🚦</span>
+            <span>{t('common.brand')} · {t('common.madagascar')}</span>
           </Link>
-          <div className="flex gap-4 items-center justify-between">
-            <Link
-              to="/register"
-              className="inline-flex h-10 items-center justify-center rounded-md bg-primary px-4 text-sm font-medium text-primary-foreground shadow-sm transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
-            >
-              Inscription
-            </Link>
+          <div className="flex shrink-0 items-center gap-1">
+            <LanguageSwitcher />
             <ThemeToggle />
           </div>
-        </div>
-      </nav>
-      <main className="flex-1">
-        <div className="mx-auto max-w-6xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8 lg:py-14">
-          {/* Banner avec image */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div className="relative">
-              <div className="absolute inset-0 bg-gradient-to-br from-teal-500/10 to-amber-400/10 rounded-3xl blur-xl"></div>
-              <img
-                src={VISUELLE}
-                alt="Étudiant en train d'étudier en classe"
-                className="relative z-10 h-56 w-full rounded-2xl border border-stone-200 object-cover shadow-lg sm:h-72 lg:h-[380px]"
-              />
-            </div>
-            <div className="text-center lg:text-left space-y-6">
-              <h1 className="text-4xl font-bold text-stone-900 dark:text-foreground sm:text-5xl tracking-tight">
-                Réviser le code de la route
-              </h1>
-              <p className="text-lg text-stone-600 dark:text-foreground max-w-xl mx-auto lg:mx-0">
-                Assistant pédagogique pour le code de la route à Madagascar :
-                panneaux, priorités, sanctions et pièges d'examen. Réponses
-                simples, en français, en MARKDOWN.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-                <Link
-                  to="/chat"
-                  className="flex-1 rounded-xl bg-teal-700 px-8 py-4 text-lg font-semibold text-white text-center hover:bg-teal-800 dark:text-teal-950"
-                >
-                  Commencer à réviser
-                </Link>
-                <Link
-                  to="/login"
-                  className="flex-1 rounded-xl border border-stone-300 bg-white px-8 py-4 text-lg font-semibold text-stone-700 text-center hover:bg-stone-50 dark:border-border dark:bg-card dark:text-foreground dark:hover:bg-accent"
-                >
-                  Se connecter
-                </Link>
-              </div>
+        </nav>
+      </header>
+
+      <main>
+        <section className="mx-auto grid max-w-6xl items-center gap-10 px-4 py-12 sm:px-6 sm:py-16 lg:grid-cols-2 lg:gap-14 lg:py-20">
+          <div className="relative order-2 lg:order-1">
+            <div className="absolute -inset-3 rounded-3xl bg-primary/10 blur-xl" aria-hidden="true" />
+            <img
+              src={VISUELLE}
+              alt={t('home.heroImageAlt')}
+              className="relative h-56 w-full rounded-2xl border border-border object-cover shadow-lg sm:h-80 lg:h-[400px]"
+            />
+          </div>
+          <div className="order-1 text-center lg:order-2 lg:text-left">
+            <p className="text-sm font-semibold uppercase tracking-wider text-primary">{t('common.madagascar')}</p>
+            <h1 className="mt-3 text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
+              {t('home.heroTitle')}
+            </h1>
+            <p className="mx-auto mt-5 max-w-xl text-lg leading-relaxed text-muted-foreground lg:mx-0">
+              {t('home.heroSubtitle')}
+            </p>
+            <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row lg:justify-start">
+              <Link
+                to="/register"
+                className="inline-flex min-h-12 items-center justify-center rounded-xl bg-primary px-6 py-3 text-base font-semibold text-primary-foreground shadow-sm transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+              >
+                {t('home.createAccount')}
+              </Link>
+              <Link
+                to="/login"
+                className="inline-flex min-h-12 items-center justify-center rounded-xl border border-border bg-card px-6 py-3 text-base font-semibold text-foreground transition-colors hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+              >
+                {t('home.login')}
+              </Link>
             </div>
           </div>
+        </section>
 
-          <section
-            aria-labelledby="trusted-learning-title"
-            className="mt-10 rounded-2xl border border-teal-200 bg-teal-50 p-5 dark:border-teal-900 dark:bg-teal-950/30 sm:mt-12 sm:p-7"
-          >
-            <div className="flex flex-col gap-6 md:flex-row md:items-center md:gap-10">
-              <div className="flex min-w-0 flex-1 items-start gap-4">
-                <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-teal-700 text-white">
-                  <BookOpenCheck size={24} aria-hidden="true" />
-                </span>
-                <div>
-                  <p className="text-sm font-semibold uppercase tracking-wide text-teal-800 dark:text-teal-300">
-                    Une base documentaire enrichie par l’équipe admin
-                  </p>
-                  <h2 id="trusted-learning-title" className="mt-1 text-xl font-bold text-stone-900 dark:text-foreground sm:text-2xl">
-                    Des réponses appuyées sur des sources de référence
-                  </h2>
-                  <p className="mt-2 max-w-3xl text-sm leading-relaxed text-stone-700 dark:text-foreground sm:text-base">
-                    L’administration ajoute des documents officiels et des ressources fiables sur le code de la route à Madagascar.
-                    Gemini peut s’appuyer sur ces connaissances pour apporter des réponses plus précises aux apprenants.
-                  </p>
-                </div>
-              </div>
-              <ul className="grid shrink-0 gap-3 border-t border-teal-200 pt-4 dark:border-teal-900 md:w-64 md:border-l md:border-t-0 md:pl-6 md:pt-0">
-                <li className="flex items-center gap-2 text-sm font-medium text-stone-700 dark:text-foreground">
-                  <ShieldCheck size={18} className="shrink-0 text-teal-700 dark:text-teal-300" aria-hidden="true" />
-                  Sources choisies par l’administration
-                </li>
-                <li className="flex items-center gap-2 text-sm font-medium text-stone-700 dark:text-foreground">
-                  <FileCheck2 size={18} className="shrink-0 text-teal-700 dark:text-teal-300" aria-hidden="true" />
-                  Documents vérifiés avant ajout
-                </li>
-              </ul>
+        <section aria-labelledby="how-title" className="border-y border-border bg-card">
+          <div className="mx-auto max-w-6xl px-4 py-14 sm:px-6 sm:py-16">
+            <h2 id="how-title" className="text-center text-2xl font-bold text-foreground sm:text-3xl">{t('home.howTitle')}</h2>
+            <div className="mt-9 grid gap-5 md:grid-cols-3">
+              {steps.map((step, index) => {
+                const Icon = stepIcons[index];
+                return (
+                  <Card key={step.title} className="h-full p-6">
+                    <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-primary/10 text-primary">
+                      <Icon size={22} aria-hidden="true" />
+                    </span>
+                    <p className="mt-5 text-xs font-bold uppercase tracking-wider text-primary">{index + 1}</p>
+                    <h3 className="mt-1 text-lg font-semibold text-card-foreground">{step.title}</h3>
+                    <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{step.text}</p>
+                  </Card>
+                );
+              })}
             </div>
-          </section>
+          </div>
+        </section>
 
-          <section
-            aria-labelledby="source-document-title"
-            className="mt-14 rounded-2xl border border-border bg-card p-5 shadow-sm sm:mt-16 sm:p-7"
-          >
-            <div className="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
-              <div className="flex items-start gap-4">
-                <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
-                  <FileText size={23} aria-hidden="true" />
-                </span>
-                <div>
-                <p className="text-sm font-semibold uppercase tracking-wide text-teal-700 dark:text-teal-300">
-                  Exemple de document source
-                </p>
-                <h2 id="source-document-title" className="mt-1 text-xl font-bold text-foreground">
-                  D71-138-VF.pdf
-                </h2>
-                <p className="mt-2 text-sm text-muted-foreground">
-                  Un exemple de document officiel de référence que l’administration peut fournir pour étayer les réponses de l’IA.
-                </p>
-                </div>
-              </div>
-              <a
-                href={SOURCE_DOCUMENT}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex shrink-0 items-center justify-center gap-2 rounded-lg border border-border bg-card px-5 py-3 text-sm font-semibold text-foreground transition-colors hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
-              >
-                <FileText size={18} aria-hidden="true" />
-                Consulter le document
-              </a>
-            </div>
-          </section>
-
-          <div className="mt-14 sm:mt-16">
-            <h2 className="text-2xl font-semibold text-stone-900 text-center mb-10 dark:text-foreground">
-              Pourquoi réviser avec nous ?
-            </h2>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-              {features.map((item, i) => (
-                <Card key={i} className="p-6 h-full flex flex-col">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-amber-100 text-amber-700 mb-4 shrink-0">
-                    {i + 1}
+        <section aria-labelledby="benefits-title" className="mx-auto max-w-6xl px-4 py-14 sm:px-6 sm:py-16">
+          <h2 id="benefits-title" className="text-center text-2xl font-bold text-foreground sm:text-3xl">{t('home.benefitsTitle')}</h2>
+          <div className="mt-9 grid gap-5 md:grid-cols-3">
+            {benefits.map((benefit, index) => {
+              const Icon = benefitIcons[index];
+              return (
+                <div key={benefit.title} className="flex items-start gap-4 rounded-xl border border-border bg-card p-5">
+                  <Icon className="mt-0.5 shrink-0 text-primary" size={22} aria-hidden="true" />
+                  <div>
+                    <h3 className="font-semibold text-card-foreground">{benefit.title}</h3>
+                    <p className="mt-1 text-sm leading-relaxed text-muted-foreground">{benefit.text}</p>
                   </div>
-                  <h3 className="text-lg font-semibold text-stone-900 mb-2 dark:text-foreground">
-                    {item.title}
-                  </h3>
-                  <p className="text-sm text-stone-600 leading-relaxed flex-1 dark:text-muted-foreground">
-                    {item.text}
-                  </p>
-                </Card>
+                </div>
+              );
+            })}
+          </div>
+        </section>
+
+        <section aria-labelledby="questions-title" className="bg-teal-50 dark:bg-teal-950/25">
+          <div className="mx-auto max-w-6xl px-4 py-14 sm:px-6 sm:py-16">
+            <h2 id="questions-title" className="text-center text-2xl font-bold text-foreground sm:text-3xl">{t('home.questionsTitle')}</h2>
+            <div className="mx-auto mt-8 grid max-w-4xl gap-3 sm:grid-cols-2">
+              {questions.map((question) => (
+                <div key={question} className="flex items-start gap-3 rounded-xl border border-border bg-card p-4 text-sm leading-relaxed text-card-foreground">
+                  <MessageCircleQuestion className="mt-0.5 shrink-0 text-primary" size={18} aria-hidden="true" />
+                  <span>{question}</span>
+                </div>
               ))}
             </div>
           </div>
+        </section>
 
-          <footer className="mt-14 sm:mt-16">
-            <div className="rounded-3xl border border-teal-200 bg-teal-50 px-6 py-9 text-center dark:border-teal-800 dark:bg-teal-950/40 sm:px-12 sm:py-12">
-              <span className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-primary/10 text-primary">
-                <GraduationCap size={30} aria-hidden="true" />
-              </span>
-              <p className="mt-5 text-xs font-bold uppercase tracking-[0.16em] text-teal-800 dark:text-teal-300 sm:text-sm">
-                Un outil complémentaire pour apprendre
-              </p>
-              <h2 className="mx-auto mt-3 max-w-3xl text-2xl font-bold leading-tight text-foreground sm:text-3xl">
-                Rien ne remplace l’apprentissage en auto-école
-              </h2>
-              <p className="mx-auto mt-4 max-w-3xl text-base leading-relaxed text-foreground sm:text-lg">
-                Cet assistant ne remplace ni l’étude en auto-école ni l’accompagnement d’un professionnel.
-                Il est là pour aider celles et ceux qui en ont besoin à réviser et à mieux comprendre le code de la route.
-              </p>
+        <section aria-labelledby="languages-title" className="mx-auto max-w-6xl px-4 py-14 sm:px-6 sm:py-16">
+          <div className="rounded-2xl border border-border bg-card p-6 text-center shadow-sm sm:p-9">
+            <h2 id="languages-title" className="text-2xl font-bold text-card-foreground">{t('home.languagesTitle')}</h2>
+            <div className="mt-6 flex flex-wrap items-center justify-center gap-4 sm:gap-8">
+              {languageFlags.map(({ code, Flag }) => (
+                <div key={code} lang={code} className="flex items-center gap-2 rounded-lg border border-border px-4 py-2.5 text-sm font-medium text-card-foreground">
+                  <Flag aria-hidden="true" className="h-5 w-7 rounded-sm object-cover" />
+                  {t(`common.languages.${code}`)}
+                </div>
+              ))}
             </div>
-          </footer>
-        </div>
+          </div>
+        </section>
+
+        <section aria-labelledby="source-title" className="mx-auto max-w-6xl px-4 pb-14 sm:px-6">
+          <div className="flex flex-col gap-4 rounded-2xl border border-border bg-card p-5 sm:flex-row sm:items-center sm:justify-between sm:p-7">
+            <div>
+              <div className="flex items-center gap-2 text-primary">
+                <ShieldCheck size={19} aria-hidden="true" />
+                <p className="text-sm font-semibold">{t('home.sourceLabel')}</p>
+              </div>
+              <h2 id="source-title" className="mt-2 text-lg font-bold text-card-foreground">{t('home.sourceTitle')}</h2>
+              <p className="mt-1 max-w-2xl text-sm text-muted-foreground">{t('home.sourceDescription')}</p>
+            </div>
+            <a
+              href={SOURCE_DOCUMENT}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex shrink-0 items-center justify-center gap-2 rounded-lg border border-border px-4 py-2.5 text-sm font-semibold text-foreground hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            >
+              {t('home.openSource')}
+            </a>
+          </div>
+        </section>
       </main>
+
+      <footer className="border-t border-border bg-card">
+        <div className="mx-auto max-w-6xl px-4 py-8 text-center sm:px-6">
+          <p className="text-sm font-semibold text-card-foreground">{t('home.disclaimerTitle')}</p>
+          <p className="mx-auto mt-2 max-w-3xl text-sm leading-relaxed text-muted-foreground">{t('home.disclaimer')}</p>
+          <p className="mt-6 border-t border-border pt-5 text-xs text-muted-foreground">{t('home.footer')}</p>
+        </div>
+      </footer>
     </div>
   );
 }

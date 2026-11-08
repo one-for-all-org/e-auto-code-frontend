@@ -1,4 +1,5 @@
 import { API_URL, USE_MOCK } from '@/lib/env';
+import i18n from '@/i18n';
 import { ApiError } from '@/lib/errors';
 import { mockRequest } from '@/lib/mock';
 import { clearAuth, getRefreshToken, getToken, setToken } from '@/lib/tokenStorage';
@@ -21,7 +22,7 @@ async function send<T>(path: string, method: Method, body: unknown, token: strin
   const response = await fetch(`${API_URL}${path}`, { method, headers, body: payload, credentials: 'include' });
   const data = await response.json().catch(() => null);
   if (!response.ok) {
-    throw new ApiError(data?.message ?? 'Une erreur est survenue, réessayez.', response.status);
+    throw new ApiError(data?.message ?? i18n.t('common.errors.generic'), response.status);
   }
   return data as T;
 }
@@ -48,7 +49,7 @@ export async function request<T>(path: string, { method = 'GET', body }: Request
 
 export async function refreshAccessToken(): Promise<string> {
   const refreshToken = getRefreshToken();
-  if (!refreshToken) throw new ApiError('Aucun token de rafraîchissement', 401);
+  if (!refreshToken) throw new ApiError(i18n.t('common.errors.missingRefreshToken'), 401);
   const response = await fetch(`${API_URL}/auth/refresh`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -58,10 +59,10 @@ export async function refreshAccessToken(): Promise<string> {
   const data = await response.json().catch(() => null);
   if (!response.ok) {
     clearAuth();
-    throw new ApiError(data?.message ?? 'Session expirée, reconnectez-vous.', response.status);
+    throw new ApiError(data?.message ?? i18n.t('common.errors.refreshFailed'), response.status);
   }
   const token = data?.data?.token;
-  if (!token) throw new ApiError('Réponse de rafraîchissement invalide', 500);
+  if (!token) throw new ApiError(i18n.t('common.errors.invalidRefreshResponse'), 500);
   setToken(token);
   return token;
 }

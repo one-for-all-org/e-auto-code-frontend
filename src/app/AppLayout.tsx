@@ -6,6 +6,8 @@ import { Toaster } from '@/components/ui/Toaster';
 import { getToken } from '@/lib/tokenStorage';
 import { ThemeToggle } from '@/components/theme/ThemeToggle';
 import { useMe } from '@/features/profile/hooks/useProfile';
+import { LanguageSwitcher } from '@/components/LanguageSwitcher';
+import { useTranslation } from 'react-i18next';
 
 const navClass = ({ isActive }: { isActive: boolean }) =>
   `inline-flex h-9 shrink-0 items-center justify-center gap-2 rounded-lg px-2.5 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600 sm:px-3 ${
@@ -13,6 +15,7 @@ const navClass = ({ isActive }: { isActive: boolean }) =>
   }`;
 
 export default function AppLayout() {
+  const { t } = useTranslation();
   const logout = useLogout();
   const token = getToken();
   const me = useMe();
@@ -27,27 +30,27 @@ export default function AppLayout() {
               <Signpost size={18} />
             </span>
             <span className="min-w-0 leading-tight">
-              <span className="block text-sm font-semibold text-stone-900">Code de la route</span>
+              <span className="block text-sm font-semibold text-stone-900">{t('common.brand')}</span>
               <span className="flex items-center gap-1.5 text-xs text-stone-500">
                 <span className="h-1 w-3 rounded-full bg-amber-400" />
-                Madagascar
+                {t('common.madagascar')}
               </span>
             </span>
           </Link>
-          <nav aria-label="Navigation principale" className="flex w-full items-center justify-between gap-1 sm:w-auto sm:justify-start">
-            <NavLink to="/" className={navClass} aria-label="Accueil">
+          <nav aria-label={t('common.mainNavigation')} className="flex w-full min-w-0 flex-wrap items-center justify-between gap-1 sm:w-auto sm:flex-nowrap sm:justify-start">
+            <NavLink to="/" className={navClass} aria-label={t('common.nav.home')}>
               <Home size={18} />
-              <span className="hidden sm:inline">Accueil</span>
+              <span className="hidden sm:inline">{t('common.nav.home')}</span>
             </NavLink>
             {token ? (
               <>
-                <NavLink to="/chat" className={navClass} aria-label="Chat">
+                <NavLink to="/chat" className={navClass} aria-label={t('common.nav.chat')}>
                   <MessageSquare size={18} />
-                  <span className="hidden sm:inline">Chat</span>
+                  <span className="hidden sm:inline">{t('common.nav.chat')}</span>
                 </NavLink>
-                <NavLink to="/profile" className={navClass} aria-label="Profil">
+                <NavLink to="/profile" className={navClass} aria-label={t('common.nav.profile')}>
                   <User size={18} />
-                  <span className="hidden sm:inline">Profil</span>
+                  <span className="hidden sm:inline">{t('common.nav.profile')}</span>
                 </NavLink>
               </>
             ) : null}
@@ -56,18 +59,19 @@ export default function AppLayout() {
               size="sm"
               className="h-9 w-9 px-0 sm:w-auto sm:px-3"
               onClick={logout}
-              aria-label={token ? 'Déconnexion' : 'Connexion'}
+              aria-label={t(token ? 'common.nav.logout' : 'common.nav.login')}
               disabled={!token}
             >
               <LogOut size={18} />
-              <span className="hidden sm:inline">{token ? 'Déconnexion' : 'Connexion'}</span>
+              <span className="hidden sm:inline">{t(token ? 'common.nav.logout' : 'common.nav.login')}</span>
             </Button>
             {token && me.data?.role === 'ADMIN' && (
-              <NavLink to="/admin" className={navClass} aria-label="Admin">
+              <NavLink to="/admin" className={navClass} aria-label={t('common.nav.admin')}>
                 <Shield size={18} />
-                <span className="hidden sm:inline">Admin</span>
+                <span className="hidden sm:inline">{t('common.nav.admin')}</span>
               </NavLink>
             )}
+            <LanguageSwitcher />
             <ThemeToggle />
           </nav>
         </div>

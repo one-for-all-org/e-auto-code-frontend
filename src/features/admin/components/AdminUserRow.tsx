@@ -4,10 +4,12 @@ import { Input } from '@/components/ui/Input';
 import { ConfirmDialog } from '@/components/ui/ConfirmDialog';
 import { useUpdateUser, useDeleteUser } from '@/features/admin/hooks/useAdmin';
 import type { User } from '@/types';
+import { useTranslation } from 'react-i18next';
 
 type Props = { user: User };
 
 export function AdminUserRow({ user }: Props) {
+  const { t } = useTranslation();
   const [mode, setMode] = useState<'view' | 'edit'>('view');
   const [editing, setEditing] = useState({
     name: user.name,
@@ -36,44 +38,46 @@ export function AdminUserRow({ user }: Props) {
   };
 
   return (
-    <div className="flex items-center justify-between gap-3 rounded-lg border border-stone-200 bg-white p-3">
+    <div className="flex flex-col gap-3 rounded-lg border border-stone-200 bg-white p-3 sm:flex-row sm:items-center sm:justify-between">
       <div className="min-w-0 flex-1">
         <p className="text-sm font-medium text-stone-900 truncate">{user.name}</p>
         <p className="text-xs text-stone-500 truncate">{user.email}</p>
         <p className="text-xs text-stone-400">
-          {user.role} · {user.isOk ? 'Compte validé' : 'À vérifier'} · {user.isBlocked ? 'Bloqué' : 'Actif'}
+          {user.role === 'ADMIN' ? t('common.admin.administrator') : t('profile.roleUser')} · {user.isOk ? t('common.admin.validated') : t('common.admin.checkAccount')} · {user.isBlocked ? t('common.admin.blocked') : t('common.admin.active')}
         </p>
       </div>
-      <div className="flex items-center gap-2">
+      <div className="flex min-w-0 flex-wrap items-center justify-end gap-2">
         {mode === 'view' ? (
           <>
             <Button
               size="sm"
               variant="danger"
               onClick={() => setMode('edit')}
+              className="flex-1 sm:flex-none"
             >
-              Modifier
+              {t('common.admin.edit')}
             </Button>
             <Button
               size="sm"
               variant={user.isBlocked ? 'secondary' : 'danger'}
               onClick={toggleBlock}
+              className="flex-1 sm:flex-none"
             >
-              {user.isBlocked ? 'Débloquer' : 'Bloquer'}
+              {user.isBlocked ? t('common.admin.unblock') : t('common.admin.block')}
             </Button>
-            <Button size="sm" variant="danger" onClick={() => setConfirmOpen(true)}>
-              Supprimer
+            <Button size="sm" variant="danger" onClick={() => setConfirmOpen(true)} className="flex-1 sm:flex-none">
+              {t('common.admin.delete')}
             </Button>
           </>
         ) : (
-          <form onSubmit={handleSubmit} className="flex items-center gap-1.5">
+          <form onSubmit={handleSubmit} className="flex w-full flex-wrap items-center gap-1.5 sm:w-auto">
             <Input
               id={`admin-name-${user.id}`}
               label=""
               required
               value={editing.name}
               onChange={(e) => setEditing({ ...editing, name: e.target.value })}
-              className="text-sm w-32"
+              className="w-full text-sm sm:w-32"
             />
             <label className="flex items-center gap-1 text-xs text-stone-600">
               <input
@@ -81,7 +85,7 @@ export function AdminUserRow({ user }: Props) {
                 checked={editing.role === 'ADMIN'}
                 onChange={(e) => setEditing({ ...editing, role: e.target.checked ? 'ADMIN' : 'USER' })}
               />
-              Admin
+              {t('common.admin.administrator')}
             </label>
             <label className="flex items-center gap-1 text-xs text-stone-600">
               <input
@@ -89,7 +93,7 @@ export function AdminUserRow({ user }: Props) {
                 checked={editing.isOk}
                 onChange={(e) => setEditing({ ...editing, isOk: e.target.checked })}
               />
-              Compte validé
+              {t('common.admin.validated')}
             </label>
             <label className="flex items-center gap-1 text-xs text-stone-600">
               <input
@@ -97,13 +101,13 @@ export function AdminUserRow({ user }: Props) {
                 checked={editing.isBlocked}
                 onChange={(e) => setEditing({ ...editing, isBlocked: e.target.checked })}
               />
-              Bloqué
+              {t('common.admin.blocked')}
             </label>
             <Button type="submit" size="sm" loading={updateUser.isPending}>
-              Enregistrer
+              {t('common.actions.save')}
             </Button>
             <Button type="button" variant="ghost" size="sm" onClick={() => setMode('view')}>
-              Annuler
+              {t('common.admin.cancel')}
             </Button>
           </form>
         )}
@@ -113,8 +117,8 @@ export function AdminUserRow({ user }: Props) {
         open={confirmOpen}
         onConfirm={handleDelete}
         onCancel={() => setConfirmOpen(false)}
-        title="Supprimer l'utilisateur"
-        description={`Le compte « ${user.name} » sera définitivement supprimé.`}
+        title={t('common.admin.deleteUserTitle')}
+        description={t('common.admin.deleteUserDescription', { name: user.name })}
         destructive
       />
     </div>

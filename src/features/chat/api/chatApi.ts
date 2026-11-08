@@ -6,9 +6,10 @@ export const listMessages = async (conversationId: string) => {
   return res.data.messages;
 };
 
-export const sendMessage = (conversationId: string, content: string, file: File | null) => {
+export const sendMessage = (conversationId: string, content: string, file: File | null, lang: 'fr' | 'en' | 'mg') => {
   const form = new FormData();
   form.append('content', content);
+  form.append('lang', lang);
   if (file) form.append('file', file);
   return request<{ success: boolean; data: SendMessageResponse; message: string }>(`/conversations/${conversationId}/messages`, {
     method: 'POST',

@@ -1,6 +1,7 @@
 import { forwardRef, useState, type InputHTMLAttributes } from 'react';
 import { Eye, EyeOff } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { useTranslation } from 'react-i18next';
 
 type Props = InputHTMLAttributes<HTMLInputElement> & {
   id: string;
@@ -13,6 +14,7 @@ export const Input = forwardRef<HTMLInputElement, Props>(function Input(
   ref,
 ) {
   const [passwordVisible, setPasswordVisible] = useState(false);
+  const { t } = useTranslation();
   const errorId = `${id}-error`;
   return (
     <div className="space-y-1.5">
@@ -39,7 +41,7 @@ export const Input = forwardRef<HTMLInputElement, Props>(function Input(
         {type === 'password' && (
           <button
             type="button"
-            aria-label={passwordVisible ? 'Masquer le mot de passe' : 'Afficher le mot de passe'}
+            aria-label={passwordVisible ? t('common.password.hide') : t('common.password.show')}
             aria-pressed={passwordVisible}
             onClick={() => setPasswordVisible((visible) => !visible)}
             className="absolute inset-y-0 right-0 flex w-10 items-center justify-center rounded-r-md text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-ring"

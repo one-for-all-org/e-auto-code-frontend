@@ -10,8 +10,11 @@ import { WelcomeScreen } from '@/features/chat/components/WelcomeScreen';
 import { useMessages, useSendMessage } from '@/features/chat/hooks/useMessages';
 import { ConversationSidebar } from '@/features/history/components/ConversationSidebar';
 import { useCreateConversation } from '@/features/history/hooks/useConversations';
+import { useTranslation } from 'react-i18next';
+import { getAppLanguage } from '@/i18n';
 
 export default function ChatPage() {
+  const { t, i18n } = useTranslation();
   const { conversationId } = useParams();
   const navigate = useNavigate();
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -31,7 +34,7 @@ export default function ChatPage() {
         id = conversation.id;
         navigate(`/chat/${id}`, { replace: true });
       }
-      await sendMessage.mutateAsync({ conversationId: id, content, file });
+      await sendMessage.mutateAsync({ conversationId: id, content, file, lang: getAppLanguage(i18n.resolvedLanguage ?? i18n.language) });
       return true;
     } catch {
       return false;
@@ -53,8 +56,8 @@ export default function ChatPage() {
       return (
         <EmptyState
           icon={MessageSquare}
-          title="Conversation introuvable"
-          description="Elle a peut-être été supprimée."
+          title={t('chat.conversationMissing')}
+          description={t('chat.conversationDeleted')}
         />
       );
     }
@@ -73,14 +76,14 @@ export default function ChatPage() {
             variant="ghost"
             size="icon"
             className="md:hidden"
-            aria-label="Ouvrir l'historique"
+            aria-label={t('chat.historyOpen')}
             onClick={() => setDrawerOpen(true)}
           >
             <Menu size={18} />
           </Button>
           <div className="min-w-0">
-            <h1 className="truncate text-base font-semibold text-stone-900">Assistant code de la route</h1>
-            <p className="truncate text-xs text-stone-500">Uniquement le code de la route à Madagascar</p>
+            <h1 className="truncate text-base font-semibold text-stone-900">{t('chat.title')}</h1>
+            <p className="truncate text-xs text-stone-500">{t('chat.scope')}</p>
           </div>
         </header>
 
@@ -98,7 +101,7 @@ export default function ChatPage() {
         <div className="fixed inset-0 mt-2 z-40 md:hidden">
           <button
             type="button"
-            aria-label="Fermer l'historique"
+            aria-label={t('chat.historyClose')}
             className="absolute inset-0 bg-stone-900/40"
             onClick={() => setDrawerOpen(false)}
           />
