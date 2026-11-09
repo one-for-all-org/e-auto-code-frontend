@@ -1,16 +1,18 @@
 import { useEffect, useRef, useState } from 'react';
-import { Check, Copy, Paperclip, Signpost } from 'lucide-react';
+import { Check, Copy, Signpost } from 'lucide-react';
 import { toast } from '@/lib/toast';
 import { Markdown } from '@/features/chat/components/Markdown';
+import { AttachmentPreview } from '@/features/chat/components/AttachmentPreview';
 import { useTranslation } from 'react-i18next';
 
 type Props = {
   role: 'user' | 'assistant';
   content: string;
   fileName?: string | null;
+  attachmentPreviewUrl?: string;
 };
 
-export function MessageBubble({ role, content, fileName }: Props) {
+export function MessageBubble({ role, content, fileName, attachmentPreviewUrl }: Props) {
   const { t } = useTranslation();
   const [copied, setCopied] = useState(false);
   const copiedTimeout = useRef<ReturnType<typeof setTimeout>>();
@@ -22,10 +24,13 @@ export function MessageBubble({ role, content, fileName }: Props) {
       <div className="flex justify-end">
         <div className="max-w-[85%] space-y-2 rounded-2xl rounded-br-md bg-teal-700 px-4 py-3 text-sm leading-normal text-white shadow-sm">
           {fileName && (
-            <p className="flex items-center gap-2 rounded-lg bg-white/15 px-2.5 py-1.5 text-xs">
-              <Paperclip size={14} className="shrink-0" />
-              <span className="truncate">{fileName}</span>
-            </p>
+            <div className="rounded-lg bg-white/15 p-2">
+              <AttachmentPreview
+                fileName={fileName}
+                previewUrl={attachmentPreviewUrl}
+                textClassName="text-white"
+              />
+            </div>
           )}
           {content && <p className="whitespace-pre-wrap break-words">{content}</p>}
         </div>

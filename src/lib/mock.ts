@@ -14,7 +14,7 @@ let messages: Message[] = [];
 const delay = () => new Promise((resolve) => setTimeout(resolve, 400));
 const now = () => Date.now();
 const uid = () => crypto.randomUUID();
-const toUser = ({ id, name, email, role, isOk, isBlocked, createdAt }: StoredUser): User => ({ id, name, email, role, isOk, isBlocked, createdAt });
+const toUser = ({ id, name, email, role, roadRole, isOk, isBlocked, createdAt }: StoredUser): User => ({ id, name, email, role, roadRole, isOk, isBlocked, createdAt });
 
 function findUser(userId: string): StoredUser {
   const user = users.find((u) => u.id === userId);
@@ -62,7 +62,7 @@ function mockAnswer(question: string, fileName: string | undefined, lang: Return
 function authRoute<T>(action: string | undefined, body: Record<string, string>): T {
   if (action === 'register') {
     if (users.some((u) => u.email === body.email)) throw new ApiError(i18n.t('common.errors.emailInUse'), 409);
-    const user: StoredUser = { id: uid(), name: body.name, email: body.email, password: body.password, role: 'USER', isOk: false, isBlocked: false, createdAt: now() };
+    const user: StoredUser = { id: uid(), name: body.name, email: body.email, password: body.password, role: 'USER', roadRole: 'CITIZEN', isOk: false, isBlocked: false, createdAt: now() };
     users.push(user);
     return openSession(user) as T;
   }
@@ -155,6 +155,7 @@ export async function mockRequest<T>({ method, path, body, token }: MockCall): P
     const user = findUser(userId);
     if (data.name) user.name = data.name;
     if (data.password) user.password = data.password;
+    if (data.roadRole) user.roadRole = data.roadRole as User['roadRole'];
     return { success: true, data: { user: toUser(user) }, message: i18n.t('profile.updated') } as T;
   }
 

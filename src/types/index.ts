@@ -3,10 +3,13 @@ export type User = {
   name: string;
   email: string;
   role: 'USER' | 'ADMIN';
+  roadRole: RoadRole;
   isOk: boolean;
   isBlocked: boolean;
   createdAt: number;
 };
+
+export type RoadRole = 'DRIVER' | 'PASSENGER' | 'PEDESTRIAN' | 'CITIZEN';
 
 export type AuthResponse = {
   token: string;

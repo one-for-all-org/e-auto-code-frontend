@@ -8,9 +8,10 @@ import { useTranslation } from 'react-i18next';
 type Props = {
   messages: Message[];
   pending?: SendInput;
+  attachmentPreviews?: Record<string, string>;
 };
 
-export function MessageList({ messages, pending }: Props) {
+export function MessageList({ messages, pending, attachmentPreviews = {} }: Props) {
   const { t } = useTranslation();
   const endRef = useRef<HTMLDivElement>(null);
 
@@ -26,6 +27,7 @@ export function MessageList({ messages, pending }: Props) {
           role={message.role}
           content={message.content}
           fileName={message.attachmentName}
+          attachmentPreviewUrl={attachmentPreviews[message.id]}
         />
       ))}
       {pending && (

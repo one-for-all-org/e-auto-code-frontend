@@ -17,6 +17,8 @@
       "home": "Fandraisana",
       "chat": "Fanontaniana",
       "profile": "Kaonty",
+      "help": "Fanampiana",
+      "goodPractices": "Fomba tsara",
       "admin": "Fitantanana",
       "login": "Hiditra",
       "logout": "Hivoaka",
@@ -48,6 +50,12 @@
     "role": {
       "user": "Mpampiasa",
       "admin": "Mpitantana"
+    },
+    "roadRoles": {
+      "DRIVER": "Mpamily",
+      "PASSENGER": "Mpandeha",
+      "PEDESTRIAN": "Mpandeha an-tongotra",
+      "CITIZEN": "Olom-pirenena"
     },
     "errors": {
       "accessCheck": "Tsy azo hamarinina ny fidirana",
@@ -101,7 +109,7 @@
         "sendGemini": "Alefa amin’i Gemini",
         "geminiAnswer": "Valin’i Gemini",
         "addTitle": "Ampitomboy ny fahalalan’i Gemini",
-        "addSubtitle": "Ampidiro ny antontan-taratasy momba ny fitsipiky ny fifamoivoizana eto Madagasikara. Rehefa voamarina dia afaka manampy amin’ny valin’i Gemini izy ireo.",
+        "addSubtitle": "Ampidiro ny loharano ofisialy momba ny fitondrana fiara, ny auto-école, ny fahazoan-dalana, ny antontan-taratasy ary ny fampiasana lalana eto Madagasikara. Rehefa voamarina dia hatao loharano voalohany amin’ny valin’i Gemini izy ireo.",
         "referenceLabel": "Rakitra fanampiny (PDF, TXT na DOCX, 30 Mo farafahabetsany)",
         "chooseReference": "Misafidiana rakitra fanampiny",
         "addKnowledge": "Hamarino ary ampio",
@@ -187,6 +195,8 @@
     "send": "Alefa",
     "fileErrorType": "Tsy ekena io rakitra io. Misafidiana .txt, .pdf, .png na .jpg.",
     "fileErrorSize": "Mihoatra ny 1 Mo ilay rakitra.",
+    "imagePreview": "Topi-maso ny sary nampiarahina",
+    "pdfPreview": "Topi-maso ny PDF: {{name}}",
     "fileLimit": "Rakitra 1 Mo farafahabetsany: .txt, .pdf, .png na .jpg",
     "writing": "Mamaly ny AI…",
     "copyResponse": "Adikao ny valiny",
@@ -228,9 +238,43 @@
     "deleteTitle": "Fafao ny resaka",
     "deleteDescription": "Ho voafafa tanteraka ny hoe « {{title}} ». Tsy azo averina izany."
   },
+  "help": {
+    "title": "Fomba fampiasana ny mpanampy",
+    "intro": "Ireto misy torohevitra hahazoana valiny mahasoa sy mifanaraka amin’ny toe-javatra misy anao.",
+    "files": {
+      "title": "Momba ny rakitra alefa",
+      "description": "Alefa any amin’i Gemini ny sary sy ny antontan-taratasy mba hamakafaka ny fanontanianao. Tsy tehirizina ao amin’ny tantaran’ny resaka ny ao anatin’ilay rakitra. Mbola hita miaraka amin’ny hafatrao kosa ny anaran’ilay rakitra."
+    },
+    "tipsTitle": "Fomba fametrahana fanontaniana mazava",
+    "tips": [
+      {
+        "title": "Lazao ny toe-javatra",
+        "description": "Hazavao ny zava-misy, ny toerana, na ny andraikitra eny an-dalana (mpamily, mpandeha, mpandeha an-tongotra, na olom-pirenena)."
+      },
+      {
+        "title": "Lazao izay tianao ho fantatra",
+        "description": "Mangataha fanazavana, fitsipika tokony harahina, na dingana amin’ny raharaha iray."
+      },
+      {
+        "title": "Fanontaniana iray isaky ny mandeha",
+        "description": "Manampy ny mpanampy hamaly mazava ny fanontaniana mifantoka. Afaka manohy amin’ny fanontaniana hafa ianao."
+      },
+      {
+        "title": "Rehefa mandefa sary na antontan-taratasy",
+        "description": "Misafidiana sary mazava ary lazao izay tianao ho fantatra na hazavaina."
+      }
+    ],
+    "readyTitle": "Vonona hametraka fanontaniana?",
+    "readyDescription": "Sokafy ny resaka ary hazavao amin’ny teninao izay ilainao.",
+    "goToChat": "Sokafy ny mpanampy"
+  },
   "profile": {
     "title": "Kaontiko",
     "updated": "Nohavaozina ny mombamomba",
+    "roadRole": "Ny mombamomba anao amin’ny lalana",
+    "roadRoleHint": "Mifanaraka amin’ity safidy ity ny torohevitra. Afaka manova azy ianao amin’ny fotoana rehetra.",
+    "roadRoleUpdated": "Nohavaozina ny mombamomba anao amin’ny lalana.",
+    "editRoadRole": "Ovay ny mombamomba anao eny an-dalana",
     "subtitle": "Ovay ny mombamomba anao sy ny teny miafinao.",
     "unavailable": "Tsy hita ny mombamomba",
     "personalInfo": "Mombamomba anao",
@@ -251,35 +295,101 @@
     "passwordUpdated": "Voavaova ny teny miafina.",
     "changePassword": "Ovay ny teny miafina"
   },
+  "guidance": {
+    "title": "Fomba tsara eny an-dalana",
+    "subtitle": "Torohevitra ilaina isan’andro. Manampy ny fianarana any amin’ny auto-école sy ny fitsipika ofisialy izy ireo, fa tsy misolo azy.",
+    "loading": "Eo am-pangalana ny mombamomba anao…",
+    "roles": {
+      "DRIVER": {
+        "title": "Torohevitra ho an’ny mpamily",
+        "intro": "Omano ny dia ary mitondrà fiara amim-pitandremana sy amim-panajana ny mpampiasa lalana hafa.",
+        "tips": [
+          "Hamarino fa manan-kery ny fahazoan-dalana sy ny taratasy ilaina amin’ilay fiara ampiasainao.",
+          "Alohan’ny handehanana, jereo ny frein, ny pneu, ny jiro ary ny fitaovana fiarovana.",
+          "Ampifanaraho amin’ny toetry ny lalana sy ny andro ary ny fifamoivoizana ny hafainganam-pandeha.",
+          "Ampahafantaro ny fihodinana, avelao ny elanelana ampy ary araho ny famantarana.",
+          "Aza mitondra rehefa avy nisotro toaka, nampiasa zava-mahadomelina, reraka be, na nihinana fanafody mampatoritory."
+        ]
+      },
+      "PASSENGER": {
+        "title": "Torohevitra ho an’ny mpandeha",
+        "intro": "Manampy amin’ny fiarovana ny dia ny fitondran-tenanao ary mamela ny mpamily hifantoka.",
+        "tips": [
+          "Mampiasà fehikibo fiarovana raha misy ary araho ny toromarika momba ny fiarovana.",
+          "Raha moto, manaova aroloha mifanaraka tsara ary fehezo tsara; apetraho amin’ny fitoerany ny tongotra.",
+          "Aza manelingelina ny mpamily; avelao izy hifantoka amin’ny lalana.",
+          "Midira sy mivoaha amin’ny ilany azo antoka, lavitry ny fifamoivoizana raha azo atao.",
+          "Aza mampirisika mitondra fiara mampidi-doza na mitondra olona mihoatra ny tokony ho izy."
+        ]
+      },
+      "PEDESTRIAN": {
+        "title": "Torohevitra ho an’ny mpandeha an-tongotra",
+        "intro": "Ataovy izay hahitana anao, mitandrema ary aza tampoka, indrindra rehefa be olona na ratsy ny fahitana.",
+        "tips": [
+          "Mandehana amin’ny sisin-dalana ary ampiasao ny toerana fiampitana raha misy.",
+          "Alohan’ny hiampitana, jereo ny ilany roa ary alao antoka fa hitan’ny mpamily ianao ary afaka mijanona izy ireo.",
+          "Aza miampita sady mijery finday na mampiasa écouteur manakana ny feon’ny fifamoivoizana.",
+          "Amin’ny alina na rehefa maizina, manaova akanjo mazava na misy zavatra mampitaratra hazavana.",
+          "Raha tsy misy sisin-dalana, mandehana amim-pitandremana ary mijoroa amin’ny toerana ahitanao ny fiara manatona."
+        ]
+      },
+      "CITIZEN": {
+        "title": "Torohevitra ho an’ny rehetra",
+        "intro": "An’ny rehetra ny lalana: miaro antsika ny fitandremana, ny fifanajana ary ny fiomanana.",
+        "tips": [
+          "Araho ny famantarana sy ny toromariky ny mpitandro filaminana eny an-dalana, na inona na inona fomba fivezivezena.",
+          "Tandremo ny mpandeha an-tongotra, ny ankizy, ny zokiolona ary ireo mora iharan-doza.",
+          "Aza sakanana ny sisin-dalana, ny toerana fiampitana, ny sampanana ary ny lalana fidiran’ny vonjy taitra.",
+          "Tony foana, aza manao fihetsika mahery setra ary omeo lalana izay tokony homena.",
+          "Raha tsy azonao antoka ny fitsipika na ny taratasy ilaina, anontanio ny loharano ofisialy na ny auto-école."
+        ]
+      }
+    }
+  },
   "home": {
     "heroTitle": "Ianaro tsikelikely ny fitsipiky ny fifamoivoizana eto Madagasikara",
-    "heroSubtitle": "Anontanio izay tianao ho fantatra, avereno ny fitsipika eto an-toerana ary mandrosoa amin’ny alalan’ny mpanampy manazava mazava.",
+    "heroSubtitle": "Omano ny fahazoan-dalana, fantaro ny fitsipika ary mianara fomba tsara eny an-dalana eto Madagasikara miaraka amin’ny mpanampy manazava mazava.",
     "heroImageAlt": "Mpianatra mianatra ny fitsipiky ny fifamoivoizana",
     "createAccount": "Mamoròna kaonty",
     "login": "Hiditra",
-    "howTitle": "Fomba fiasany",
-    "steps": [
-      { "title": "Mametraha fanontaniana", "text": "Anontanio ny fitsipika, ny takelaka famantarana na ny toe-javatra eny an-dalana." },
-      { "title": "Fantaro ny valiny", "text": "Mahazoa fanazavana tsotra momba ny fitsipika eto Madagasikara." },
-      { "title": "Tohizo ny fianarana", "text": "Hivereno ny resakao ary tohizo ny famerenana." }
-    ],
     "benefitsTitle": "Fianarana mora kokoa",
     "benefits": [
       { "title": "Mianara haingana", "text": "Mifantoha amin’ny zava-dehibe ary mianara rehefa ilainao." },
       { "title": "Valiny mazava", "text": "Fantaro amin’ny fanazavana mora ny fitsipika." },
       { "title": "Voatahiry ny tantaranao", "text": "Hita indray ny resaka taloha mba hanohizanao ny fianarana." }
     ],
+    "audienceTitle": "Torohevitra mifanaraka amin’ny anjara toeranao eny an-dalana",
+    "audienceIntro": "Misafidiana mombamomba anao mba hahazoana torohevitra ilaina amin’ny fivezivezenao. Afaka manova izany ao amin’ny kaontinao ianao.",
+    "audiences": [
+      { "title": "Mpamily", "text": "Fiomanana amin’ny fahazoan-dalana, fitondrana amim-pilaminana, taratasy ary fikarakarana fiara." },
+      { "title": "Mpandeha", "text": "Fiarovana ao anaty fiara, fitaovana ilaina ary fomba hanampiana ny mpamily." },
+      { "title": "Mpandeha an-tongotra", "text": "Fomba hahitana anao, fiampitana azo antoka ary fitandremana rehefa mandeha." },
+      { "title": "Olom-pirenena", "text": "Fomba tsara hizarana ny lalana isan’andro, na inona na inona dia atao." }
+    ],
     "questionsTitle": "Fanontaniana hanombohana",
     "questions": [
       "Iza no mandeha aloha raha tsy misy takelaka eny amin’ny sampanana?",
       "Inona no dikan’ny takelaka telozoro misy sisiny mena?",
-      "Inona avy ny taratasy tokony hoentina rehefa mitondra fiara?",
-      "Inona no atao rehefa mirehitra mavo ny jiro?"
+      "Inona avy ny dingana hanomanana taratasy fangatahana fahazoan-dalana?",
+      "Inona no tokony hotandremana rehefa mpandeha na mandeha an-tongotra?"
+    ],
+    "contactTitle": "Manampia hanatsara ny fahalalana",
+    "contactIntro": "Manana antontan-taratasy na loharano azo itokisana hanatsarana ny valiny ve ianao? Mifandraisa aminay mba hizara izany amin’ny rehetra.",
+    "contactContribution": "Manampy amin’ny fanatsarana ny fahalalan’ny mpanampy ny loharano ofisialy sy azo hamarinina.",
+    "contactWhatsApp": "WhatsApp",
+    "contactEmail": "Mailaka",
+    "contactDiscord": "Discord",
+    "faqTitle": "Fanontaniana apetraka matetika",
+    "faq": [
+      { "question": "Manolo ny auto-école ve ny mpanampy?", "answer": "Tsia. Manampy amin’ny famerenana lesona izy, fa tsy misolo ny fampianarana any amin’ny auto-école, ny fanazarana miaraka amin’ny mpampianatra, na ny toromarika ofisialy." },
+      { "question": "Inona no azoko anontaniana?", "answer": "Azonao anontaniana ny fitsipiky ny lalana eto Madagasikara, ny fahazoan-dalana, ny fianarana mitondra fiara, ny antontan-taratasy ilaina ary ny fomba tsara ho an’ny mpamily, mpandeha ary mpandeha an-tongotra." },
+      { "question": "Inona avy ny loharano ampiasain’ny mpanampy?", "answer": "Ny antontan-taratasy neken’ny mpitantana no loharano voalohany. Manampy ny Google Search raha tsy ampy ny fanazavana; aseho ao amin’ny valiny ny rohy nampiasaina. Hamarino amin’ny loharano ofisialy ny fitsipika sy ny dingana ankehitriny." },
+      { "question": "Afaka mampifanaraka ny torohevitra amin’ny fiainako ve aho?", "answer": "Eny. Misafidiana mpamily, mpandeha, mpandeha an-tongotra na olom-pirenena ao amin’ny kaontinao. Afaka manova izany ianao, ary mifanaraka amin’izany ny pejin’ny fomba tsara." }
     ],
     "languagesTitle": "Azo ampiasaina amin’ny teny frantsay, anglisy ary malagasy",
     "sourceLabel": "Loharano azo itokisana",
     "sourceTitle": "Antontan-taratasy manampy amin’ny valiny",
-    "sourceDescription": "Afaka manampy antontan-taratasy ofisialy ao amin’ny fahalalana ny mpitantana. Jereo ny ohatra iray.",
+    "sourceDescription": "Afaka manampy loharano ofisialy momba ny fitondrana fiara, ny fahazoan-dalana ary ny fampiasana lalana ny mpitantana. Ireo no loharano voalohany; manampy azy ny fikarohana web.",
     "openSource": "Jereo ny D71-138-VF.pdf",
     "disclaimerTitle": "Mpanampy amin’ny fianarana",
     "disclaimer": "Tsy hisolo ny fianarana any amin’ny auto-école na ny fampianarana ataon’ny matihanina ity mpanampy ity. Afaka manampy izay mila mamerina sy mahatakatra kokoa ny fitsipiky ny fifamoivoizana izy.",

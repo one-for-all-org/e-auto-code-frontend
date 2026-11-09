@@ -3,6 +3,7 @@ import { EmptyState } from '@/components/ui/EmptyState';
 import { Spinner } from '@/components/ui/Spinner';
 import { NameForm } from '@/features/profile/components/NameForm';
 import { PasswordForm } from '@/features/profile/components/PasswordForm';
+import { RoadRoleForm } from '@/features/profile/components/RoadRoleForm';
 import { useMe } from '@/features/profile/hooks/useProfile';
 import { useTranslation } from 'react-i18next';
 
@@ -19,6 +20,7 @@ export default function ProfilePage() {
       {me.isSuccess && me.data ? (
         <>
           <NameForm user={me.data} />
+          <RoadRoleForm user={me.data} />
           <PasswordForm />
         </>
       ) : me.isError ? (

@@ -95,7 +95,7 @@ export function NameForm({ user }: { user?: User }) {
               disabled={!trimmed || trimmed === user?.name}
               className="w-full sm:w-auto"
             >
-              Enregistrer
+              {t('common.actions.save')}
             </Button>
           </div>
         </form>

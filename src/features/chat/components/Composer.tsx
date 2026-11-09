@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState, type ChangeEvent, type KeyboardEvent } from 'react';
-import { FileText, Paperclip, Send, X } from 'lucide-react';
+import { Paperclip, Send } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
+import { AttachmentPreview } from '@/features/chat/components/AttachmentPreview';
 import { useTranslation } from 'react-i18next';
 
 const ACCEPTED_TYPES: Record<string, string> = {
@@ -24,10 +25,22 @@ export function Composer({ disabled, onSend }: Props) {
   const { t } = useTranslation();
   const [text, setText] = useState('');
   const [file, setFile] = useState<File | null>(null);
+  const [previewUrl, setPreviewUrl] = useState<string>();
   const [fileError, setFileError] = useState('');
   const fileInput = useRef<HTMLInputElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const canSend = !disabled && (text.trim() !== '' || file !== null);
+
+  useEffect(() => {
+    if (!file || !/\.(pdf|png|jpe?g)$/i.test(file.name)) {
+      setPreviewUrl(undefined);
+      return;
+    }
+
+    const url = URL.createObjectURL(file);
+    setPreviewUrl(url);
+    return () => URL.revokeObjectURL(url);
+  }, [file]);
 
   useEffect(() => {
     const textarea = textareaRef.current;
@@ -82,18 +95,14 @@ export function Composer({ disabled, onSend }: Props) {
       className="border-t border-stone-200 p-3 sm:p-4 bg-white"
     >
       {file && (
-        <div className="mb-2 flex items-center gap-2 rounded-lg bg-amber-50 px-3 py-1 text-sm text-amber-700 border border-amber-100">
-          <FileText size={14} className="shrink-0 text-amber-600" />
-          <span className="min-w-0 truncate">{file.name}</span>
-          <span className="shrink-0 text-amber-500">{formatSize(file.size)}</span>
-          <button
-            type="button"
-            aria-label={t('chat.removeFile')}
-            onClick={() => setFile(null)}
-            className="ml-auto rounded p-1 text-amber-500 hover:bg-amber-100 hover:text-amber-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-600"
-          >
-            <X size={14} />
-          </button>
+        <div className="mb-2 rounded-xl border border-amber-100 bg-amber-50 p-2">
+          <AttachmentPreview
+            fileName={file.name}
+            previewUrl={previewUrl}
+            fileSize={formatSize(file.size)}
+            onRemove={() => setFile(null)}
+            textClassName="text-amber-800"
+          />
         </div>
       )}
       {fileError && (

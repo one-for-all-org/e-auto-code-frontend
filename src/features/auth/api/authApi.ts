@@ -1,7 +1,7 @@
 import { request } from '@/lib/http';
 import type { AuthResponse } from '@/types';
 
-export const register = async (input: { name: string; email: string; password: string }) => {
+export const register = async (input: { name: string; email: string; password: string; roadRole?: import('@/types').RoadRole }) => {
   const res = await request<{ success: boolean; data: AuthResponse; message: string }>('/auth/register', {
     method: 'POST',
     body: input,

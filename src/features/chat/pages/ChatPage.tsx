@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Menu, MessageSquare } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
@@ -18,6 +18,8 @@ export default function ChatPage() {
   const { conversationId } = useParams();
   const navigate = useNavigate();
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const [attachmentPreviews, setAttachmentPreviews] = useState<Record<string, string>>({});
+  const attachmentPreviewUrls = useRef<string[]>([]);
   const messagesQuery = useMessages(conversationId);
   const createConversation = useCreateConversation();
   const sendMessage = useSendMessage();
@@ -25,6 +27,10 @@ export default function ChatPage() {
   const isBusy = createConversation.isPending || sendMessage.isPending;
   const error = createConversation.error ?? sendMessage.error;
   const pending = sendMessage.isPending ? sendMessage.variables : undefined;
+
+  useEffect(() => () => {
+    attachmentPreviewUrls.current.forEach((url) => URL.revokeObjectURL(url));
+  }, []);
 
   const handleSend = async (content: string, file: File | null) => {
     try {
@@ -34,7 +40,12 @@ export default function ChatPage() {
         id = conversation.id;
         navigate(`/chat/${id}`, { replace: true });
       }
-      await sendMessage.mutateAsync({ conversationId: id, content, file, lang: getAppLanguage(i18n.resolvedLanguage ?? i18n.language) });
+      const result = await sendMessage.mutateAsync({ conversationId: id, content, file, lang: getAppLanguage(i18n.resolvedLanguage ?? i18n.language) });
+      if (file && /\.(pdf|png|jpe?g)$/i.test(file.name)) {
+        const previewUrl = URL.createObjectURL(file);
+        attachmentPreviewUrls.current.push(previewUrl);
+        setAttachmentPreviews((current) => ({ ...current, [result.userMessage.id]: previewUrl }));
+      }
       return true;
     } catch {
       return false;
@@ -61,7 +72,7 @@ export default function ChatPage() {
         />
       );
     }
-    return <MessageList messages={messagesQuery.data} pending={pending} />;
+    return <MessageList messages={messagesQuery.data} pending={pending} attachmentPreviews={attachmentPreviews} />;
   };
 
   return (

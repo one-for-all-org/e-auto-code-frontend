@@ -17,6 +17,8 @@
       "home": "Home",
       "chat": "Chat",
       "profile": "Profile",
+      "help": "Help",
+      "goodPractices": "Good practices",
       "admin": "Admin",
       "login": "Sign in",
       "logout": "Sign out",
@@ -48,6 +50,12 @@
     "role": {
       "user": "User",
       "admin": "Administrator"
+    },
+    "roadRoles": {
+      "DRIVER": "Driver",
+      "PASSENGER": "Passenger",
+      "PEDESTRIAN": "Pedestrian",
+      "CITIZEN": "Citizen"
     },
     "errors": {
       "accessCheck": "Unable to verify access",
@@ -101,7 +109,7 @@
         "sendGemini": "Send to Gemini",
         "geminiAnswer": "Gemini's answer",
         "addTitle": "Improve Gemini's knowledge",
-        "addSubtitle": "Add reference documents about Madagascar's road rules. After review, their content can help Gemini answer future user questions.",
+        "addSubtitle": "Add official sources about driving, driving school, permits, procedures, and road use in Madagascar. Once reviewed, they are prioritized in Gemini's answers.",
         "referenceLabel": "Reference document (PDF, TXT or DOCX, max 30 MB)",
         "chooseReference": "Choose a reference document",
         "addKnowledge": "Review and add to knowledge",
@@ -187,6 +195,8 @@
     "send": "Send",
     "fileErrorType": "Unsupported file. Choose a .txt, .pdf, .png or .jpg file.",
     "fileErrorSize": "The file is larger than 1 MB.",
+    "imagePreview": "Attached image preview",
+    "pdfPreview": "PDF preview: {{name}}",
     "fileLimit": "Maximum file size: 1 MB (.txt, .pdf, .png or .jpg)",
     "writing": "AI is writing…",
     "copyResponse": "Copy response",
@@ -228,9 +238,43 @@
     "deleteTitle": "Delete conversation",
     "deleteDescription": "“{{title}}” will be permanently deleted. This action cannot be undone."
   },
+  "help": {
+    "title": "How to use the assistant",
+    "intro": "A few tips to get a more helpful answer that fits your situation.",
+    "files": {
+      "title": "About uploaded files",
+      "description": "Photos and documents are sent to Gemini to analyze your request. Their contents are not saved in your conversation history. The file name remains visible with your message."
+    },
+    "tipsTitle": "How to ask a clear question",
+    "tips": [
+      {
+        "title": "Give some context",
+        "description": "Describe the situation, location, or road-user role involved (driver, passenger, pedestrian, or citizen)."
+      },
+      {
+        "title": "Say what you want to understand",
+        "description": "Ask for an explanation, a rule to follow, or the steps in a process."
+      },
+      {
+        "title": "Ask one question at a time",
+        "description": "A focused request helps the assistant answer clearly. You can follow up with another question."
+      },
+      {
+        "title": "When sharing a photo or document",
+        "description": "Choose a clear image and say what you want identified or explained."
+      }
+    ],
+    "readyTitle": "Ready to ask?",
+    "readyDescription": "Start a conversation and explain what you need in your own words.",
+    "goToChat": "Open the assistant"
+  },
   "profile": {
     "title": "My profile",
     "updated": "Profile updated",
+    "roadRole": "Your road-user profile",
+    "roadRoleHint": "Your guidance adapts to this role. You can change it at any time.",
+    "roadRoleUpdated": "Your road-user profile has been updated.",
+    "editRoadRole": "Change my road-user profile",
     "subtitle": "Manage your details and password.",
     "unavailable": "Profile unavailable",
     "personalInfo": "Personal information",
@@ -251,35 +295,101 @@
     "passwordUpdated": "Password updated.",
     "changePassword": "Change password"
   },
+  "guidance": {
+    "title": "Good practices on the road",
+    "subtitle": "Practical guidance for everyday travel. It complements driving-school instruction and official rules.",
+    "loading": "Loading your profile…",
+    "roles": {
+      "DRIVER": {
+        "title": "Guidance for drivers",
+        "intro": "Plan your trips and drive predictably, carefully, and with consideration for other road users.",
+        "tips": [
+          "Check that your licence and required documents are valid and appropriate for the vehicle you use.",
+          "Before setting off, check your vehicle’s brakes, tyres, lights, and safety equipment.",
+          "Adjust your speed to road conditions, visibility, weather, and traffic.",
+          "Signal turns, leave a safe following distance, and obey right-of-way rules and signs.",
+          "Never drive under the influence of alcohol or drugs, while exhausted, or after taking medicine that affects alertness."
+        ]
+      },
+      "PASSENGER": {
+        "title": "Guidance for passengers",
+        "intro": "Your actions help keep the trip safe and allow the driver to focus.",
+        "tips": [
+          "Wear a seat belt when available and follow the vehicle’s safety instructions.",
+          "On a motorcycle, wear a properly fastened, suitable helmet and keep your feet on the footrests.",
+          "Avoid distracting the driver and let them focus on traffic.",
+          "Get in and out on the safest side, away from moving traffic whenever possible.",
+          "Never encourage unsafe driving or carrying more people than the vehicle is designed for."
+        ]
+      },
+      "PEDESTRIAN": {
+        "title": "Guidance for pedestrians",
+        "intro": "Stay visible, alert, and predictable, especially in busy traffic or poor visibility.",
+        "tips": [
+          "Use pavements and pedestrian crossings where available.",
+          "Before crossing, look both ways and make sure approaching drivers have seen you and can stop.",
+          "Avoid crossing while looking at your phone or wearing headphones that block traffic sounds.",
+          "At night or in low visibility, wear light-coloured clothing or reflective items.",
+          "Where there is no pavement, walk carefully and position yourself so you can see approaching traffic."
+        ]
+      },
+      "CITIZEN": {
+        "title": "Guidance for everyone",
+        "intro": "Roads are shared spaces: awareness, respect, and anticipation help protect everyone.",
+        "tips": [
+          "Follow signs and instructions from traffic officers, whatever your mode of travel.",
+          "Look out for pedestrians, children, older people, and other vulnerable road users.",
+          "Keep pavements, crossings, intersections, and emergency access routes clear.",
+          "Stay calm, avoid aggressive behaviour, and give way when required.",
+          "If you are unsure about a procedure or rule, check with an official source or a driving school."
+        ]
+      }
+    }
+  },
   "home": {
     "heroTitle": "Learn Madagascar's road rules at your own pace",
-    "heroSubtitle": "Ask questions, review local rules and make progress with a clear, approachable learning assistant.",
+    "heroSubtitle": "Prepare for your driving test, understand local rules and build safe road habits with a clear, approachable learning assistant.",
     "heroImageAlt": "Learners studying road rules",
     "createAccount": "Create an account",
     "login": "Sign in",
-    "howTitle": "How it works",
-    "steps": [
-      { "title": "Ask a question", "text": "Ask about a rule, a road sign or a driving situation." },
-      { "title": "Understand the answer", "text": "Get a simple explanation based on Madagascar's road rules." },
-      { "title": "Keep learning", "text": "Return to your conversations and continue studying." }
-    ],
     "benefitsTitle": "A simpler way to learn",
     "benefits": [
       { "title": "Learn faster", "text": "Focus on what matters and revise whenever you need." },
       { "title": "Clear answers", "text": "Understand the rules through easy-to-follow explanations." },
       { "title": "Your history stays saved", "text": "Find past conversations and pick up where you left off." }
     ],
+    "audienceTitle": "Guidance for your role on the road",
+    "audienceIntro": "Choose a road-user profile to find useful guidance for your journeys. You can change it from your personal space.",
+    "audiences": [
+      { "title": "Driver", "text": "Driving-test preparation, safe driving, documents, and vehicle checks." },
+      { "title": "Passenger", "text": "Safety in the vehicle, suitable equipment, and ways to support the driver." },
+      { "title": "Pedestrian", "text": "Visibility, safer crossings, and mindful walking." },
+      { "title": "Citizen", "text": "Everyday habits for sharing the road, whatever your journey." }
+    ],
     "questionsTitle": "Questions to get you started",
     "questions": [
       "Who has priority at an unmarked intersection?",
       "What does a red-bordered triangular sign mean?",
-      "Which documents should you carry while driving?",
-      "How should you react to an amber traffic light?"
+      "What steps are involved in preparing a driving-licence application?",
+      "What should passengers and pedestrians keep in mind?"
+    ],
+    "contactTitle": "Help us improve the information",
+    "contactIntro": "Have documents or reliable sources that could make answers more accurate? Contact us to share them with the community.",
+    "contactContribution": "Official, verifiable resources help strengthen the assistant’s knowledge.",
+    "contactWhatsApp": "WhatsApp",
+    "contactEmail": "Email",
+    "contactDiscord": "Discord",
+    "faqTitle": "Frequently asked questions",
+    "faq": [
+      { "question": "Does the assistant replace driving school?", "answer": "No. It can support your revision, but it does not replace driving-school instruction, supervised practice, or information from the relevant authorities." },
+      { "question": "What can I ask about?", "answer": "Ask about road rules in Madagascar, driving licences, driving-school learning, useful procedures and documents, and good practices for drivers, passengers, and pedestrians." },
+      { "question": "Which sources does the assistant use?", "answer": "Reference documents approved by the administrators come first. Google Search can supplement missing information, and consulted links are shown in the answer. Confirm current rules and procedures with official sources." },
+      { "question": "Can I tailor the guidance to my situation?", "answer": "Yes. Choose driver, passenger, pedestrian, or citizen in your profile. You can change it at any time, and the good-practices page will adapt." }
     ],
     "languagesTitle": "Available in French, English and Malagasy",
     "sourceLabel": "A reference source",
     "sourceTitle": "Reliable documents to support answers",
-    "sourceDescription": "Administrators can add official documents to the knowledge base. Explore an example source document.",
+    "sourceDescription": "Administrators can add official sources about driving, permits, and road use. These take priority; web search can supplement them.",
     "openSource": "View D71-138-VF.pdf",
     "disclaimerTitle": "Here to support your learning",
     "disclaimer": "This assistant is not a replacement for driving school or professional instruction. It can help anyone who needs extra support to review and better understand road rules.",

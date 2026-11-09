@@ -10,6 +10,8 @@ import ResetPasswordPage from '@/features/auth/pages/ResetPasswordPage';
 import ChatPage from '@/features/chat/pages/ChatPage';
 import ProfilePage from '@/features/profile/pages/ProfilePage';
 import AdminPage from '@/features/admin/pages/AdminPage';
+import GoodPracticesPage from '@/features/guidance/pages/GoodPracticesPage';
+import HelpPage from '@/features/help/pages/HelpPage';
 
 export const router = createBrowserRouter([
   { path: '/', element: <HomePage /> },
@@ -25,6 +27,8 @@ export const router = createBrowserRouter([
         children: [
           { path: '/chat/:conversationId?', element: <ChatPage /> },
           { path: '/profile', element: <ProfilePage /> },
+          { path: '/good-practices', element: <GoodPracticesPage /> },
+          { path: '/help', element: <HelpPage /> },
           {
             element: <RequireAdmin />,
             children: [{ path: '/admin', element: <AdminPage /> }],

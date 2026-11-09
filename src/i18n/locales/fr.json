@@ -17,6 +17,8 @@
       "home": "Accueil",
       "chat": "Chat",
       "profile": "Profil",
+      "help": "Aide",
+      "goodPractices": "Bonnes pratiques",
       "admin": "Administration",
       "login": "Connexion",
       "logout": "Déconnexion",
@@ -48,6 +50,12 @@
     "role": {
       "user": "Utilisateur",
       "admin": "Administrateur"
+    },
+    "roadRoles": {
+      "DRIVER": "Conducteur",
+      "PASSENGER": "Passager",
+      "PEDESTRIAN": "Piéton",
+      "CITIZEN": "Citoyen"
     },
     "errors": {
       "accessCheck": "Accès impossible à vérifier",
@@ -101,7 +109,7 @@
         "sendGemini": "Envoyer à Gemini",
         "geminiAnswer": "Réponse de Gemini",
         "addTitle": "Enrichir les connaissances de Gemini",
-        "addSubtitle": "Ajoutez des documents de référence sur le code de la route à Madagascar. Après vérification, leur contenu pourra aider Gemini à répondre aux futures questions des utilisateurs.",
+        "addSubtitle": "Ajoutez des sources officielles sur la conduite, l’auto-école, le permis, les démarches et l’usage de la route à Madagascar. Après vérification, elles seront prioritaires dans les réponses de Gemini.",
         "referenceLabel": "Document de référence (PDF, TXT ou DOCX, 30 Mo max.)",
         "chooseReference": "Choisir un document de référence",
         "addKnowledge": "Vérifier et ajouter aux connaissances",
@@ -187,6 +195,8 @@
     "send": "Envoyer",
     "fileErrorType": "Format non accepté. Choisissez un fichier .txt, .pdf, .png ou .jpg.",
     "fileErrorSize": "Le fichier dépasse 1 Mo.",
+    "imagePreview": "Aperçu de l’image jointe",
+    "pdfPreview": "Aperçu du PDF : {{name}}",
     "fileLimit": "Fichier de 1 Mo maximum : .txt, .pdf, .png ou .jpg",
     "writing": "L'IA écrit…",
     "copyResponse": "Copier la réponse",
@@ -228,9 +238,43 @@
     "deleteTitle": "Supprimer la conversation",
     "deleteDescription": "« {{title}} » sera définitivement supprimée. Cette action est irréversible."
   },
+  "help": {
+    "title": "Bien utiliser l’assistant",
+    "intro": "Quelques conseils pour obtenir une réponse plus utile et mieux adaptée à votre situation.",
+    "files": {
+      "title": "À propos des fichiers envoyés",
+      "description": "Les photos et documents sont transmis à Gemini pour analyser votre demande. Leur contenu n’est pas enregistré dans l’historique de la conversation. Le nom du fichier, lui, reste visible avec votre message."
+    },
+    "tipsTitle": "Comment poser une question claire",
+    "tips": [
+      {
+        "title": "Donnez le contexte",
+        "description": "Précisez la situation, le lieu ou le type d’usager concerné (conducteur, passager, piéton ou citoyen)."
+      },
+      {
+        "title": "Dites ce que vous voulez comprendre",
+        "description": "Demandez une explication, une règle à appliquer ou les étapes d’une démarche."
+      },
+      {
+        "title": "Posez une question à la fois",
+        "description": "Une demande précise aide l’assistant à répondre clairement. Vous pouvez ensuite poser une question complémentaire."
+      },
+      {
+        "title": "Pour une photo ou un document",
+        "description": "Envoyez une image nette et indiquez ce que vous souhaitez identifier ou faire expliquer."
+      }
+    ],
+    "readyTitle": "Prêt à poser votre question ?",
+    "readyDescription": "Ouvrez une conversation et expliquez votre besoin avec vos propres mots.",
+    "goToChat": "Ouvrir l’assistant"
+  },
   "profile": {
     "title": "Mon profil",
     "updated": "Profil mis à jour",
+    "roadRole": "Votre profil d’usager",
+    "roadRoleHint": "Ces conseils s’adaptent à votre rôle. Vous pouvez le modifier à tout moment.",
+    "roadRoleUpdated": "Votre profil d’usager a été mis à jour.",
+    "editRoadRole": "Modifier mon profil d’usager",
     "subtitle": "Gérez vos informations et votre mot de passe.",
     "unavailable": "Profil indisponible",
     "personalInfo": "Informations personnelles",
@@ -251,35 +295,101 @@
     "passwordUpdated": "Mot de passe mis à jour.",
     "changePassword": "Changer le mot de passe"
   },
+  "guidance": {
+    "title": "Les bons réflexes sur la route",
+    "subtitle": "Des repères pratiques adaptés à votre quotidien. Ils complètent l’apprentissage en auto-école et les textes officiels.",
+    "loading": "Chargement de votre profil…",
+    "roles": {
+      "DRIVER": {
+        "title": "Conseils pour les conducteurs",
+        "intro": "Préparez vos déplacements et adoptez une conduite prévisible, prudente et respectueuse des autres usagers.",
+        "tips": [
+          "Vérifiez que votre permis et les documents requis sont valides et adaptés au véhicule utilisé.",
+          "Avant de partir, contrôlez les freins, les pneus, les feux et les équipements de sécurité de votre véhicule.",
+          "Adaptez votre vitesse à l’état de la route, à la visibilité, à la météo et à la circulation.",
+          "Signalez vos changements de direction, gardez vos distances et respectez les priorités et la signalisation.",
+          "Ne conduisez pas sous l’effet de l’alcool, de drogues, de la fatigue ou d’un médicament qui réduit la vigilance."
+        ]
+      },
+      "PASSENGER": {
+        "title": "Conseils pour les passagers",
+        "intro": "Votre comportement contribue à la sécurité du trajet et aide le conducteur à rester concentré.",
+        "tips": [
+          "Attachez votre ceinture lorsqu’elle est disponible et suivez les consignes de sécurité du véhicule.",
+          "À moto, portez un casque adapté et correctement attaché, et gardez les pieds sur les repose-pieds.",
+          "Évitez de distraire le conducteur et laissez-le se concentrer sur la circulation.",
+          "Montez et descendez du côté le plus sûr, loin de la circulation quand la situation le permet.",
+          "N’encouragez jamais une conduite dangereuse ou un dépassement de capacité du véhicule."
+        ]
+      },
+      "PEDESTRIAN": {
+        "title": "Conseils pour les piétons",
+        "intro": "Restez visible, attentif et prévisible, en particulier lorsque la circulation est dense ou la visibilité réduite.",
+        "tips": [
+          "Empruntez les trottoirs et les passages piétons lorsqu’ils sont disponibles.",
+          "Avant de traverser, regardez dans les deux sens et assurez-vous que les véhicules vous ont vu et peuvent s’arrêter.",
+          "Évitez de traverser en regardant votre téléphone ou en portant des écouteurs qui masquent les bruits de circulation.",
+          "La nuit ou par faible visibilité, choisissez des vêtements clairs ou des éléments réfléchissants.",
+          "Sur une route sans trottoir, marchez avec prudence et placez-vous de façon à voir la circulation qui approche."
+        ]
+      },
+      "CITIZEN": {
+        "title": "Conseils pour tous les usagers",
+        "intro": "La route est un espace partagé : attention, respect et anticipation protègent chacun.",
+        "tips": [
+          "Respectez la signalisation et les consignes des agents, quel que soit votre mode de déplacement.",
+          "Restez attentif aux piétons, aux enfants, aux personnes âgées et aux usagers les plus vulnérables.",
+          "Ne bloquez pas les trottoirs, les passages piétons, les intersections ou les accès de secours.",
+          "Gardez votre calme, évitez les comportements agressifs et laissez la priorité lorsqu’elle est due.",
+          "En cas de doute sur une démarche ou une règle, vérifiez auprès d’une source officielle ou d’une auto-école."
+        ]
+      }
+    }
+  },
   "home": {
     "heroTitle": "Le code de la route à Madagascar, à votre rythme",
-    "heroSubtitle": "Posez vos questions, révisez les règles locales et progressez avec un assistant pédagogique clair et accessible.",
+    "heroSubtitle": "Préparez le permis, comprenez les règles et adoptez les bons réflexes sur la route à Madagascar, avec un assistant pédagogique clair et accessible.",
     "heroImageAlt": "Apprenants étudiant le code de la route",
     "createAccount": "Créer un compte",
     "login": "Se connecter",
-    "howTitle": "Comment ça marche",
-    "steps": [
-      { "title": "Posez une question", "text": "Demandez une explication sur une règle, un panneau ou une situation de conduite." },
-      { "title": "Comprenez la réponse", "text": "Obtenez une explication simple, adaptée au code de la route malgache." },
-      { "title": "Continuez à apprendre", "text": "Retrouvez vos conversations et poursuivez vos révisions." }
-    ],
     "benefitsTitle": "Un apprentissage plus simple",
     "benefits": [
       { "title": "Apprenez vite", "text": "Allez à l’essentiel et révisez quand vous en avez besoin." },
       { "title": "Des réponses claires", "text": "Comprenez les règles avec des explications faciles à suivre." },
       { "title": "Votre historique conservé", "text": "Retrouvez vos échanges pour reprendre vos révisions." }
     ],
+    "audienceTitle": "Des conseils adaptés à votre place sur la route",
+    "audienceIntro": "Choisissez votre profil d’usager et retrouvez des repères utiles pour vos déplacements. Vous pourrez le modifier depuis votre espace personnel.",
+    "audiences": [
+      { "title": "Conducteur", "text": "Préparation au permis, conduite prudente, documents et entretien du véhicule." },
+      { "title": "Passager", "text": "Sécurité à bord, équipement adapté et comportements qui aident le conducteur." },
+      { "title": "Piéton", "text": "Visibilité, traversées sûres et déplacements attentifs." },
+      { "title": "Citoyen", "text": "Bons réflexes pour partager la route au quotidien, quel que soit votre trajet." }
+    ],
     "questionsTitle": "Des questions pour commencer",
     "questions": [
       "Qui a la priorité à un carrefour sans panneau ?",
       "Que signifie un panneau triangulaire à bord rouge ?",
-      "Quels documents faut-il avoir en conduisant ?",
-      "Comment réagir à un feu orange ?"
+      "Quelles démarches pour préparer un dossier de permis ?",
+      "Quels réflexes adopter comme passager ou piéton ?"
+    ],
+    "contactTitle": "Contribuez à une meilleure information",
+    "contactIntro": "Vous disposez de documents ou de sources fiables qui pourraient améliorer la précision des réponses ? Contactez-nous pour les partager avec la communauté.",
+    "contactContribution": "Les ressources officielles et vérifiables aident à enrichir les connaissances de l’assistant.",
+    "contactWhatsApp": "WhatsApp",
+    "contactEmail": "E-mail",
+    "contactDiscord": "Discord",
+    "faqTitle": "Questions fréquentes",
+    "faq": [
+      { "question": "L’assistant remplace-t-il une auto-école ?", "answer": "Non. Il complète vos révisions, mais ne remplace ni l’enseignement d’une auto-école, ni la pratique encadrée, ni les informations des autorités compétentes." },
+      { "question": "Quelles questions puis-je poser ?", "answer": "Vous pouvez demander des explications sur les règles de circulation à Madagascar, le permis, la préparation à l’auto-école, les démarches et documents utiles ainsi que les bons comportements des conducteurs, passagers et piétons." },
+      { "question": "Quelles sources l’assistant utilise-t-il ?", "answer": "Les documents de référence validés par l’administration sont prioritaires. La recherche Google peut compléter les informations manquantes ; les liens consultés sont indiqués dans la réponse. Vérifiez les démarches et règles à jour auprès des sources officielles." },
+      { "question": "Puis-je adapter les conseils à ma situation ?", "answer": "Oui. Dans votre profil, choisissez conducteur, passager, piéton ou citoyen. Vous pouvez modifier ce choix à tout moment, et la page des bonnes pratiques s’adaptera à votre profil." }
     ],
     "languagesTitle": "Disponible en français, anglais et malagasy",
     "sourceLabel": "Une source de référence",
     "sourceTitle": "Des documents fiables pour éclairer les réponses",
-    "sourceDescription": "L’administration peut ajouter des documents officiels à la base de connaissances. Découvrez un exemple de document source.",
+    "sourceDescription": "L’administration peut ajouter des sources officielles sur la conduite, le permis et l’usage de la route. Elles sont prioritaires ; la recherche web peut les compléter.",
     "openSource": "Consulter D71-138-VF.pdf",
     "disclaimerTitle": "Un outil pour vous accompagner",
     "disclaimer": "Cet assistant ne remplacera jamais l’étude en auto-école ni l’apprentissage encadré. Il peut aider celles et ceux qui en ont besoin à réviser et à mieux comprendre le code de la route.",

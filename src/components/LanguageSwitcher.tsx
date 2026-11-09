@@ -10,7 +10,7 @@ const languages = [
   { code: 'mg', Flag: MG },
 ] as const satisfies readonly { code: AppLanguage; Flag: typeof FR }[];
 
-export function LanguageSwitcher() {
+export function LanguageSwitcher({ menuMode = false }: { menuMode?: boolean }) {
   const { t, i18n } = useTranslation();
   const [open, setOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -47,7 +47,7 @@ export function LanguageSwitcher() {
   };
 
   return (
-    <div ref={containerRef} className="relative">
+    <div ref={containerRef} className={`relative${menuMode ? ' w-full' : ''}`}>
       <button
         ref={triggerRef}
         type="button"
@@ -62,12 +62,12 @@ export function LanguageSwitcher() {
             requestAnimationFrame(() => containerRef.current?.querySelector<HTMLButtonElement>('[role="menuitem"]')?.focus());
           }
         }}
-        className="inline-flex h-9 items-center gap-2 rounded-lg px-2 text-sm font-medium text-foreground hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+        className={`inline-flex h-9 items-center gap-2 rounded-lg px-2 text-sm font-medium text-foreground hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring${menuMode ? ' w-full justify-start' : ''}`}
       >
         <ActiveFlag aria-hidden="true" className="h-4 w-6 rounded-sm object-cover" />
-        <span className="hidden sm:inline">{t(`common.languages.${active.code}`)}</span>
-        <Languages aria-hidden="true" className="h-4 w-4 sm:hidden" />
-        <ChevronDown aria-hidden="true" className="hidden h-4 w-4 sm:block" />
+        <span className={menuMode ? 'flex-1 text-left' : 'hidden sm:inline'}>{t(`common.languages.${active.code}`)}</span>
+        {!menuMode && <Languages aria-hidden="true" className="h-4 w-4 sm:hidden" />}
+        <ChevronDown aria-hidden="true" className={menuMode ? 'h-4 w-4' : 'hidden h-4 w-4 sm:block'} />
       </button>
       {open && (
         <div
