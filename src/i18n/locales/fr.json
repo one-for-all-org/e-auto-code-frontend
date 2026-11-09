@@ -117,6 +117,8 @@
         "resourceUrlLabel": "Lien vers la ressource (optionnel)",
         "resourceUrlPlaceholder": "https://exemple.com/document.pdf",
         "noResourceUrl": "Aucun lien",
+        "resourceRequired": "Fournissez un fichier et/ou un lien de ressource.",
+        "replaceFileLabel": "Remplacer le fichier (PDF, TXT ou DOCX)",
         "available": "Documents de référence disponibles",
         "empty": "Aucun document de référence ajouté.",
         "deleteDocument": "Supprimer {{name}}"

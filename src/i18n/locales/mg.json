@@ -117,6 +117,8 @@
         "resourceUrlLabel": "Loharano arovana (akaikinany)",
         "resourceUrlPlaceholder": "https://exemple.com/dokimanjo.pdf",
         "noResourceUrl": "Tsy misy loharano",
+        "resourceRequired": "Mipesaka ny rakitra ary/na ny loharano arovana.",
+        "replaceFileLabel": "Hamorona ny rakitra (PDF, TXT na DOCX)",
         "available": "Rakitra fanampiny misy",
         "empty": "Mbola tsy nisy rakitra fanampiny nampiana.",
         "deleteDocument": "Fafao {{name}}"

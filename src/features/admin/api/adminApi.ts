@@ -56,6 +56,17 @@ export const uploadLesson = async (input: { file: File; resourceUrl?: string | n
   return res.data.lesson;
 };
 
+export const updateLesson = async (input: { lessonId: string; file?: File; resourceUrl?: string | null }) => {
+  const body = new FormData();
+  if (input.file) body.append('file', input.file);
+  if (input.resourceUrl) body.append('resourceUrl', input.resourceUrl);
+  const res = await request<{ success: boolean; data: { lesson: Lesson }; message: string }>(`/admin/lessons/${input.lessonId}`, {
+    method: 'PATCH',
+    body,
+  });
+  return res.data.lesson;
+};
+
 export const askGeminiAboutFile = async (input: { file: File; question: string }) => {
   const body = new FormData();
   body.append('file', input.file);

@@ -6,6 +6,7 @@ import {
   deleteUser,
   listLessons,
   listUsers,
+  updateLesson,
   updateUser,
   uploadLesson,
 } from '@/features/admin/api/adminApi';
@@ -50,6 +51,14 @@ export function useUploadLesson() {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: uploadLesson,
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: lessonsKey }),
+  });
+}
+
+export function useUpdateLesson() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: updateLesson,
     onSuccess: () => queryClient.invalidateQueries({ queryKey: lessonsKey }),
   });
 }

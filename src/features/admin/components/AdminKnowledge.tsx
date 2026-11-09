@@ -1,5 +1,5 @@
 import { useRef, useState, type ChangeEvent, type FormEvent } from 'react';
-import { Clipboard, FileText, Send, Trash2, Upload } from 'lucide-react';
+import { Clipboard, Edit, FileText, Save, Send, Trash2, Upload, X } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
 import { Markdown } from '@/features/chat/components/Markdown';
@@ -8,6 +8,7 @@ import {
   useDeleteLesson,
   useListLessons,
   useUploadLesson,
+  useUpdateLesson,
 } from '@/features/admin/hooks/useAdmin';
 import { useTranslation } from 'react-i18next';
 
@@ -37,7 +38,69 @@ export function AdminKnowledge() {
   const lessonsQuery = useListLessons();
   const askGemini = useAskGeminiAboutFile();
   const upload = useUploadLesson();
+  const update = useUpdateLesson();
   const remove = useDeleteLesson();
+
+  const [editingLessonId, setEditingLessonId] = useState<string | null>(null);
+  const editFileInput = useRef<HTMLInputElement>(null);
+  const [editFile, setEditFile] = useState<File | null>(null);
+  const [editResourceUrl, setEditResourceUrl] = useState('');
+  const [editValidationError, setEditValidationError] = useState('');
+
+  const chooseEditFile = (event: ChangeEvent<HTMLInputElement>) => {
+    const selected = event.target.files?.[0] ?? null;
+    event.target.value = '';
+    setEditValidationError('');
+    if (!selected) return;
+    if (!isSupportedDocument(selected)) {
+      setEditValidationError(t('common.admin.knowledge.fileTypes'));
+      setEditFile(null);
+      return;
+    }
+    if (selected.size > KNOWLEDGE_MAX_FILE_SIZE) {
+      setEditValidationError(t('common.admin.knowledge.fileSize', { size: KNOWLEDGE_MAX_FILE_SIZE / (1024 * 1024) }));
+      setEditFile(null);
+      return;
+    }
+    setEditFile(selected);
+  };
+
+  const startEdit = (lesson: NonNullable<typeof lessonsQuery.data>[number]) => {
+    setEditFile(null);
+    setEditResourceUrl(lesson.resourceUrl ?? '');
+    setEditValidationError('');
+    setEditingLessonId(lesson.id);
+  };
+
+  const cancelEdit = () => {
+    setEditingLessonId(null);
+    setEditFile(null);
+    setEditResourceUrl('');
+    setEditValidationError('');
+  };
+
+  const submitEdit = (event: FormEvent) => {
+    event.preventDefault();
+    if (!editFile && !editResourceUrl.trim()) {
+      setEditValidationError(t('common.admin.knowledge.resourceRequired'));
+      return;
+    }
+    if (!editingLessonId) return;
+    update.mutate(
+      { lessonId: editingLessonId, file: editFile ?? undefined, resourceUrl: editResourceUrl.trim() || undefined },
+      {
+        onSuccess: () => {
+          setEditingLessonId(null);
+          setEditFile(null);
+          setEditResourceUrl('');
+          setEditValidationError('');
+        },
+        onError: (error: Error) => {
+          setEditValidationError(error.message);
+        },
+      },
+    );
+  };
 
   const chooseFile = (
     event: ChangeEvent<HTMLInputElement>,
@@ -220,42 +283,115 @@ export function AdminKnowledge() {
             <p className="mt-3 text-sm text-muted-foreground">{t('common.admin.knowledge.empty')}</p>
           ) : (
             <ul className="mt-3 divide-y divide-border">
-              {lessonsQuery.data.map((lesson) => (
-                <li key={lesson.id} className="flex flex-col sm:flex-row sm:items-center gap-3 py-3">
-                  <FileText size={17} className="shrink-0 text-primary" />
-                  <div className="min-w-0 flex-1">
-                    <span className="block truncate text-sm font-medium">{lesson.originalName}</span>
-                    {lesson.resourceUrl ? (
-                      <div className="mt-1 flex items-center gap-2">
-                        <span className="shrink-0 truncate text-xs text-muted-foreground">{lesson.resourceUrl}</span>
-                        <Button
-                          type="button"
-                          size="icon"
-                          variant="ghost"
-                          onClick={() => copyResource(lesson.resourceUrl as string)}
-                          title={t('common.actions.copy')}
-                        >
-                          <Clipboard size={14} />
-                        </Button>
+              {lessonsQuery.data.map((lesson) => {
+                const isEditing = editingLessonId === lesson.id;
+                if (isEditing) {
+                  return (
+                    <li key={lesson.id} className="flex flex-col sm:flex-row sm:items-start gap-3 py-3">
+                      <FileText size={17} className="shrink-0 text-primary mt-0.5" />
+                      <div className="min-w-0 flex-1 space-y-2">
+                        <div>
+                          <label className="mb-1 block text-xs font-medium text-muted-foreground">
+                            {t('common.admin.knowledge.replaceFileLabel')}
+                          </label>
+                          <input
+                            ref={editFileInput}
+                            type="file"
+                            accept=".pdf,.txt,.docx,application/pdf,text/plain,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                            onChange={chooseEditFile}
+                            className="hidden"
+                          />
+                          <Button
+                            type="button"
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => editFileInput.current?.click()}
+                          >
+                            {editFile ? `${editFile.name} · ${formatSize(editFile.size)}` : t('common.actions.edit')}
+                          </Button>
+                        </div>
+                        <div>
+                          <label htmlFor={`edit-resource-url-${lesson.id}`} className="mb-1 block text-xs font-medium text-muted-foreground">
+                            {t('common.admin.knowledge.resourceUrlLabel')}
+                          </label>
+                          <input
+                            id={`edit-resource-url-${lesson.id}`}
+                            type="url"
+                            value={editResourceUrl}
+                            onChange={(event) => setEditResourceUrl(event.target.value)}
+                            placeholder={t('common.admin.knowledge.resourceUrlPlaceholder')}
+                            className="w-full resize-none rounded-md border border-input bg-input px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                          />
+                        </div>
+                        {editValidationError && (
+                          <p role="alert" className="text-xs text-red-700">{editValidationError}</p>
+                        )}
+                        <div className="flex gap-2">
+                          <Button
+                            type="button"
+                            onClick={(event) => submitEdit(event as unknown as FormEvent)}
+                            disabled={update.isPending}
+                            loading={update.isPending}
+                          >
+                            <Save size={14} />
+                            {t('common.actions.save')}
+                          </Button>
+                          <Button type="button" variant="ghost" onClick={cancelEdit} size="sm">
+                            {t('common.actions.cancel')}
+                          </Button>
+                        </div>
                       </div>
-                    ) : null}
-                    {!lesson.resourceUrl && (
-                      <span className="text-xs text-muted-foreground">{t('common.admin.knowledge.noResourceUrl')}</span>
-                    )}
-                  </div>
-                  <span className="shrink-0 text-xs text-muted-foreground">{formatSize(lesson.fileSize)}</span>
-                  <Button
-                    type="button"
-                    size="icon"
-                    variant="ghost"
-                    aria-label={t('common.admin.knowledge.deleteDocument', { name: lesson.originalName })}
-                    disabled={remove.isPending}
-                    onClick={() => remove.mutate(lesson.id)}
-                  >
-                    <Trash2 size={16} />
-                  </Button>
-                </li>
-              ))}
+                    </li>
+                  );
+                }
+                return (
+                  <li key={lesson.id} className="flex flex-col sm:flex-row sm:items-center gap-3 py-3">
+                    <FileText size={17} className="shrink-0 text-primary" />
+                    <div className="min-w-0 flex-1">
+                      <span className="block truncate text-sm font-medium">{lesson.originalName}</span>
+                      {lesson.resourceUrl ? (
+                        <div className="mt-1 flex items-center gap-2">
+                          <span className="shrink-0 truncate text-xs text-muted-foreground">{lesson.resourceUrl}</span>
+                          <Button
+                            type="button"
+                            size="icon"
+                            variant="ghost"
+                            onClick={() => copyResource(lesson.resourceUrl as string)}
+                            title={t('common.actions.copy')}
+                          >
+                            <Clipboard size={14} />
+                          </Button>
+                        </div>
+                      ) : null}
+                      {!lesson.resourceUrl && (
+                        <span className="text-xs text-muted-foreground">{t('common.admin.knowledge.noResourceUrl')}</span>
+                      )}
+                    </div>
+                    <span className="shrink-0 text-xs text-muted-foreground">{formatSize(lesson.fileSize)}</span>
+                    <div className="flex gap-1 shrink-0">
+                      <Button
+                        type="button"
+                        size="icon"
+                        variant="ghost"
+                        onClick={() => startEdit(lesson)}
+                        title={t('common.actions.edit')}
+                      >
+                        <Edit size={16} />
+                      </Button>
+                      <Button
+                        type="button"
+                        size="icon"
+                        variant="ghost"
+                        aria-label={t('common.admin.knowledge.deleteDocument', { name: lesson.originalName })}
+                        disabled={remove.isPending}
+                        onClick={() => remove.mutate(lesson.id)}
+                      >
+                        <Trash2 size={16} />
+                      </Button>
+                    </div>
+                  </li>
+                );
+              })}
             </ul>
           )}
           {remove.error && <p role="alert" className="mt-2 text-sm text-red-700">{remove.error.message}</p>}
