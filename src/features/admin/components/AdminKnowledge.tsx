@@ -1,5 +1,5 @@
 import { useRef, useState, type ChangeEvent, type FormEvent } from 'react';
-import { FileText, Send, Trash2, Upload } from 'lucide-react';
+import { Clipboard, FileText, Send, Trash2, Upload } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
 import { Markdown } from '@/features/chat/components/Markdown';
@@ -30,6 +30,7 @@ export function AdminKnowledge() {
   const knowledgeFileInput = useRef<HTMLInputElement>(null);
   const [askFile, setAskFile] = useState<File | null>(null);
   const [knowledgeFile, setKnowledgeFile] = useState<File | null>(null);
+  const [resourceUrl, setResourceUrl] = useState('');
   const [question, setQuestion] = useState('');
   const [askValidationError, setAskValidationError] = useState('');
   const [knowledgeValidationError, setKnowledgeValidationError] = useState('');
@@ -70,7 +71,11 @@ export function AdminKnowledge() {
   const submitKnowledge = (event: FormEvent) => {
     event.preventDefault();
     if (!knowledgeFile) return;
-    upload.mutate(knowledgeFile, { onSuccess: () => setKnowledgeFile(null) });
+    upload.mutate({ file: knowledgeFile, resourceUrl: resourceUrl.trim() || undefined }, { onSuccess: () => { setKnowledgeFile(null); setResourceUrl(''); } });
+  };
+
+  const copyResource = (url: string) => {
+    navigator.clipboard.writeText(url);
   };
 
   return (
@@ -176,6 +181,19 @@ export function AdminKnowledge() {
               <span className="truncate">{knowledgeFile ? `${knowledgeFile.name} · ${formatSize(knowledgeFile.size)}` : t('common.admin.knowledge.chooseReference')}</span>
             </Button>
           </div>
+          <div className="min-w-0 flex-1">
+            <label htmlFor="lesson-resource-url" className="mb-1.5 block text-sm font-medium">
+              {t('common.admin.knowledge.resourceUrlLabel')}
+            </label>
+            <input
+              id="lesson-resource-url"
+              type="url"
+              value={resourceUrl}
+              onChange={(event) => setResourceUrl(event.target.value)}
+              placeholder={t('common.admin.knowledge.resourceUrlPlaceholder')}
+              className="w-full resize-none rounded-md border border-input bg-input px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            />
+          </div>
           <Button type="submit" disabled={!knowledgeFile} loading={upload.isPending}>
             <Upload size={16} />
             {t('common.admin.knowledge.addKnowledge')}
@@ -203,9 +221,28 @@ export function AdminKnowledge() {
           ) : (
             <ul className="mt-3 divide-y divide-border">
               {lessonsQuery.data.map((lesson) => (
-                <li key={lesson.id} className="flex items-center gap-3 py-3">
+                <li key={lesson.id} className="flex flex-col sm:flex-row sm:items-center gap-3 py-3">
                   <FileText size={17} className="shrink-0 text-primary" />
-                  <span className="min-w-0 flex-1 truncate text-sm font-medium">{lesson.originalName}</span>
+                  <div className="min-w-0 flex-1">
+                    <span className="block truncate text-sm font-medium">{lesson.originalName}</span>
+                    {lesson.resourceUrl ? (
+                      <div className="mt-1 flex items-center gap-2">
+                        <span className="shrink-0 truncate text-xs text-muted-foreground">{lesson.resourceUrl}</span>
+                        <Button
+                          type="button"
+                          size="icon"
+                          variant="ghost"
+                          onClick={() => copyResource(lesson.resourceUrl as string)}
+                          title={t('common.actions.copy')}
+                        >
+                          <Clipboard size={14} />
+                        </Button>
+                      </div>
+                    ) : null}
+                    {!lesson.resourceUrl && (
+                      <span className="text-xs text-muted-foreground">{t('common.admin.knowledge.noResourceUrl')}</span>
+                    )}
+                  </div>
                   <span className="shrink-0 text-xs text-muted-foreground">{formatSize(lesson.fileSize)}</span>
                   <Button
                     type="button"

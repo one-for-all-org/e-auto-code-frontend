@@ -114,6 +114,9 @@
         "chooseReference": "Choisir un document de référence",
         "addKnowledge": "Vérifier et ajouter aux connaissances",
         "added": "Document vérifié et ajouté. Il pourra désormais aider Gemini à répondre aux utilisateurs.",
+        "resourceUrlLabel": "Lien vers la ressource (optionnel)",
+        "resourceUrlPlaceholder": "https://exemple.com/document.pdf",
+        "noResourceUrl": "Aucun lien",
         "available": "Documents de référence disponibles",
         "empty": "Aucun document de référence ajouté.",
         "deleteDocument": "Supprimer {{name}}"
@@ -243,7 +246,7 @@
     "intro": "Quelques conseils pour obtenir une réponse plus utile et mieux adaptée à votre situation.",
     "files": {
       "title": "À propos des fichiers envoyés",
-      "description": "Les photos et documents sont transmis à Gemini pour analyser votre demande. Leur contenu n’est pas enregistré dans l’historique de la conversation. Le nom du fichier, lui, reste visible avec votre message."
+      "description": "Pour répondre, votre message, le contexte de la conversation et, si vous en joignez un, le fichier sont transmis au fournisseur d’IA utilisé : Gemini en priorité, puis Gemini Flash-Lite, Groq, Cloudflare Workers AI ou OpenRouter si le fournisseur précédent est indisponible ou limité. Un fournisseur n’est sollicité que si sa clé API est configurée. Le contenu du fichier n’est pas enregistré dans l’historique de l’application ; seul son nom y apparaît. Chaque fournisseur traite ces données selon ses propres conditions de confidentialité (Google, Mistral AI, Groq, Cloudflare ou OpenRouter)."
     },
     "tipsTitle": "Comment poser une question claire",
     "tips": [

@@ -4,9 +4,11 @@ import type { User } from '@/types';
 export type Lesson = {
   id: string;
   originalName: string;
+  resourceUrl: string | null;
   mimeType: string;
   fileSize: number;
   createdAt: number;
+  updatedAt: number;
 };
 
 export const listUsers = async () => {
@@ -43,9 +45,10 @@ export const listLessons = async () => {
   return res.data.lessons;
 };
 
-export const uploadLesson = async (file: File) => {
+export const uploadLesson = async (input: { file: File; resourceUrl?: string | null }) => {
   const body = new FormData();
-  body.append('file', file);
+  body.append('file', input.file);
+  if (input.resourceUrl) body.append('resourceUrl', input.resourceUrl);
   const res = await request<{ success: boolean; data: { lesson: Lesson }; message: string }>('/admin/lessons', {
     method: 'POST',
     body,

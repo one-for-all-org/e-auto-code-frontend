@@ -114,6 +114,9 @@
         "chooseReference": "Misafidiana rakitra fanampiny",
         "addKnowledge": "Hamarino ary ampio",
         "added": "Voamarina sy nampiana ilay rakitra. Afaka manampy amin’ny valin’i Gemini izy izao.",
+        "resourceUrlLabel": "Loharano arovana (akaikinany)",
+        "resourceUrlPlaceholder": "https://exemple.com/dokimanjo.pdf",
+        "noResourceUrl": "Tsy misy loharano",
         "available": "Rakitra fanampiny misy",
         "empty": "Mbola tsy nisy rakitra fanampiny nampiana.",
         "deleteDocument": "Fafao {{name}}"
@@ -243,7 +246,7 @@
     "intro": "Ireto misy torohevitra hahazoana valiny mahasoa sy mifanaraka amin’ny toe-javatra misy anao.",
     "files": {
       "title": "Momba ny rakitra alefa",
-      "description": "Alefa any amin’i Gemini ny sary sy ny antontan-taratasy mba hamakafaka ny fanontanianao. Tsy tehirizina ao amin’ny tantaran’ny resaka ny ao anatin’ilay rakitra. Mbola hita miaraka amin’ny hafatrao kosa ny anaran’ilay rakitra."
+      "description": "Mba hamaly anao, alefa any amin’ny mpanome AI ampiasaina ny hafatrao, ny tantaran’ny resaka ary ny rakitra raha misy: Gemini aloha, avy eo Gemini Flash-Lite, Groq, Cloudflare Workers AI na OpenRouter raha ilay mpanome taloha tsy afaka mamaly na voafetra. Tsy tehirizin’ny app ao amin’ny tantaran’ny resaka ny ao anatin’ny rakitra; ny anarany ihany no hita. Manaraka ny fepetra momba ny tsiambaratelo an’ny mpanome tsirairay ny fikarakarana izany (Google, Mistral AI, Groq, Cloudflare na OpenRouter)."
     },
     "tipsTitle": "Fomba fametrahana fanontaniana mazava",
     "tips": [

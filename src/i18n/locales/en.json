@@ -114,6 +114,9 @@
         "chooseReference": "Choose a reference document",
         "addKnowledge": "Review and add to knowledge",
         "added": "Document reviewed and added. It can now help Gemini answer users.",
+        "resourceUrlLabel": "Resource link (optional)",
+        "resourceUrlPlaceholder": "https://example.com/document.pdf",
+        "noResourceUrl": "No link",
         "available": "Available reference documents",
         "empty": "No reference documents have been added.",
         "deleteDocument": "Delete {{name}}"
@@ -243,7 +246,7 @@
     "intro": "A few tips to get a more helpful answer that fits your situation.",
     "files": {
       "title": "About uploaded files",
-      "description": "Photos and documents are sent to Gemini to analyze your request. Their contents are not saved in your conversation history. The file name remains visible with your message."
+      "description": "To answer, your message, conversation context and any attached file are sent to the AI provider handling the request: Gemini first, then Gemini Flash-Lite, Groq, Cloudflare Workers AI or OpenRouter if the previous provider is unavailable or rate-limited. A provider is only solicited if its API key is configured. The file contents are not saved in the app's conversation history; only its name is. Each provider processes the data under its own privacy terms (Google, Mistral AI, Groq, Cloudflare or OpenRouter)."
     },
     "tipsTitle": "How to ask a clear question",
     "tips": [
