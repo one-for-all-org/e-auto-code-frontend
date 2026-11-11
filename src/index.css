@@ -4,29 +4,47 @@
 
 :root {
   color-scheme: light;
-  --background: 210 25% 97%;
+  --background: 210 18% 94%;
   --foreground: 222 24% 14%;
   --card: 0 0% 100%;
   --card-foreground: 222 24% 14%;
   --primary: 173 58% 34%;
+  --primary-end: 173 52% 40%;
   --primary-foreground: 0 0% 100%;
   --secondary: 210 20% 92%;
-  --muted: 210 20% 94%;
+  --muted: 210 12% 88%;
   --muted-foreground: 215 12% 43%;
   --accent: 173 30% 92%;
   --border: 214 18% 86%;
   --input: 214 18% 82%;
   --ring: 173 55% 40%;
   --brand-soft: 173 42% 94%;
+  /* Tokens "flottant 3D" — centralisés pour rester faciles à annuler */
+  --radius: 14px;
+  --shadow-color: 222 24% 14%;
+  --shadow-highlight: 0 0% 100%;
+  --shadow-float: 0 24px 48px -16px hsl(var(--shadow-color) / 0.10), 0 8px 16px -4px hsl(var(--shadow-color) / 0.07);
+  --shadow-float-hover: 0 34px 64px -20px hsl(var(--shadow-color) / 0.15), 0 14px 28px -8px hsl(var(--shadow-color) / 0.10);
+  --shadow-float-pressed: 0 8px 16px -6px hsl(var(--shadow-color) / 0.14);
+  --shadow-inset-top: inset 0 1px 0 hsl(var(--shadow-highlight) / 0.55);
+  --shadow-inset-edge: inset 0 -1px 0 hsl(var(--shadow-color) / 0.12);
+  --shadow-surface: var(--shadow-float), var(--shadow-inset-top), var(--shadow-inset-edge);
+  --shadow-surface-hover: var(--shadow-float-hover), var(--shadow-inset-top), var(--shadow-inset-edge);
+  --shadow-surface-pressed: var(--shadow-float-pressed);
+  --transition-float: transform 250ms cubic-bezier(0.22, 0.06, 0.12, 0.96), box-shadow 250ms ease-out, background-color 200ms ease-out, border-color 200ms ease-out;
+  --accent-gradient: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary-end)));
+  --surface-gradient: linear-gradient(180deg, hsl(var(--card)), hsl(var(--card-end)));
+  --card-end: 0 0% 98%;
 }
 
 .dark {
   color-scheme: dark;
-  --background: 222 20% 8%;
+  --background: 222 20% 7%;
   --foreground: 214 20% 92%;
-  --card: 222 18% 12%;
+  --card: 222 18% 11%;
   --card-foreground: 214 20% 92%;
   --primary: 173 55% 48%;
+  --primary-end: 173 55% 52%;
   --primary-foreground: 222 24% 9%;
   --secondary: 222 14% 18%;
   --muted: 222 14% 16%;
@@ -36,6 +54,15 @@
   --input: 220 13% 27%;
   --ring: 173 55% 48%;
   --brand-soft: 173 28% 18%;
+  /* Tokens "flottant 3D" (mode sombre) */
+  --shadow-color: 222 20% 3%;
+  --shadow-highlight: 0 0% 100%;
+  --shadow-float: 0 24px 48px -16px hsl(var(--shadow-color) / 0.30), 0 8px 16px -4px hsl(var(--shadow-color) / 0.20);
+  --shadow-float-hover: 0 34px 64px -20px hsl(var(--shadow-color) / 0.40), 0 14px 28px -8px hsl(var(--shadow-color) / 0.30);
+  --shadow-float-pressed: 0 8px 16px -6px hsl(var(--shadow-color) / 0.35);
+  --shadow-inset-top: inset 0 1px 0 hsl(var(--shadow-highlight) / 0.20);
+  --shadow-inset-edge: inset 0 -1px 0 hsl(var(--shadow-color) / 0.40);
+  --card-end: 222 18% 8%;
 }
 
 @layer base {
@@ -45,5 +72,16 @@
 
   body {
     @apply min-h-screen bg-background font-sans text-foreground antialiased;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      transition-delay: 0.01ms !important;
+    }
   }
 }

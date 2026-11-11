@@ -74,7 +74,7 @@ export function LanguageSwitcher({ menuMode = false }: { menuMode?: boolean }) {
           role="menu"
           aria-label={t('common.language')}
           onKeyDown={handleMenuKeyDown}
-          className="absolute right-0 z-50 mt-2 min-w-44 rounded-lg border border-border bg-card p-1 shadow-lg"
+          className="absolute right-0 z-50 mt-2 min-w-44 rounded-xl border border-border bg-card p-1 shadow-surface"
         >
           {languages.map(({ code, Flag }) => (
             <button

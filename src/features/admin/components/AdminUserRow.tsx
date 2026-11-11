@@ -38,7 +38,7 @@ export function AdminUserRow({ user }: Props) {
   };
 
   return (
-    <div className="flex flex-col gap-3 rounded-lg border border-stone-200 bg-white p-3 sm:flex-row sm:items-center sm:justify-between">
+    <div className="flex flex-col gap-3 rounded-xl border border-border bg-card p-3 shadow-surface hover:-translate-y-0.5 hover:shadow-surface-hover transition-transform duration-250 ease-out sm:flex-row sm:items-center sm:justify-between">
       <div className="min-w-0 flex-1">
         <p className="text-sm font-medium text-stone-900 truncate">{user.name}</p>
         <p className="text-xs text-stone-500 truncate">{user.email}</p>

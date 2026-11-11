@@ -37,7 +37,7 @@ export default function GoodPracticesPage() {
         <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{content.intro}</p>
         <ul className="mt-5 space-y-3">
           {content.tips.map((tip, index) => (
-            <li key={tip} className="flex gap-3 rounded-lg border border-border p-3 text-sm leading-relaxed text-card-foreground">
+            <li key={tip} className="flex gap-3 rounded-xl border border-border p-3 shadow-sm hover:bg-accent/40 transition-colors duration-200 text-sm leading-relaxed text-card-foreground">
               <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary/10 text-xs font-semibold text-primary">
                 {index + 1}
               </span>

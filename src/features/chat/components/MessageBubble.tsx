@@ -22,7 +22,7 @@ export function MessageBubble({ role, content, fileName, attachmentPreviewUrl }:
   if (role === 'user') {
     return (
       <div className="flex justify-end">
-        <div className="max-w-[85%] space-y-2 rounded-2xl rounded-br-md bg-teal-700 px-4 py-3 text-sm leading-normal text-white shadow-sm">
+        <div className="max-w-[85%] space-y-2 rounded-2xl rounded-br-md bg-teal-700 px-4 py-3 text-sm leading-normal text-white shadow-[0_12px_24px_-8px_hsl(var(--primary)/0.40)]">
           {fileName && (
             <div className="rounded-lg bg-white/15 p-2">
               <AttachmentPreview

@@ -20,10 +20,10 @@ import { useTranslation } from "react-i18next";
 import { cn } from "@/lib/utils";
 
 const navClass = ({ isActive }: { isActive: boolean }) =>
-  `inline-flex h-9 shrink-0 items-center justify-center gap-2 rounded-lg px-2.5 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600 sm:px-3 ${
+  `inline-flex h-9 shrink-0 items-center justify-center gap-2 rounded-lg px-2.5 text-sm font-medium transition-all duration-200 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600 sm:px-3 ${
     isActive
-      ? "bg-teal-50 text-teal-800"
-      : "text-stone-600 hover:bg-stone-100 hover:text-stone-900"
+      ? "bg-teal-50 text-teal-800 shadow-[0_6px_12px_-4px_hsl(var(--primary)/0.30)]"
+      : "text-stone-600 hover:bg-stone-100 hover:text-stone-900 hover:-translate-y-0.5"
   }`;
 
 export default function AppLayout() {
@@ -35,13 +35,13 @@ export default function AppLayout() {
   return (
     <div className="flex h-dvh flex-col overflow-hidden">
       <Toaster />
-      <header className="sticky top-0 z-50 w-full shrink-0 border-b border-stone-200 bg-white/95 shadow-sm backdrop-blur-md">
+      <header className="sticky top-0 z-50 w-full shrink-0 border-b border-border bg-card/90 shadow-sm backdrop-blur-md">
         <div className="mx-auto flex w-full max-w-6xl flex-col gap-2 px-3 py-2 sm:h-16 sm:flex-row sm:items-center sm:justify-between sm:gap-4 sm:px-6 sm:py-0">
           <Link
             to="/"
             className="flex min-w-0 items-center gap-3 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600"
           >
-            <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-teal-700 text-white shadow-sm">
+            <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-teal-700 text-white shadow-sm shadow-[0_10px_20px_-6px_hsl(var(--primary)/0.45)]">
               <Signpost size={18} />
             </span>
             <span className="min-w-0 leading-tight">
@@ -117,7 +117,7 @@ export default function AppLayout() {
                     className="shrink-0 transition-transform group-open:rotate-180"
                   />
                 </summary>
-                <div className="absolute right-0 z-50 mt-2 w-64 rounded-xl border border-stone-200 bg-white p-2 shadow-lg">
+                <div className="absolute right-0 z-50 mt-2 w-64 rounded-2xl border border-border bg-card p-2 shadow-surface">
                   <div className="border-b border-stone-100 px-3 py-2">
                     <p className="truncate text-sm font-semibold text-stone-900">
                       {me.data?.name}

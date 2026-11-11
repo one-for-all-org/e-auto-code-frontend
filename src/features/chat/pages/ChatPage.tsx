@@ -77,11 +77,11 @@ export default function ChatPage() {
 
   return (
     <div className="mx-auto flex h-full min-h-0 w-full max-w-6xl gap-3 p-2 sm:gap-6 sm:p-6">
-      <div className="hidden w-72 shrink-0 overflow-hidden rounded-lg border border-stone-200 bg-white shadow-sm md:block">
+      <div className="hidden w-72 shrink-0 overflow-hidden rounded-xl border border-border bg-card shadow-surface md:block">
         <ConversationSidebar activeId={conversationId} />
       </div>
 
-      <section className="flex min-h-0 min-w-0 flex-1 flex-col overflow-hidden rounded-lg border border-stone-200 bg-white shadow-sm">
+      <section className="flex min-h-0 min-w-0 flex-1 flex-col overflow-hidden rounded-xl border border-border bg-card shadow-surface">
         <header className="flex items-center gap-3 border-b border-stone-200 px-4 py-3 sm:px-5">
           <Button
             variant="ghost"
@@ -113,10 +113,10 @@ export default function ChatPage() {
           <button
             type="button"
             aria-label={t('chat.historyClose')}
-            className="absolute inset-0 bg-stone-900/40"
+            className="absolute inset-0 bg-stone-900/50"
             onClick={() => setDrawerOpen(false)}
           />
-          <div className="absolute inset-y-0 left-0 w-80 max-w-[95%] bg-white shadow-xl">
+          <div className="absolute inset-y-0 left-0 w-80 max-w-[95%] rounded-xl border border-border bg-card shadow-surface">
             <ConversationSidebar activeId={conversationId} onDone={() => setDrawerOpen(false)} />
           </div>
         </div>

@@ -63,7 +63,7 @@ export default function HelpPage() {
         </div>
         <Link
           to="/chat"
-          className="inline-flex shrink-0 items-center justify-center gap-2 rounded-lg bg-primary px-4 py-2.5 text-sm font-semibold text-primary-foreground hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+          className="inline-flex shrink-0 items-center justify-center gap-2 rounded-xl bg-[background-image:var(--accent-gradient)] bg-primary px-4 py-2.5 text-sm font-semibold text-primary-foreground shadow-surface hover:-translate-y-0.5 hover:shadow-surface-hover active:shadow-surface-pressed transition-transform duration-200 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
         >
           {t('help.goToChat')}
           <ArrowRight size={16} aria-hidden="true" />

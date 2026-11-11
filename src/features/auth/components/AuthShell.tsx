@@ -22,7 +22,7 @@ export function AuthShell({ title, subtitle, children, footer }: Props) {
       </header>
       <div className="mt-20 w-full max-w-md sm:mt-0">
         <div className="mb-6 flex flex-col items-center text-center sm:mb-8">
-          <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-teal-700 text-white shadow-sm">
+          <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-teal-700 text-white shadow-sm shadow-[0_10px_20px_-6px_hsl(var(--primary)/0.45)]">
             <Signpost size={22} />
           </span>
           <p className="mt-4 text-sm font-medium text-muted-foreground">{t('auth.brandCaption')}</p>

@@ -30,7 +30,7 @@ export function RoadRoleForm({ user }: { user: User }) {
           value={roadRole}
           disabled={updateMe.isPending}
           onChange={(event) => setRoadRole(event.target.value as RoadRole)}
-          className="w-full rounded-md border border-input bg-card px-3 py-2 text-sm text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+          className="w-full rounded-xl border border-input bg-card px-3 py-2 text-sm text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
         >
           {roadRoles.map((role) => (
             <option key={role} value={role}>{t(`common.roadRoles.${role}`)}</option>

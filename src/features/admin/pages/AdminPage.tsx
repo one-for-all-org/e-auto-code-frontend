@@ -40,7 +40,7 @@ export default function AdminPage() {
         <AdminKnowledge />
       </div>
 
-      <div className="rounded-lg border border-stone-200 bg-white shadow-sm">
+      <div className="rounded-xl border border-border bg-card shadow-surface">
         <div className="border-b border-stone-200 px-4 py-3">
           <h2 className="text-sm font-semibold text-stone-900">{t('common.admin.usersTitle', { count: users.length })}</h2>
         </div>

@@ -46,6 +46,17 @@ export default {
         },
         white: 'hsl(var(--card) / <alpha-value>)',
       },
+      borderRadius: {
+        radius: 'var(--radius)',
+      },
+      boxShadow: {
+        surface: 'var(--shadow-surface)',
+        'surface-hover': 'var(--shadow-surface-hover)',
+        'surface-pressed': 'var(--shadow-surface-pressed)',
+        float: 'var(--shadow-float)',
+        'float-hover': 'var(--shadow-float-hover)',
+        'float-pressed': 'var(--shadow-float-pressed)',
+      },
     },
   },
   plugins: [],

@@ -42,7 +42,7 @@ export function Toast({ toast, onDismiss }: Props) {
   if (!visible) return null;
 
   return (
-    <div className={`fixed top-4 right-4 z-50 flex w-full max-w-sm flex-col gap-2 pointer-events-auto ${bg} border px-4 py-3 rounded-lg shadow-lg`} role="alert">
+    <div className={`fixed top-4 right-4 z-50 flex w-full max-w-sm flex-col gap-2 pointer-events-auto ${bg} border px-4 py-3 rounded-xl shadow-surface`} role="alert">
       <div className="flex items-start gap-3">
         <Icon size={18} className="shrink-0" />
         <div className="min-w-0 flex-1">

@@ -50,7 +50,7 @@ export function ConversationItem({ conversation, active, onOpen }: Props) {
 
   if (mode === 'rename') {
     return (
-      <form onSubmit={saveRename} className="flex items-center gap-1 rounded-lg bg-stone-100 p-1.5">
+      <form onSubmit={saveRename} className="flex items-center gap-1 rounded-xl bg-stone-100 shadow-sm p-1.5">
         <input
           autoFocus
           value={title}
@@ -71,8 +71,10 @@ export function ConversationItem({ conversation, active, onOpen }: Props) {
 
   return (
     <div
-      className={`group flex items-center gap-1 rounded-lg pr-1 transition-colors ${
-        active ? 'bg-teal-50' : 'hover:bg-stone-100'
+      className={`group flex items-center gap-1 rounded-lg pr-1 transition-all duration-200 ease-out ${
+        active
+          ? 'bg-teal-50 shadow-[0_6px_12px_-4px_hsl(var(--primary)/0.25)]'
+          : 'hover:bg-stone-100 hover:-translate-y-0.5'
       }`}
     >
       <Link

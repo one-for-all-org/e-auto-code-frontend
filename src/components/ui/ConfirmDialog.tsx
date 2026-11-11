@@ -32,11 +32,11 @@ export function ConfirmDialog({
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
       <div
-        className="fixed inset-0 bg-black/40 backdrop-blur-sm"
+        className="fixed inset-0 bg-black/45 backdrop-blur-md"
         onClick={onCancel}
       />
       <div
-        className="relative w-full max-w-md mx-4 rounded-xl border border-stone-200 bg-white shadow-2xl flex flex-col"
+        className="relative w-full max-w-md mx-4 rounded-2xl border border-border bg-card shadow-surface flex flex-col"
         role="dialog"
         aria-modal="true"
       >
@@ -60,7 +60,7 @@ export function ConfirmDialog({
           </div>
           {children}
         </div>
-        <div className="border-t border-stone-100 bg-stone-50 p-4 flex justify-end gap-2">
+        <div className="border-t border-border/50 bg-card/50 p-4 flex justify-end gap-2">
           <Button
             variant="ghost"
             onClick={onCancel}

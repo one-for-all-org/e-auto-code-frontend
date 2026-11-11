@@ -34,7 +34,7 @@ export default function HomePage() {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <header className="sticky top-0 z-40 border-b border-border bg-card/95 backdrop-blur">
+      <header className="sticky top-0 z-40 border-b border-border bg-card/90 backdrop-blur-md shadow-sm">
         <nav aria-label={t('common.mainNavigation')} className="mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-3 sm:px-6">
           <Link to="/" className="flex items-center gap-2 font-bold text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
             <span aria-hidden="true">🚦</span>
@@ -59,7 +59,7 @@ export default function HomePage() {
                 loop
                 playsInline
                 aria-label={t('home.heroImageAlt')}
-                className="block h-56 w-full rounded-xl border-2 border-primary object-contain shadow-lg sm:h-80 lg:h-[400px]"
+                className="block h-56 w-full rounded-2xl border border-primary/40 object-contain shadow-surface hover:-translate-y-1 hover:shadow-surface-hover transition-transform duration-300 ease-out sm:h-80 lg:h-[400px]"
               />
             </div>
             <div className="order-1 text-center lg:order-2 lg:text-left">
@@ -73,7 +73,7 @@ export default function HomePage() {
               <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row lg:justify-start">
                 <Link
                   to="/register"
-                  className="inline-flex min-h-12 items-center justify-center rounded-xl bg-primary px-6 py-3 text-base font-semibold text-primary-foreground shadow-sm transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+                  className="inline-flex min-h-12 items-center justify-center rounded-xl bg-[background-image:var(--accent-gradient)] bg-primary px-6 py-3 text-base font-semibold text-primary-foreground shadow-surface hover:-translate-y-1 hover:shadow-surface-hover active:shadow-surface-pressed transition-transform duration-200 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
                 >
                   {t('home.createAccount')}
                 </Link>
@@ -140,7 +140,7 @@ export default function HomePage() {
         </section>
 
         <section aria-labelledby="languages-title" className="mx-auto max-w-6xl px-4 py-14 sm:px-6 sm:py-16">
-          <div className="rounded-2xl border border-border bg-card p-6 text-center shadow-sm sm:p-9">
+          <div className="rounded-2xl border border-border bg-card p-6 text-center shadow-surface hover:-translate-y-0.5 hover:shadow-surface-hover transition-transform duration-250 ease-out sm:p-9">
             <h2 id="languages-title" className="text-2xl font-bold text-card-foreground">{t('home.languagesTitle')}</h2>
             <div className="mt-6 flex flex-wrap items-center justify-center gap-4 sm:gap-8">
               {languageFlags.map(({ code, Flag }) => (
@@ -183,7 +183,7 @@ export default function HomePage() {
             </div>
             <a
               href={`mailto:${contactEmail}`}
-              className="mx-auto mt-8 flex w-full max-w-xl items-center gap-4 rounded-2xl border border-border bg-background p-5 transition-colors hover:border-primary/50 hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring sm:p-6"
+              className="mx-auto mt-8 flex w-full max-w-xl items-center gap-4 rounded-2xl border border-border bg-background p-5 shadow-surface hover:-translate-y-0.5 hover:shadow-surface-hover active:shadow-surface-pressed transition-transform duration-200 ease-out hover:border-primary/50 hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring sm:p-6"
             >
               <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
                 <Mail size={23} aria-hidden="true" />
@@ -200,7 +200,7 @@ export default function HomePage() {
           <h2 id="faq-title" className="text-center text-2xl font-bold text-foreground sm:text-3xl">{t('home.faqTitle')}</h2>
           <div className="mx-auto mt-8 max-w-4xl space-y-3">
             {faqs.map(({ question, answer }) => (
-              <details key={question} className="group rounded-xl border border-border bg-card p-4 sm:p-5">
+              <details key={question} className="group rounded-2xl border border-border bg-card p-4 shadow-surface hover:-translate-y-0.5 hover:shadow-surface-hover transition-transform duration-250 ease-out sm:p-5">
                 <summary className="flex cursor-pointer list-none items-center justify-between gap-4 font-semibold text-card-foreground marker:hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
                   <span>{question}</span>
                   <ChevronDown size={18} className="shrink-0 text-muted-foreground transition-transform group-open:rotate-180" aria-hidden="true" />
