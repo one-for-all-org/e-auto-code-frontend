@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { CarFront, ChevronDown, Clock3, Footprints, Mail, MessageCircleQuestion, MessagesSquare, ShieldCheck, Users } from 'lucide-react';
 import { FR, GB, MG } from 'country-flag-icons/react/3x2';
@@ -28,9 +28,6 @@ export default function HomePage() {
   const questions = t('home.questions', { returnObjects: true }) as string[];
   const faqs = t('home.faq', { returnObjects: true }) as FaqItem[];
 
-  useEffect(() => {
-    if (videoRef.current) videoRef.current.playbackRate = 0.5;
-  }, []);
 
   return (
     <div className="min-h-screen bg-background text-foreground">
