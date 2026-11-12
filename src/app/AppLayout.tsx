@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Link, NavLink, Outlet } from "react-router-dom";
 import {
   ChevronDown,
@@ -11,6 +12,7 @@ import {
   BookOpenCheck,
 } from "lucide-react";
 import { useLogout } from "@/features/auth/hooks/useAuth";
+import { LogoutConfirm } from "@/features/auth/components/LogoutConfirm";
 import { Toaster } from "@/components/ui/Toaster";
 import { getToken } from "@/lib/tokenStorage";
 import { ThemeToggle } from "@/components/theme/ThemeToggle";
@@ -31,6 +33,7 @@ export default function AppLayout() {
   const logout = useLogout();
   const token = getToken();
   const me = useMe();
+  const [logoutConfirmOpen, setLogoutConfirmOpen] = useState(false);
 
   return (
     <div className="flex h-dvh flex-col overflow-hidden">
@@ -164,7 +167,7 @@ export default function AppLayout() {
                       event.currentTarget
                         .closest("details")
                         ?.removeAttribute("open");
-                      void logout();
+                      setLogoutConfirmOpen(true);
                     }}
                     className="mt-1 flex h-9 w-full items-center gap-2 rounded-lg px-3 text-left text-sm font-medium text-stone-600 hover:bg-stone-100 hover:text-stone-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600"
                   >
@@ -186,6 +189,13 @@ export default function AppLayout() {
       <main className="flex min-h-0 flex-1 flex-col overflow-y-auto">
         <Outlet />
       </main>
+
+      <LogoutConfirm
+        open={logoutConfirmOpen}
+        onConfirm={logout}
+        onCancel={() => setLogoutConfirmOpen(false)}
+      />
+
     </div>
   );
 }

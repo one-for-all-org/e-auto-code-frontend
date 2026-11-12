@@ -136,12 +136,12 @@ export function Composer({ disabled, onSend }: Props) {
         />
         <Button
           type="submit"
-          variant="primary"
+          variant="ghost"
           size="md"
           aria-label={t('chat.send')}
           disabled={!canSend}
           onClick={(e) => e.stopPropagation()}
-          className="shrink-0 shadow-[0_10px_20px_-6px_hsl(var(--primary)/0.35)] hover:-translate-y-0.5 active:translate-y-0 disabled:cursor-not-allowed disabled:bg-teal-200 disabled:text-stone-400 transition-transform duration-200 ease-out  "
+          className="shrink-0 rounded-full disabled:cursor-not-allowed disabled:bg-teal-200 disabled:text-stone-400"
         >
           <Send size={24} />
         </Button>

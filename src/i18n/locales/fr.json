@@ -178,6 +178,7 @@
     },
     "passwordMin": "Le mot de passe doit contenir au moins 8 caractères."
     ,"logoutSuccess": "Déconnecté"
+    ,"logoutDescription": "Toutes vos données de session seront effacées. Cette action est irréversible."
   },
   "chat": {
     "title": "Assistant code de la route",

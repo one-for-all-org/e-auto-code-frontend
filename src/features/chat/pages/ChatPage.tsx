@@ -86,7 +86,7 @@ export default function ChatPage() {
           <Button
             variant="ghost"
             size="icon"
-            className="md:hidden"
+            className="md:hidden hover:translate-y-0"
             aria-label={t('chat.historyOpen')}
             onClick={() => setDrawerOpen(true)}
           >

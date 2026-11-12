@@ -46,9 +46,6 @@ export function useLogout() {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   return async () => {
-    if (!window.confirm(t('common.logoutConfirm'))) {
-      return;
-    }
     try {
       await logout();
     } catch {

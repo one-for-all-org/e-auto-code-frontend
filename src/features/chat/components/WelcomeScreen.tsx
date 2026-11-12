@@ -28,7 +28,7 @@ export function WelcomeScreen({ disabled, onPick }: Props) {
             variant="secondary"
             disabled={disabled}
             onClick={() => onPick(suggestion)}
-            className="h-auto justify-between whitespace-normal py-3 text-left font-normal hover:border-teal-600 hover:text-teal-800"
+            className="h-auto justify-between whitespace-normal py-3 text-left font-normal hover:border-teal-600 hover:text-teal-800 hover:translate-y-0"
           >
             {suggestion}
           </Button>

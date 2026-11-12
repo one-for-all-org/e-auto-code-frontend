@@ -178,6 +178,7 @@
     },
     "passwordMin": "Password must be at least 8 characters long.",
     "logoutSuccess": "Signed out"
+    ,"logoutDescription": "All your session data will be cleared. This action cannot be undone."
   },
   "chat": {
     "title": "Road Rules Assistant",
