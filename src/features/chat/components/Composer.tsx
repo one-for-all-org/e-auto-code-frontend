@@ -77,7 +77,7 @@ export function Composer({ disabled, onSend }: Props) {
         void submit();
       }}
       className={cn(
-        'mx-auto w-full max-w-3xl rounded-2xl border border-border bg-card p-3 shadow-sm',
+        'mx-auto mb-2.5 w-full max-w-3xl rounded-2xl border border-border bg-card p-3 shadow-sm',
         'transition-colors focus-within:border-ring/60 focus-within:ring-[3px] focus-within:ring-ring/20',
         disabled && 'opacity-60'
       )}
