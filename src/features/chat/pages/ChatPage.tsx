@@ -76,24 +76,24 @@ export default function ChatPage() {
   };
 
   return (
-    <div className="mx-auto flex h-full min-h-0 w-full max-w-6xl gap-3 p-2 sm:gap-6 sm:p-6">
-      <div className="hidden w-72 shrink-0 overflow-hidden rounded-xl border border-border bg-card shadow-surface md:block">
+    <div className="flex h-full min-h-0 w-full">
+      <aside className="hidden w-72 shrink-0 overflow-hidden border-r border-border bg-card md:block">
         <ConversationSidebar activeId={conversationId} />
-      </div>
+      </aside>
 
-      <section className="flex min-h-0 min-w-0 flex-1 flex-col overflow-hidden rounded-xl border border-border bg-card shadow-surface">
-        <header className="flex items-center gap-3 border-b border-stone-200 px-4 py-3 sm:px-5">
+      <section className="flex min-h-0 min-w-0 flex-1 flex-col bg-white dark:bg-stone-900">
+        <header className="flex items-center gap-2 border-b border-border px-3 py-2 sm:px-5">
           <Button
             variant="ghost"
             size="icon"
-            className="md:hidden hover:translate-y-0"
+            className="md:hidden"
             aria-label={t('chat.historyOpen')}
             onClick={() => setDrawerOpen(true)}
           >
             <Menu size={18} />
           </Button>
           <div className="min-w-0">
-            <h1 className="truncate text-base font-semibold text-stone-900">{t('chat.title')}</h1>
+            <h1 className="truncate text-sm font-semibold text-foreground">{t('chat.title')}</h1>
             <p className="truncate text-xs text-stone-500">{t('chat.scope')}</p>
           </div>
         </header>
@@ -101,22 +101,22 @@ export default function ChatPage() {
         <div className="flex min-h-0 flex-1 flex-col overflow-y-auto">{renderBody()}</div>
 
         {error && (
-          <p role="alert" className="mx-4 rounded-lg bg-red-50 px-3 py-2 text-sm text-red-700">
-            {error.message}
+          <p role="alert" className="mx-auto w-full max-w-3xl px-4">
+            <span className="block rounded-lg bg-red-50 px-3 py-2 text-sm text-red-700">{error.message}</span>
           </p>
         )}
         <Composer disabled={isBusy} onSend={handleSend} />
       </section>
 
       {drawerOpen && (
-        <div className="fixed inset-0 mt-2 z-40 md:hidden">
+        <div className="fixed inset-0 z-40 md:hidden">
           <button
             type="button"
             aria-label={t('chat.historyClose')}
             className="absolute inset-0 bg-stone-900/50"
             onClick={() => setDrawerOpen(false)}
           />
-          <div className="absolute inset-y-0 left-0 w-80 max-w-[95%] rounded-xl border border-border bg-card shadow-surface">
+          <div className="absolute inset-y-0 left-0 w-80 max-w-[92%] border-r border-border bg-card shadow-float">
             <ConversationSidebar activeId={conversationId} onDone={() => setDrawerOpen(false)} />
           </div>
         </div>

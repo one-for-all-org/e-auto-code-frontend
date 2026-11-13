@@ -149,6 +149,7 @@
       "submit": "Sign in",
       "noAccount": "Don't have an account yet?",
       "registerLink": "Sign up",
+      "backHome": "Back to home",
       "invalidCredentials": "Invalid email or password",
       "success": "Signed in successfully"
     },
@@ -177,8 +178,9 @@
       "goToLogin": "Go to sign in"
     },
     "passwordMin": "Password must be at least 8 characters long.",
-    "logoutSuccess": "Signed out"
-    ,"logoutDescription": "All your session data will be cleared. This action cannot be undone."
+    "logoutSuccess": "Signed out",
+    "logoutDescription": "All your session data will be cleared. This action cannot be undone.",
+    "panelTagline": "Learn Madagascar's road rules, simply."
   },
   "chat": {
     "title": "Road Rules Assistant",
@@ -189,11 +191,6 @@
     "conversationDeleted": "It may have been deleted.",
     "welcomeTitle": "Hello! Ask a question",
     "welcomeText": "I can help you study Madagascar's road rules with clear, concise answers.",
-    "suggestions": [
-      "Who has right of way at an intersection?",
-      "Which documents should I carry when driving?",
-      "What should I know about traffic lights?"
-    ],
     "questionPlaceholder": "Ask about road rules in Madagascar…",
     "questionLabel": "Your question",
     "attachFile": "Attach a file",
@@ -203,7 +200,6 @@
     "fileErrorSize": "The file is larger than 1 MB.",
     "imagePreview": "Attached image preview",
     "pdfPreview": "PDF preview: {{name}}",
-    "fileLimit": "Maximum file size: 1 MB (.txt, .pdf, .png or .jpg)",
     "writing": "AI is writing…",
     "copyResponse": "Copy response",
     "responseCopied": "Response copied",
@@ -226,7 +222,9 @@
       "simulated": "Demo mode: this is a simulated answer.",
       "fileReceived": "I received the file **{{fileName}}**.",
       "responseGenerated": "Answer generated."
-    }
+    },
+    "responseDisclaimer": "Answers are indicative: check the official text.",
+    "fileSize": "{size} KB"
   },
   "history": {
     "title": "History",
@@ -242,7 +240,10 @@
     "save": "Save",
     "cancel": "Cancel",
     "deleteTitle": "Delete conversation",
-    "deleteDescription": "“{{title}}” will be permanently deleted. This action cannot be undone."
+    "deleteDescription": "“{{title}}” will be permanently deleted. This action cannot be undone.",
+    "search": "Search conversations",
+    "searchEmpty": "No results for this search.",
+    "options": "Conversation options"
   },
   "help": {
     "title": "How to use the assistant",
@@ -299,7 +300,9 @@
     "confirmPassword": "Confirm password",
     "passwordMismatch": "The passwords do not match.",
     "passwordUpdated": "Password updated.",
-    "changePassword": "Change password"
+    "changePassword": "Change password",
+    "languageTitle": "Interface language",
+    "languageHint": "Change the interface language at any time."
   },
   "guidance": {
     "title": "Good practices on the road",
@@ -353,52 +356,75 @@
     }
   },
   "home": {
-    "heroTitle": "Learn Madagascar's road rules at your own pace",
-    "heroSubtitle": "Prepare for your driving test, understand local rules and build safe road habits with a clear, approachable learning assistant.",
-    "heroImageAlt": "Learners studying road rules",
+    "heroTitle": "Learn Madagascar's road rules, simply",
+    "heroSubtitle": "An assistant that explains the rules, the licence and safe habits, at your own pace.",
+    "heroImageAlt": "Demonstration of the road-rules assistant",
     "createAccount": "Create an account",
     "login": "Sign in",
-    "benefitsTitle": "A simpler way to learn",
-    "benefits": [
-      { "title": "Learn faster", "text": "Focus on what matters and revise whenever you need." },
-      { "title": "Clear answers", "text": "Understand the rules through easy-to-follow explanations." },
-      { "title": "Your history stays saved", "text": "Find past conversations and pick up where you left off." }
+    "heroMeta": "Free · 3 languages · Instant answers",
+    "howTitle": "How it works",
+    "howSteps": [
+      {
+        "title": "Create your account",
+        "text": "A few seconds is all it takes to get started."
+      },
+      {
+        "title": "Choose your profile",
+        "text": "Driver, passenger, pedestrian or citizen."
+      },
+      {
+        "title": "Ask your questions",
+        "text": "Clear, sourced and instant answers."
+      }
     ],
-    "audienceTitle": "Guidance for your role on the road",
-    "audienceIntro": "Choose a road-user profile to find useful guidance for your journeys. You can change it from your personal space.",
-    "audiences": [
-      { "title": "Driver", "text": "Driving-test preparation, safe driving, documents, and vehicle checks." },
-      { "title": "Passenger", "text": "Safety in the vehicle, suitable equipment, and ways to support the driver." },
-      { "title": "Pedestrian", "text": "Visibility, safer crossings, and mindful walking." },
-      { "title": "Citizen", "text": "Everyday habits for sharing the road, whatever your journey." }
+    "whyTitle": "Why this assistant",
+    "whyItems": [
+      {
+        "title": "Reliable answers",
+        "text": "Official documents and approved sources are checked first. Web search only fills what is missing, with links cited in the answer."
+      },
+      {
+        "title": "Learning that feels alive",
+        "text": "Ask questions as you would of a patient instructor: step-by-step explanations, concrete examples and easier memorising, in French, English or Malagasy."
+      }
     ],
-    "questionsTitle": "Questions to get you started",
-    "questions": [
+    "chats": [
+      {
+        "question": "What does a red-bordered triangular sign mean?",
+        "answerTitle": "Priority sign",
+        "answerItems": [
+          "It marks a priority road.",
+          "Yield to vehicles entering from it.",
+          "Slow down before the intersection."
+        ]
+      },
+      {
+        "question": "How do I prepare my licence application?",
+        "answerTitle": "The usual documents",
+        "answerItems": [
+          "A valid identity document.",
+          "Two photos meeting the standards.",
+          "A recent proof of address."
+        ]
+      }
+    ],
+    "chatNote": "Illustrative example — always check with official sources.",
+    "examplesTitle": "Try one of these questions",
+    "examplesNote": "Click a question to create your account and try the assistant.",
+    "exampleQuestions": [
       "Who has priority at an unmarked intersection?",
       "What does a red-bordered triangular sign mean?",
-      "What steps are involved in preparing a driving-licence application?",
-      "What should passengers and pedestrians keep in mind?"
+      "Which documents for a licence application?",
+      "How do I cross the road safely?",
+      "Which equipment is mandatory in a car?",
+      "What should I do after a road accident?"
     ],
-    "contactTitle": "Help us improve the information",
-    "contactIntro": "Have documents or reliable sources that could make answers more accurate? Contact us to share them with the community.",
-    "contactContribution": "Official, verifiable resources help strengthen the assistant’s knowledge.",
-    "contactWhatsApp": "WhatsApp",
-    "contactEmail": "Email",
-    "contactDiscord": "Discord",
-    "faqTitle": "Frequently asked questions",
-    "faq": [
-      { "question": "Does the assistant replace driving school?", "answer": "No. It can support your revision, but it does not replace driving-school instruction, supervised practice, or information from the relevant authorities." },
-      { "question": "What can I ask about?", "answer": "Ask about road rules in Madagascar, driving licences, driving-school learning, useful procedures and documents, and good practices for drivers, passengers, and pedestrians." },
-      { "question": "Which sources does the assistant use?", "answer": "Reference documents approved by the administrators come first. Google Search can supplement missing information, and consulted links are shown in the answer. Confirm current rules and procedures with official sources." },
-      { "question": "Can I tailor the guidance to my situation?", "answer": "Yes. Choose driver, passenger, pedestrian, or citizen in your profile. You can change it at any time, and the good-practices page will adapt." }
-    ],
-    "languagesTitle": "Available in French, English and Malagasy",
-    "sourceLabel": "A reference source",
-    "sourceTitle": "Reliable documents to support answers",
-    "sourceDescription": "Administrators can add official sources about driving, permits, and road use. These take priority; web search can supplement them.",
-    "openSource": "View D71-138-VF.pdf",
-    "disclaimerTitle": "Here to support your learning",
-    "disclaimer": "This assistant is not a replacement for driving school or professional instruction. It can help anyone who needs extra support to review and better understand road rules.",
-    "footer": "E-Torolalana · A study assistant for Madagascar's road rules."
+    "languagesText": "Available in French, English and Malagasy",
+    "ctaTitle": "Ready to revise differently?",
+    "ctaSubtitle": "Create your free account and ask your first question right away.",
+    "ctaButton": "Create a free account",
+    "footerHome": "Home",
+    "footerTagline": "An assistant to revise Madagascar's road rules.",
+    "footerDisclaimer": "AI answers are indicative: always check rules and procedures against official texts and services."
   }
 }

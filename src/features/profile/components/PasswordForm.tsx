@@ -1,6 +1,5 @@
 import { useState, type FormEvent } from 'react';
 import { Button } from '@/components/ui/Button';
-import { Card } from '@/components/ui/Card';
 import { Input } from '@/components/ui/Input';
 import { useUpdateMe } from '@/features/profile/hooks/useProfile';
 import { useTranslation } from 'react-i18next';
@@ -26,8 +25,8 @@ export function PasswordForm() {
   };
 
   return (
-    <Card>
-      <h2 className="text-base font-semibold text-stone-900">{t('profile.password')}</h2>
+    <section className="py-8">
+      <h2 className="text-base font-semibold text-foreground">{t('profile.password')}</h2>
       <p className="mt-1 text-sm text-stone-500">{t('profile.passwordHint')}</p>
       <form onSubmit={handleSubmit} className="mt-5 space-y-5">
         <Input
@@ -66,6 +65,6 @@ export function PasswordForm() {
           </Button>
         </div>
       </form>
-    </Card>
+    </section>
   );
 }

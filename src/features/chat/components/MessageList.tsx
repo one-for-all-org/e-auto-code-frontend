@@ -1,6 +1,5 @@
 import { useEffect, useRef } from 'react';
 import { MessageBubble } from '@/features/chat/components/MessageBubble';
-import { Spinner } from '@/components/ui/Spinner';
 import type { SendInput } from '@/features/chat/hooks/useMessages';
 import type { Message } from '@/types';
 import { useTranslation } from 'react-i18next';
@@ -20,7 +19,7 @@ export function MessageList({ messages, pending, attachmentPreviews = {} }: Prop
   }, [messages.length, pending]);
 
   return (
-    <div className="flex flex-col gap-5 p-4 sm:p-6">
+    <div className="mx-auto flex w-full max-w-3xl flex-col gap-5 px-4 py-6 sm:px-6">
       {messages.map((message) => (
         <MessageBubble
           key={message.id}
@@ -33,9 +32,13 @@ export function MessageList({ messages, pending, attachmentPreviews = {} }: Prop
       {pending && (
         <>
           <MessageBubble role="user" content={pending.content} fileName={pending.file?.name} />
-          <div role="status" className="flex items-center gap-2 pl-11 text-sm text-stone-500">
-            <Spinner className="h-4 w-4" />
-            {t('chat.writing')}
+          <div role="status" aria-label={t('chat.writing')} className="flex items-center gap-2 pl-11">
+            <span className="flex items-center gap-1" aria-hidden="true">
+              <span className="size-1.5 animate-typing rounded-full bg-teal-600" />
+              <span className="size-1.5 animate-typing rounded-full bg-teal-600" style={{ animationDelay: '150ms' }} />
+              <span className="size-1.5 animate-typing rounded-full bg-teal-600" style={{ animationDelay: '300ms' }} />
+            </span>
+            <span className="text-sm text-stone-500">{t('chat.writing')}</span>
           </div>
         </>
       )}

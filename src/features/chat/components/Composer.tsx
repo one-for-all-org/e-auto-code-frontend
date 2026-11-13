@@ -77,25 +77,26 @@ export function Composer({ disabled, onSend }: Props) {
         void submit();
       }}
       className={cn(
-        'w-full max-w-3xl rounded-2xl border border-border bg-card p-3 shadow-sm',
+        'mx-auto w-full max-w-3xl rounded-2xl border border-border bg-card p-3 shadow-sm',
         'transition-colors focus-within:border-ring/60 focus-within:ring-[3px] focus-within:ring-ring/20',
         disabled && 'opacity-60'
       )}
       onClick={() => textareaRef.current?.focus()}
     >
       {file && (
-        <div className="mb-2 flex max-w-[200px] items-center gap-1.5 rounded-lg bg-muted py-1 pl-2.5 pr-1 text-xs text-muted-foreground">
+        <div className="mb-2 flex max-w-[240px] items-center gap-1.5 rounded-full bg-muted py-1 pl-3 pr-1 text-xs text-muted-foreground">
           <span className="truncate">{file.name}</span>
+          <span className="shrink-0 font-medium">{t('chat.fileSize', { size: Math.ceil(file.size / 1024) })}</span>
           <button
             type="button"
-            aria-label={`Retirer ${file.name}`}
-            className="rounded p-0.5 hover:bg-background hover:text-foreground"
+            aria-label={t('chat.removeFile')}
+            className="rounded-full p-0.5 hover:bg-background hover:text-foreground"
             onClick={(e) => {
               e.stopPropagation();
               setFile(null);
             }}
           >
-            <X className="size-3" />
+            <X className="size-3.5" />
           </button>
         </div>
       )}
@@ -136,17 +137,16 @@ export function Composer({ disabled, onSend }: Props) {
         />
         <Button
           type="submit"
-          variant="ghost"
-          size="md"
+          size="icon"
           aria-label={t('chat.send')}
           disabled={!canSend}
           onClick={(e) => e.stopPropagation()}
-          className="shrink-0 rounded-full disabled:cursor-not-allowed disabled:bg-teal-200 disabled:text-stone-400"
+          className="shrink-0 rounded-full disabled:cursor-not-allowed"
         >
-          <Send size={24} />
+          <Send size={17} />
         </Button>
       </div>
-      <p className="mt-1 text-xs text-stone-500">{t('chat.fileLimit')}</p>
+      <p className="mt-1.5 text-xs text-stone-500">{t('chat.responseDisclaimer')}</p>
     </form>
   );
 }

@@ -22,13 +22,13 @@ export function MessageBubble({ role, content, fileName, attachmentPreviewUrl }:
   if (role === 'user') {
     return (
       <div className="flex justify-end">
-        <div className="max-w-[85%] space-y-2 rounded-2xl rounded-br-md bg-teal-700 px-4 py-3 text-sm leading-normal text-white shadow-[0_12px_24px_-8px_hsl(var(--primary)/0.40)]">
+        <div className="max-w-[85%] space-y-2 rounded-2xl rounded-br-md bg-primary px-4 py-3 text-sm leading-normal text-primary-foreground">
           {fileName && (
-            <div className="rounded-lg bg-white/15 p-2">
+            <div className="rounded-lg bg-primary-foreground/15 p-2">
               <AttachmentPreview
                 fileName={fileName}
                 previewUrl={attachmentPreviewUrl}
-                textClassName="text-white"
+                textClassName="text-primary-foreground"
               />
             </div>
           )}
@@ -52,8 +52,8 @@ export function MessageBubble({ role, content, fileName, attachmentPreviewUrl }:
 
   return (
     <div className="flex min-w-0 items-start gap-2.5 sm:gap-3">
-      <span className="mt-1 flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-teal-100 text-teal-800">
-        <Signpost size={16} />
+      <span className="mt-1 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary">
+        <Signpost size={15} />
       </span>
       <div className="min-w-0 flex-1">
         <Markdown content={content} />

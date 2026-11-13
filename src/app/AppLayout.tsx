@@ -1,32 +1,39 @@
 import { useState } from 'react';
 import { Link, NavLink, Outlet } from "react-router-dom";
 import {
-  ChevronDown,
   CircleHelp,
   LogOut,
   MessageSquare,
   Signpost,
-  UserCircle,
   Shield,
   Home,
   BookOpenCheck,
+  Settings,
 } from "lucide-react";
 import { useLogout } from "@/features/auth/hooks/useAuth";
 import { LogoutConfirm } from "@/features/auth/components/LogoutConfirm";
 import { Toaster } from "@/components/ui/Toaster";
 import { getToken } from "@/lib/tokenStorage";
-import { ThemeToggle } from "@/components/theme/ThemeToggle";
 import { useMe } from "@/features/profile/hooks/useProfile";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 import { useTranslation } from "react-i18next";
 import { cn } from "@/lib/utils";
 
 const navClass = ({ isActive }: { isActive: boolean }) =>
-  `inline-flex h-9 shrink-0 items-center justify-center gap-2 rounded-lg px-2.5 text-sm font-medium transition-all duration-200 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600 sm:px-3 ${
+  `inline-flex h-9 shrink-0 items-center justify-center gap-2 rounded-lg px-2.5 text-sm font-medium transition-colors duration-200 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring sm:px-3 ${
     isActive
-      ? "bg-teal-50 text-teal-800 shadow-[0_6px_12px_-4px_hsl(var(--primary)/0.30)]"
-      : "text-stone-600 hover:bg-stone-100 hover:text-stone-900 hover:-translate-y-0.5"
+      ? "bg-teal-50 text-teal-800 dark:bg-teal-950/40 dark:text-teal-200"
+      : "text-stone-600 hover:bg-stone-100 hover:text-stone-900 dark:text-stone-300 dark:hover:bg-stone-800 dark:hover:text-stone-100"
   }`;
+
+function initials(name?: string) {
+  return (name ?? '')
+    .trim()
+    .split(/\s+/)
+    .slice(0, 2)
+    .map((part) => part.charAt(0).toUpperCase())
+    .join('') || '?';
+}
 
 export default function AppLayout() {
   const { t } = useTranslation();
@@ -36,98 +43,60 @@ export default function AppLayout() {
   const [logoutConfirmOpen, setLogoutConfirmOpen] = useState(false);
 
   return (
-    <div className="flex h-dvh flex-col overflow-hidden">
+    <div className="flex h-dvh flex-col overflow-hidden bg-background">
       <Toaster />
-      <header className="sticky top-0 z-50 w-full shrink-0 border-b border-border bg-card/90 shadow-sm backdrop-blur-md">
-        <div className="mx-auto flex w-full max-w-6xl flex-col gap-2 px-3 py-2 sm:h-16 sm:flex-row sm:items-center sm:justify-between sm:gap-4 sm:px-6 sm:py-0">
-          <Link
-            to="/"
-            className="flex min-w-0 items-center gap-3 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600"
-          >
-            <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-teal-700 text-white shadow-sm shadow-[0_10px_20px_-6px_hsl(var(--primary)/0.45)]">
-              <Signpost size={18} />
-            </span>
-            <span className="min-w-0 leading-tight">
-              <span className="block text-sm font-semibold text-stone-900">
+      <header className="z-50 w-full shrink-0 border-b border-border bg-card">
+        <div className="mx-auto flex h-14 w-full max-w-7xl items-center justify-between gap-2 px-3 sm:px-6">
+          <div className="flex min-w-0 items-center gap-1 sm:gap-3">
+            <Link
+              to="/"
+              className="flex min-w-0 items-center gap-2.5 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            >
+              <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-primary text-primary-foreground">
+                <Signpost size={17} />
+              </span>
+              <span className="hidden min-w-0 truncate text-sm font-semibold text-foreground sm:block">
                 {t("common.brand")}
               </span>
-              <span className="flex items-center gap-1.5 text-xs text-stone-500">
-                <span className="h-1 w-3 rounded-full bg-amber-400" />
-                {t("common.madagascar")}
-              </span>
-            </span>
-          </Link>
-          <nav
-            aria-label={t("common.mainNavigation")}
-            className="flex w-full min-w-0 flex-wrap items-center justify-between gap-1 sm:w-auto sm:flex-nowrap sm:justify-start"
-          >
-            <NavLink
-              to="/"
-              className={navClass}
-              aria-label={t("common.nav.home")}
-            >
-              <Home size={18} />
-              <span className="hidden sm:inline">{t("common.nav.home")}</span>
-            </NavLink>
+            </Link>
             {token ? (
               <>
-                <NavLink
-                  to="/chat"
-                  className={navClass}
-                  aria-label={t("common.nav.chat")}
-                >
+                <NavLink to="/chat" className={navClass} aria-label={t("common.nav.chat")}>
                   <MessageSquare size={18} />
-                  <span className="hidden sm:inline">
-                    {t("common.nav.chat")}
-                  </span>
+                  <span className="hidden md:inline">{t("common.nav.chat")}</span>
                 </NavLink>
-                <NavLink
-                  to="/good-practices"
-                  className={navClass}
-                  aria-label={t("common.nav.goodPractices")}
-                >
+                <NavLink to="/good-practices" className={navClass} aria-label={t("common.nav.goodPractices")}>
                   <BookOpenCheck size={18} />
-                  <span className="hidden sm:inline">
-                    {t("common.nav.goodPractices")}
-                  </span>
+                  <span className="hidden md:inline">{t("common.nav.goodPractices")}</span>
                 </NavLink>
+                {me.data?.role === "ADMIN" && (
+                  <NavLink to="/admin" className={navClass} aria-label={t("common.nav.admin")}>
+                    <Shield size={18} />
+                    <span className="hidden md:inline">{t("common.nav.admin")}</span>
+                  </NavLink>
+                )}
               </>
             ) : null}
-            {token && me.data?.role === "ADMIN" && (
-              <NavLink
-                to="/admin"
-                className={navClass}
-                aria-label={t("common.nav.admin")}
-              >
-                <Shield size={18} />
-                <span className="hidden sm:inline">
-                  {t("common.nav.admin")}
-                </span>
-              </NavLink>
-            )}
+          </div>
+          <div className="flex shrink-0 items-center gap-1 sm:gap-2">
+            <LanguageSwitcher />
             {token && (
               <details className="group relative">
                 <summary
                   aria-label={t("common.nav.profile")}
-                  className="flex h-9 max-w-40 cursor-pointer list-none items-center gap-1.5 rounded-lg px-2 text-sm font-medium text-stone-700 hover:bg-stone-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600 sm:max-w-56 sm:px-3 [&::-webkit-details-marker]:hidden"
+                  className="flex h-9 cursor-pointer list-none items-center gap-1.5 rounded-lg px-1.5 text-sm font-medium text-foreground hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring sm:px-2 [&::-webkit-details-marker]:hidden"
                 >
-                  <UserCircle size={18} className="shrink-0" />
-                  <span className="truncate">
+                  <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-primary/10 text-xs font-bold text-primary">
+                    {initials(me.data?.name)}
+                  </span>
+                  <span className="hidden max-w-36 truncate sm:block">
                     {me.data?.name ?? t("common.nav.profile")}
                   </span>
-                  <ChevronDown
-                    size={14}
-                    className="shrink-0 transition-transform group-open:rotate-180"
-                  />
                 </summary>
-                <div className="absolute right-0 z-50 mt-2 w-64 rounded-2xl border border-border bg-card p-2 shadow-surface">
-                  <div className="border-b border-stone-100 px-3 py-2">
-                    <p className="truncate text-sm font-semibold text-stone-900">
-                      {me.data?.name}
-                    </p>
-                    <p className="truncate text-xs text-stone-500">
-                      {me.data?.email}
-                    </p>
+                <div className="absolute right-0 z-50 mt-2 w-64 rounded-xl border border-border bg-card p-2 shadow-float">
+                  <div className="border-b border-border px-3 py-2">
+                    <p className="truncate text-sm font-semibold text-foreground">{me.data?.name}</p>
+                    <p className="truncate text-xs text-stone-500">{me.data?.email}</p>
                   </div>
                   <NavLink
                     to="/profile"
@@ -140,7 +109,7 @@ export default function AppLayout() {
                       cn(navClass({ isActive }), "mt-1 w-full justify-start")
                     }
                   >
-                    <UserCircle size={16} />
+                    <Settings size={16} />
                     <span>{t("common.nav.profile")}</span>
                   </NavLink>
                   <NavLink
@@ -157,9 +126,8 @@ export default function AppLayout() {
                     <CircleHelp size={16} />
                     {t("common.nav.help")}
                   </NavLink>
-                  <div className="mt-1 border-t border-stone-100 pt-1">
+                  <div className="mt-1 border-t border-border pt-1">
                     <LanguageSwitcher menuMode />
-                    <ThemeToggle showLabel />
                   </div>
                   <button
                     type="button"
@@ -169,7 +137,7 @@ export default function AppLayout() {
                         ?.removeAttribute("open");
                       setLogoutConfirmOpen(true);
                     }}
-                    className="mt-1 flex h-9 w-full items-center gap-2 rounded-lg px-3 text-left text-sm font-medium text-stone-600 hover:bg-stone-100 hover:text-stone-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600"
+                    className="mt-1 flex h-9 w-full items-center gap-2 rounded-lg px-2.5 text-left text-sm font-medium text-stone-600 transition-colors hover:bg-stone-100 hover:text-stone-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring dark:text-stone-300 dark:hover:bg-stone-800 dark:hover:text-stone-100"
                   >
                     <LogOut size={16} />
                     {t("common.nav.logout")}
@@ -177,13 +145,7 @@ export default function AppLayout() {
                 </div>
               </details>
             )}
-            {!token && (
-              <>
-                <LanguageSwitcher />
-                <ThemeToggle />
-              </>
-            )}
-          </nav>
+          </div>
         </div>
       </header>
       <main className="flex min-h-0 flex-1 flex-col overflow-y-auto">

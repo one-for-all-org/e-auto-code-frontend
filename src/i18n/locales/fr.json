@@ -136,8 +136,8 @@
       "passwordHint": "Utilisez au moins 8 caractères. Après l’inscription, vous pourrez commencer vos révisions.",
       "submit": "Créer mon compte",
       "hasAccount": "Vous avez déjà un compte ?",
-      "loginLink": "Connectez-vous"
-      ,"success": "Compte créé avec succès",
+      "loginLink": "Connectez-vous",
+      "success": "Compte créé avec succès",
       "error": "Impossible de créer le compte"
     },
     "login": {
@@ -149,6 +149,7 @@
       "submit": "Se connecter",
       "noAccount": "Pas encore de compte ?",
       "registerLink": "Inscrivez-vous",
+      "backHome": "Retourner à l'accueil",
       "invalidCredentials": "Identifiants invalides",
       "success": "Connexion réussie"
     },
@@ -176,9 +177,10 @@
       "doneHelp": "Vos sessions de renouvellement ont été révoquées. Reconnectez-vous avec votre nouveau mot de passe.",
       "goToLogin": "Aller à la connexion"
     },
-    "passwordMin": "Le mot de passe doit contenir au moins 8 caractères."
-    ,"logoutSuccess": "Déconnecté"
-    ,"logoutDescription": "Toutes vos données de session seront effacées. Cette action est irréversible."
+    "passwordMin": "Le mot de passe doit contenir au moins 8 caractères.",
+    "logoutSuccess": "Déconnecté",
+    "logoutDescription": "Toutes vos données de session seront effacées. Cette action est irréversible.",
+    "panelTagline": "Révisez le code de la route à Madagascar, simplement."
   },
   "chat": {
     "title": "Assistant code de la route",
@@ -189,11 +191,6 @@
     "conversationDeleted": "Elle a peut-être été supprimée.",
     "welcomeTitle": "Bonjour, posez votre question",
     "welcomeText": "Je vous aide à réviser le code de la route à Madagascar, avec des réponses courtes et claires.",
-    "suggestions": [
-      "Quelles sont les règles de priorité à un carrefour ?",
-      "Quels documents dois-je avoir sur moi en conduisant ?",
-      "Que dois-je savoir sur les feux de signalisation ?"
-    ],
     "questionPlaceholder": "Posez une question sur le code de la route à Madagascar…",
     "questionLabel": "Votre question",
     "attachFile": "Joindre un fichier",
@@ -203,7 +200,6 @@
     "fileErrorSize": "Le fichier dépasse 1 Mo.",
     "imagePreview": "Aperçu de l’image jointe",
     "pdfPreview": "Aperçu du PDF : {{name}}",
-    "fileLimit": "Fichier de 1 Mo maximum : .txt, .pdf, .png ou .jpg",
     "writing": "L'IA écrit…",
     "copyResponse": "Copier la réponse",
     "responseCopied": "Réponse copiée",
@@ -226,7 +222,9 @@
       "simulated": "Mode démonstration : cette réponse est simulée.",
       "fileReceived": "J'ai bien reçu le fichier **{{fileName}}**.",
       "responseGenerated": "Réponse générée."
-    }
+    },
+    "responseDisclaimer": "Les réponses sont indicatives : vérifiez le texte officiel.",
+    "fileSize": "{size} Ko"
   },
   "history": {
     "title": "Historique",
@@ -242,7 +240,10 @@
     "save": "Enregistrer",
     "cancel": "Annuler",
     "deleteTitle": "Supprimer la conversation",
-    "deleteDescription": "« {{title}} » sera définitivement supprimée. Cette action est irréversible."
+    "deleteDescription": "« {{title}} » sera définitivement supprimée. Cette action est irréversible.",
+    "search": "Rechercher une conversation",
+    "searchEmpty": "Aucun résultat pour cette recherche.",
+    "options": "Options de la conversation"
   },
   "help": {
     "title": "Bien utiliser l’assistant",
@@ -299,7 +300,9 @@
     "confirmPassword": "Confirmer le mot de passe",
     "passwordMismatch": "Les mots de passe ne correspondent pas.",
     "passwordUpdated": "Mot de passe mis à jour.",
-    "changePassword": "Changer le mot de passe"
+    "changePassword": "Changer le mot de passe",
+    "languageTitle": "Langue de l’interface",
+    "languageHint": "Changez la langue de l’interface à tout moment."
   },
   "guidance": {
     "title": "Les bons réflexes sur la route",
@@ -353,52 +356,75 @@
     }
   },
   "home": {
-    "heroTitle": "Le code de la route à Madagascar, à votre rythme",
-    "heroSubtitle": "Préparez le permis, comprenez les règles et adoptez les bons réflexes sur la route à Madagascar, avec un assistant pédagogique clair et accessible.",
-    "heroImageAlt": "Apprenants étudiant le code de la route",
+    "heroTitle": "Révisez le code de la route à Madagascar, simplement",
+    "heroSubtitle": "Un assistant qui vous explique les règles, le permis et les bons réflexes, à votre rythme.",
+    "heroImageAlt": "Démonstration de l'assistant code de la route",
     "createAccount": "Créer un compte",
     "login": "Se connecter",
-    "benefitsTitle": "Un apprentissage plus simple",
-    "benefits": [
-      { "title": "Apprenez vite", "text": "Allez à l’essentiel et révisez quand vous en avez besoin." },
-      { "title": "Des réponses claires", "text": "Comprenez les règles avec des explications faciles à suivre." },
-      { "title": "Votre historique conservé", "text": "Retrouvez vos échanges pour reprendre vos révisions." }
+    "heroMeta": "Gratuit · 3 langues · Réponses instantanées",
+    "howTitle": "Comment ça marche",
+    "howSteps": [
+      {
+        "title": "Créez votre compte",
+        "text": "Quelques secondes suffisent pour commencer."
+      },
+      {
+        "title": "Choisissez votre profil",
+        "text": "Conducteur, passager, piéton ou citoyen."
+      },
+      {
+        "title": "Posez vos questions",
+        "text": "Des réponses claires, sourcées et instantanées."
+      }
     ],
-    "audienceTitle": "Des conseils adaptés à votre place sur la route",
-    "audienceIntro": "Choisissez votre profil d’usager et retrouvez des repères utiles pour vos déplacements. Vous pourrez le modifier depuis votre espace personnel.",
-    "audiences": [
-      { "title": "Conducteur", "text": "Préparation au permis, conduite prudente, documents et entretien du véhicule." },
-      { "title": "Passager", "text": "Sécurité à bord, équipement adapté et comportements qui aident le conducteur." },
-      { "title": "Piéton", "text": "Visibilité, traversées sûres et déplacements attentifs." },
-      { "title": "Citoyen", "text": "Bons réflexes pour partager la route au quotidien, quel que soit votre trajet." }
+    "whyTitle": "Pourquoi cet assistant",
+    "whyItems": [
+      {
+        "title": "Des réponses fiables",
+        "text": "Les documents officiels et les sources validées sont consultés en premier. La recherche web ne complète que ce qui manque, avec les liens cités dans la réponse."
+      },
+      {
+        "title": "Un apprentissage vivant",
+        "text": "Posez vos questions comme à un moniteur patient : explications pas à pas, exemples concrets et mémorisation facilitée, en français, en anglais ou en malagasy."
+      }
     ],
-    "questionsTitle": "Des questions pour commencer",
-    "questions": [
+    "chats": [
+      {
+        "question": "Que signifie un panneau triangulaire à bord rouge ?",
+        "answerTitle": "Panneau de priorité",
+        "answerItems": [
+          "Il annonce une voie prioritaire.",
+          "Cédez le passage aux véhicules qui s'y engagent.",
+          "Ralentissez avant l'intersection."
+        ]
+      },
+      {
+        "question": "Comment préparer mon dossier de permis ?",
+        "answerTitle": "Les pièces habituelles",
+        "answerItems": [
+          "Une pièce d'identité en cours de validité.",
+          "Deux photos conformes aux normes.",
+          "Un justificatif de domicile récent."
+        ]
+      }
+    ],
+    "chatNote": "Exemple illustratif — vérifiez toujours auprès des sources officielles.",
+    "examplesTitle": "Essayez avec une de ces questions",
+    "examplesNote": "Cliquez sur une question pour créer votre compte et tester l'assistant.",
+    "exampleQuestions": [
       "Qui a la priorité à un carrefour sans panneau ?",
       "Que signifie un panneau triangulaire à bord rouge ?",
-      "Quelles démarches pour préparer un dossier de permis ?",
-      "Quels réflexes adopter comme passager ou piéton ?"
+      "Quelles pièces pour un dossier de permis ?",
+      "Comment traverser la route en toute sécurité ?",
+      "Quels équipements obligatoires en voiture ?",
+      "Que faire après un accident de la route ?"
     ],
-    "contactTitle": "Contribuez à une meilleure information",
-    "contactIntro": "Vous disposez de documents ou de sources fiables qui pourraient améliorer la précision des réponses ? Contactez-nous pour les partager avec la communauté.",
-    "contactContribution": "Les ressources officielles et vérifiables aident à enrichir les connaissances de l’assistant.",
-    "contactWhatsApp": "WhatsApp",
-    "contactEmail": "E-mail",
-    "contactDiscord": "Discord",
-    "faqTitle": "Questions fréquentes",
-    "faq": [
-      { "question": "L’assistant remplace-t-il une auto-école ?", "answer": "Non. Il complète vos révisions, mais ne remplace ni l’enseignement d’une auto-école, ni la pratique encadrée, ni les informations des autorités compétentes." },
-      { "question": "Quelles questions puis-je poser ?", "answer": "Vous pouvez demander des explications sur les règles de circulation à Madagascar, le permis, la préparation à l’auto-école, les démarches et documents utiles ainsi que les bons comportements des conducteurs, passagers et piétons." },
-      { "question": "Quelles sources l’assistant utilise-t-il ?", "answer": "Les documents de référence validés par l’administration sont prioritaires. La recherche Google peut compléter les informations manquantes ; les liens consultés sont indiqués dans la réponse. Vérifiez les démarches et règles à jour auprès des sources officielles." },
-      { "question": "Puis-je adapter les conseils à ma situation ?", "answer": "Oui. Dans votre profil, choisissez conducteur, passager, piéton ou citoyen. Vous pouvez modifier ce choix à tout moment, et la page des bonnes pratiques s’adaptera à votre profil." }
-    ],
-    "languagesTitle": "Disponible en français, anglais et malagasy",
-    "sourceLabel": "Une source de référence",
-    "sourceTitle": "Des documents fiables pour éclairer les réponses",
-    "sourceDescription": "L’administration peut ajouter des sources officielles sur la conduite, le permis et l’usage de la route. Elles sont prioritaires ; la recherche web peut les compléter.",
-    "openSource": "Consulter D71-138-VF.pdf",
-    "disclaimerTitle": "Un outil pour vous accompagner",
-    "disclaimer": "Cet assistant ne remplacera jamais l’étude en auto-école ni l’apprentissage encadré. Il peut aider celles et ceux qui en ont besoin à réviser et à mieux comprendre le code de la route.",
-    "footer": "E-Torolalana · Un assistant pour réviser le code de la route à Madagascar."
+    "languagesText": "Disponible en français, anglais et malagasy",
+    "ctaTitle": "Prêt à réviser autrement ?",
+    "ctaSubtitle": "Créez votre compte gratuit et posez votre première question dès maintenant.",
+    "ctaButton": "Créer un compte gratuit",
+    "footerHome": "Accueil",
+    "footerTagline": "Un assistant pour réviser le code de la route à Madagascar.",
+    "footerDisclaimer": "Les réponses de l'IA sont indicatives : vérifiez toujours les règles et les démarches auprès des textes et services officiels."
   }
 }
