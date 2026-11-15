@@ -6,7 +6,6 @@ import {
   MessageSquare,
   Signpost,
   Shield,
-  Home,
   BookOpenCheck,
   Settings,
 } from "lucide-react";
@@ -23,7 +22,7 @@ import { cn } from "@/lib/utils";
 const navClass = ({ isActive }: { isActive: boolean }) =>
   `inline-flex h-9 shrink-0 items-center justify-center gap-2 rounded-lg px-2.5 text-sm font-medium transition-colors duration-200 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring sm:px-3 ${
     isActive
-      ? "bg-teal-500 text-teal-800 dark:bg-teal-950/40 dark:text-teal-200"
+      ? "bg-teal-500 text-teal-800 dark:bg-teal-950 dark:text-teal-700"
       : "text-stone-600 hover:bg-stone-100 hover:text-stone-900 dark:text-foreground dark:hover:bg-stone-800 dark:hover:text-stone-100"
   }`;
 
@@ -97,7 +96,7 @@ export default function AppLayout() {
                 <div className="absolute right-0 z-50 mt-2 w-64 rounded-xl border border-border bg-card p-2 shadow-float">
                   <div className="border-b border-border px-3 py-2">
                   <p className="truncate text-sm font-semibold text-foreground">{me.data?.name}</p>
-                  <p className="truncate text-xs text-muted-foreground dark:text-stone-300">{me.data?.email}</p>
+                  <p className="truncate text-xs text-muted-foreground dark:text-stone-700">{me.data?.email}</p>
                   </div>
                   <NavLink
                     to="/profile"
@@ -141,7 +140,7 @@ export default function AppLayout() {
                         ?.removeAttribute("open");
                       setLogoutConfirmOpen(true);
                     }}
-                    className="mt-1 flex h-9 w-full items-center gap-2 rounded-lg px-2.5 text-left text-sm font-medium text-stone-600 transition-colors hover:bg-stone-100 hover:text-stone-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring dark:text-stone-200 dark:hover:bg-stone-800 dark:hover:text-stone-100"
+                    className="mt-1 flex h-9 w-full justify-start ml-2 items-center gap-2 rounded-lg px-2.5 text-left text-sm font-medium text-stone-600 transition-colors hover:bg-stone-100 hover:text-stone-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring dark:text-stone-700 dark:hover:bg-stone-800 dark:hover:text-stone-100"
                   >
                     <LogOut size={16} />
                     {t("common.nav.logout")}
