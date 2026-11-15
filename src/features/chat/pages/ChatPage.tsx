@@ -81,7 +81,7 @@ export default function ChatPage() {
         <ConversationSidebar activeId={conversationId} />
       </aside>
 
-      <section className="flex min-h-0 min-w-0 flex-1 flex-col bg-white dark:bg-stone-900">
+      <section className="flex min-h-0 min-w-0 flex-1 flex-col bg-background">
         <header className="flex items-center gap-2 border-b border-border px-3 py-2 sm:px-5">
           <Button
             variant="ghost"

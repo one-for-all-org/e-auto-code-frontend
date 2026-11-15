@@ -62,11 +62,11 @@ export function ConversationSidebar({ activeId, onDone }: Props) {
         {conversations.isPending ? (
           <Spinner className="mx-auto mt-6" />
         ) : conversations.isError ? (
-          <p className="p-3 text-sm text-red-700">{t('history.loadError')}</p>
+          <p className="p-3 text-sm text-red-700 dark:text-red-400">{t('history.loadError')}</p>
         ) : (conversations.data ?? []).length === 0 ? (
           <EmptyState icon={History} title={t('history.emptyTitle')} description={t('history.emptyText')} />
         ) : filtered.length === 0 ? (
-          <p className="p-3 text-sm text-stone-500">{t('history.searchEmpty')}</p>
+          <p className="p-3 text-sm text-muted-foreground">{t('history.searchEmpty')}</p>
         ) : (
           filtered.map((conversation) => (
             <ConversationItem

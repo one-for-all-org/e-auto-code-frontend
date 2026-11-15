@@ -25,8 +25,8 @@ export function AdminUserForm() {
   return (
     <Card className="w-full max-w-7xl">
       <div>
-        <h2 className="text-base font-semibold text-stone-900">{t('common.admin.createUser')}</h2>
-        <p className="mt-1 text-sm text-stone-500">{t('common.admin.createUserHint')}</p>
+        <h2 className="text-base font-semibold text-foreground">{t('common.admin.createUser')}</h2>
+        <p className="mt-1 text-sm text-muted-foreground">{t('common.admin.createUserHint')}</p>
       </div>
       <form onSubmit={handleSubmit} className="mt-5 grid grid-cols-1 gap-x-4 gap-y-4 sm:grid-cols-2">
         <Input
@@ -69,10 +69,10 @@ export function AdminUserForm() {
           }}
         />
         <div className="flex min-h-10 items-center sm:pt-5">
-          <label className="inline-flex cursor-pointer items-center gap-2 text-sm text-stone-700">
+          <label className="inline-flex cursor-pointer items-center gap-2 text-sm text-foreground">
             <input
               type="checkbox"
-              className="h-4 w-4 rounded border-stone-300 text-teal-700 focus:ring-teal-600"
+              className="h-4 w-4 rounded border-input text-primary focus:ring-teal-600"
               checked={form.role === 'ADMIN'}
               onChange={(e) => setForm({ ...form, role: e.target.checked ? 'ADMIN' : 'USER' })}
             />
@@ -89,7 +89,7 @@ export function AdminUserForm() {
             {message}
           </p>
         )}
-        <div className="col-span-full flex justify-end border-t border-stone-200 pt-4">
+        <div className="col-span-full flex justify-end border-t border-border pt-4">
           <Button type="submit" loading={createUser.isPending} className="w-full sm:w-auto">
             {t('common.admin.create')}
           </Button>

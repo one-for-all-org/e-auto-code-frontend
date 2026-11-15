@@ -61,7 +61,7 @@ export function MessageBubble({ role, content, fileName, attachmentPreviewUrl }:
           type="button"
           onClick={() => void copyResponse()}
           aria-label={copied ? t('chat.responseCopied') : t('chat.copyResponse')}
-          className="mt-3 inline-flex h-8 items-center gap-1.5 rounded-md px-2 text-xs font-medium text-stone-500 transition-colors hover:bg-stone-100 hover:text-stone-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600"
+          className="mt-3 inline-flex h-8 items-center gap-1.5 rounded-md px-2 text-xs font-medium text-muted-foreground transition-colors hover:bg-accent hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-teal-600"
         >
           {copied ? <Check size={14} /> : <Copy size={14} />}
           <span>{copied ? t('common.actions.copied') : t('common.actions.copy')}</span>

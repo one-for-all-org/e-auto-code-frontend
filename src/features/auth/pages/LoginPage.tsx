@@ -21,12 +21,12 @@ export default function LoginPage() {
       title={t("auth.login.title")}
       subtitle={t("auth.login.subtitle")}
       footer={
-        <div className="mt-6 flex flex-col *:items-center gap-2 text-sm text-gray-600">
+        <div className="mt-6 flex flex-col *:items-center gap-2 text-sm text-muted-foreground">
           <div className="">
             {t("auth.login.noAccount")}{" "}
             <Link
               to="/register"
-              className="font-medium text-teal-700 hover:text-teal-900 hover:underline"
+              className="font-medium text-teal-600 hover:text-teal-300 dark:text-teal-400 dark:hover:text-teal-300 hover:underline"
             >
               {t("auth.login.registerLink")}
             </Link>
@@ -34,7 +34,7 @@ export default function LoginPage() {
           {" · "}
           <Link
             to="/"
-            className="font-medium text-teal-700 hover:text-teal-900 hover:underline"
+            className="font-medium text-teal-600 hover:text-teal-300 dark:text-teal-400 dark:hover:text-teal-300 hover:underline"
           >
             {t("auth.login.backHome")}
           </Link>
@@ -63,7 +63,7 @@ export default function LoginPage() {
         <div className="-mt-2 text-right">
           <Link
             to="/forgot-password"
-            className="text-sm font-medium text-teal-700 hover:underline"
+            className="text-sm font-medium text-teal-600 hover:text-teal-300 dark:text-teal-400 dark:hover:text-teal-300 hover:underline"
           >
             {t("auth.login.forgot")}
           </Link>
@@ -71,7 +71,7 @@ export default function LoginPage() {
         {login.error && (
           <p
             role="alert"
-            className="rounded-lg bg-red-50 px-3 py-2 text-sm text-red-700"
+            className="rounded-lg bg-red-50 dark:bg-red-900/20 px-3 py-2 text-sm text-red-700 dark:text-red-400"
           >
             {login.error.message}
           </p>

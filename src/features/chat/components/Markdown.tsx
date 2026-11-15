@@ -2,9 +2,9 @@ import ReactMarkdown, { type Components } from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 
 const components: Components = {
-  h1: ({ children }) => <h2 className="text-lg font-semibold leading-tight text-stone-900">{children}</h2>,
-  h2: ({ children }) => <h3 className="text-base font-semibold leading-tight text-stone-900">{children}</h3>,
-  h3: ({ children }) => <h4 className="text-sm font-semibold leading-tight text-stone-900">{children}</h4>,
+  h1: ({ children }) => <h2 className="text-lg font-semibold leading-tight text-foreground">{children}</h2>,
+  h2: ({ children }) => <h3 className="text-base font-semibold leading-tight text-foreground">{children}</h3>,
+  h3: ({ children }) => <h4 className="text-sm font-semibold leading-tight text-foreground">{children}</h4>,
   ul: ({ children }) => <ul className="list-disc space-y-1 pl-5">{children}</ul>,
   ol: ({ children }) => <ol className="list-decimal space-y-1 pl-5">{children}</ol>,
   a: ({ href, children }) => (
@@ -12,23 +12,23 @@ const components: Components = {
       href={href}
       target="_blank"
       rel="noreferrer"
-      className="font-medium text-teal-700 underline underline-offset-2 hover:text-teal-900"
+      className="font-medium text-primary underline underline-offset-2 hover:text-teal-600 dark:text-teal-400 dark:hover:text-teal-300"
     >
       {children}
     </a>
   ),
   blockquote: ({ children }) => (
-    <blockquote className="rounded-r-lg border-l-4 border-amber-400 bg-amber-50 py-2 pl-4 pr-3 text-stone-700 dark:bg-amber-950/30">
+    <blockquote className="rounded-r-lg border-l-4 border-amber-400 bg-amber-50 py-2 pl-4 pr-3 text-stone-700 dark:text-stone-300 dark:bg-amber-900/30">
       {children}
     </blockquote>
   ),
   pre: ({ children }) => (
-    <pre className="max-w-full overflow-x-auto rounded-xl bg-stone-900 p-3 text-sm text-stone-100 [&_code]:bg-transparent [&_code]:p-0 [&_code]:text-stone-100">
+    <pre className="max-w-full overflow-x-auto rounded-xl bg-accent p-3 text-sm text-foreground [&_code]:bg-transparent [&_code]:p-0 [&_code]:text-foreground">
       {children}
     </pre>
   ),
   code: ({ children }) => (
-    <code className="rounded bg-stone-100 px-1.5 py-0.5 font-mono text-[0.85em] text-teal-800 dark:text-teal-200">{children}</code>
+    <code className="rounded bg-accent px-1.5 py-0.5 font-mono text-[0.85em] text-foreground">{children}</code>
   ),
   table: ({ children }) => (
     <div className="overflow-x-auto">
@@ -36,14 +36,14 @@ const components: Components = {
     </div>
   ),
   th: ({ children }) => (
-    <th className="border border-stone-200 bg-stone-50 px-3 py-2 font-semibold text-stone-900">{children}</th>
+    <th className="border border-border bg-accent px-3 py-2 font-semibold text-foreground">{children}</th>
   ),
-  td: ({ children }) => <td className="border border-stone-200 px-3 py-2 align-top">{children}</td>,
+  td: ({ children }) => <td className="border border-border px-3 py-2 align-top">{children}</td>,
 };
 
 export function Markdown({ content }: { content: string }) {
   return (
-    <div className="space-y-4 break-words text-[15px] leading-normal text-stone-800">
+    <div className="space-y-4 break-words text-[15px] leading-normal text-foreground">
       <ReactMarkdown remarkPlugins={[remarkGfm]} components={components}>
         {content}
       </ReactMarkdown>

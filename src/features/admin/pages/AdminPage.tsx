@@ -27,8 +27,8 @@ export default function AdminPage() {
     <div className="mx-auto w-full max-w-7xl px-4 py-8 sm:px-6 sm:py-10">
       <div className="mb-6">
         <div>
-          <h1 className="text-2xl font-semibold text-stone-900">{t('common.admin.title')}</h1>
-          <p className="mt-1 text-sm text-stone-500">{t('common.admin.subtitle')}</p>
+          <h1 className="text-2xl font-semibold text-foreground">{t('common.admin.title')}</h1>
+          <p className="mt-1 text-sm text-muted-foreground">{t('common.admin.subtitle')}</p>
         </div>
       </div>
 
@@ -41,13 +41,13 @@ export default function AdminPage() {
       </div>
 
       <div className="rounded-xl border border-border bg-card shadow-surface">
-        <div className="border-b border-stone-200 px-4 py-3">
-          <h2 className="text-sm font-semibold text-stone-900">{t('common.admin.usersTitle', { count: users.length })}</h2>
+        <div className="border-b border-border px-4 py-3">
+          <h2 className="text-sm font-semibold text-foreground">{t('common.admin.usersTitle', { count: users.length })}</h2>
         </div>
-        <div className="divide-y divide-stone-100">
+        <div className="divide-y divide-border">
           {users.length === 0 ? (
             <div className="px-4 py-8 text-center">
-              <p className="text-sm text-stone-500">{t('common.emptyUsers')}</p>
+              <p className="text-sm text-muted-foreground">{t('common.emptyUsers')}</p>
             </div>
           ) : (
             users.map((user) => (

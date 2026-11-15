@@ -23,7 +23,7 @@ export default function RegisterPage() {
       footer={
         <>
           {t('auth.register.hasAccount')}{' '}
-          <Link to="/login" className="font-medium text-teal-700 hover:text-teal-900 hover:underline">
+          <Link to="/login" className="font-medium text-teal-600 hover:text-teal-300 dark:text-teal-400 dark:hover:text-teal-300 hover:underline">
             {t('auth.register.loginLink')}
           </Link>
         </>
@@ -61,7 +61,7 @@ export default function RegisterPage() {
           {t('auth.register.passwordHint')}
         </p>
         {register.error && (
-          <p role="alert" className="rounded-lg bg-red-50 px-3 py-2 text-sm text-red-700">
+          <p role="alert" className="rounded-lg bg-red-50 dark:bg-red-900/20 px-3 py-2 text-sm text-red-700 dark:text-red-400">
             {register.error.message}
           </p>
         )}

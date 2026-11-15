@@ -36,13 +36,13 @@ export default function ResetPasswordPage() {
         subtitle={t('auth.reset.doneSubtitle')}
         footer={
           <>
-            <Link to="/login" className="font-medium text-teal-700 hover:text-teal-900 hover:underline">
+            <Link to="/login" className="font-medium text-teal-600 hover:text-teal-300 dark:text-teal-400 dark:hover:text-teal-300 hover:underline">
               {t('auth.login.submit')}
             </Link>
           </>
         }
       >
-        <p className="text-sm text-stone-600">{t('auth.reset.doneHelp')}</p>
+        <p className="text-sm text-muted-foreground">{t('auth.reset.doneHelp')}</p>
         <Button className="mt-5 w-full" onClick={() => navigate('/login')}>
           {t('auth.reset.goToLogin')}
         </Button>
@@ -55,7 +55,7 @@ export default function ResetPasswordPage() {
       title={t('auth.reset.title')}
       subtitle={t('auth.reset.subtitle')}
       footer={
-        <Link to="/login" className="font-medium text-teal-700 hover:text-teal-900 hover:underline">
+        <Link to="/login" className="font-medium text-teal-600 hover:text-teal-300 dark:text-teal-400 dark:hover:text-teal-300 hover:underline">
           {t('auth.forgot.backToLogin')}
         </Link>
       }
@@ -91,7 +91,7 @@ export default function ResetPasswordPage() {
           onChange={(e) => setForm({ ...form, password: e.target.value })}
         />
         {resetPassword.error && (
-          <p role="alert" className="rounded-lg bg-red-50 px-3 py-2 text-sm text-red-700">
+          <p role="alert" className="rounded-lg bg-red-50 dark:bg-red-900/20 px-3 py-2 text-sm text-red-700 dark:text-red-400">
             {resetPassword.error.message}
           </p>
         )}

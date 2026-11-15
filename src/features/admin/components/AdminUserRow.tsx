@@ -40,9 +40,9 @@ export function AdminUserRow({ user }: Props) {
   return (
     <div className="flex flex-col gap-3 rounded-xl border border-border bg-card p-3 shadow-surface hover:-translate-y-0.5 hover:shadow-surface-hover transition-transform duration-250 ease-out sm:flex-row sm:items-center sm:justify-between">
       <div className="min-w-0 flex-1">
-        <p className="text-sm font-medium text-stone-900 truncate">{user.name}</p>
-        <p className="text-xs text-stone-500 truncate">{user.email}</p>
-        <p className="text-xs text-stone-400">
+        <p className="text-sm font-medium text-foreground truncate">{user.name}</p>
+        <p className="text-xs text-muted-foreground truncate">{user.email}</p>
+        <p className="text-xs text-muted-foreground">
           {user.role === 'ADMIN' ? t('common.admin.administrator') : t('profile.roleUser')} · {user.isOk ? t('common.admin.validated') : t('common.admin.checkAccount')} · {user.isBlocked ? t('common.admin.blocked') : t('common.admin.active')}
         </p>
       </div>
@@ -79,7 +79,7 @@ export function AdminUserRow({ user }: Props) {
               onChange={(e) => setEditing({ ...editing, name: e.target.value })}
               className="w-full text-sm sm:w-32"
             />
-            <label className="flex items-center gap-1 text-xs text-stone-600">
+            <label className="flex items-center gap-1 text-xs text-muted-foreground">
               <input
                 type="checkbox"
                 checked={editing.role === 'ADMIN'}
@@ -87,7 +87,7 @@ export function AdminUserRow({ user }: Props) {
               />
               {t('common.admin.administrator')}
             </label>
-            <label className="flex items-center gap-1 text-xs text-stone-600">
+            <label className="flex items-center gap-1 text-xs text-muted-foreground">
               <input
                 type="checkbox"
                 checked={editing.isOk}
@@ -95,7 +95,7 @@ export function AdminUserRow({ user }: Props) {
               />
               {t('common.admin.validated')}
             </label>
-            <label className="flex items-center gap-1 text-xs text-stone-600">
+            <label className="flex items-center gap-1 text-xs text-muted-foreground">
               <input
                 type="checkbox"
                 checked={editing.isBlocked}

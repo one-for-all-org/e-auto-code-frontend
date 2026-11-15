@@ -146,7 +146,7 @@ export function Composer({ disabled, onSend }: Props) {
           <Send size={17} />
         </Button>
       </div>
-      <p className="mt-1.5 text-xs text-stone-500">{t('chat.responseDisclaimer')}</p>
+      <p className="mt-1.5 text-xs text-muted-foreground">{t('chat.responseDisclaimer')}</p>
     </form>
   );
 }

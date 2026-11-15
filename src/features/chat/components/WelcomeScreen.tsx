@@ -16,7 +16,7 @@ export function WelcomeScreen({ disabled, onPick }: Props) {
       </span>
       <div>
         <h2 className="text-2xl font-bold text-foreground">{t('chat.welcomeTitle')}</h2>
-        <p className="mt-2 text-sm leading-relaxed text-stone-600">
+        <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
           {t('chat.welcomeText')}
         </p>
       </div>

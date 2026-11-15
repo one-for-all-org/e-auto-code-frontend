@@ -194,7 +194,7 @@ export function AdminKnowledge() {
             />
           </div>
           {(askValidationError || askGemini.error) && (
-            <p role="alert" className="rounded-md border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-800">
+            <p role="alert" className="rounded-md border border-red-200 bg-red-50 dark:bg-red-900/20 px-3 py-2 text-sm text-red-800 dark:text-red-400">
               {askValidationError || askGemini.error?.message}
             </p>
           )}
@@ -263,7 +263,7 @@ export function AdminKnowledge() {
           </Button>
         </form>
         {(knowledgeValidationError || upload.error) && (
-          <p role="alert" className="mt-3 rounded-md border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-800">
+          <p role="alert" className="mt-3 rounded-md border border-red-200 bg-red-50 dark:bg-red-900/20 px-3 py-2 text-sm text-red-800 dark:text-red-400">
             {knowledgeValidationError || upload.error?.message}
           </p>
         )}
@@ -278,7 +278,7 @@ export function AdminKnowledge() {
           {lessonsQuery.isPending ? (
             <p className="mt-3 text-sm text-muted-foreground">{t('common.actions.loading')}</p>
           ) : lessonsQuery.isError ? (
-            <p role="alert" className="mt-3 text-sm text-red-700">{lessonsQuery.error.message}</p>
+            <p role="alert" className="mt-3 text-sm text-red-700 dark:text-red-400">{lessonsQuery.error.message}</p>
           ) : lessonsQuery.data.length === 0 ? (
             <p className="mt-3 text-sm text-muted-foreground">{t('common.admin.knowledge.empty')}</p>
           ) : (
@@ -324,7 +324,7 @@ export function AdminKnowledge() {
                           />
                         </div>
                         {editValidationError && (
-                          <p role="alert" className="text-xs text-red-700">{editValidationError}</p>
+                          <p role="alert" className="text-xs text-red-700 dark:text-red-400">{editValidationError}</p>
                         )}
                         <div className="flex gap-2">
                           <Button
@@ -394,7 +394,7 @@ export function AdminKnowledge() {
               })}
             </ul>
           )}
-          {remove.error && <p role="alert" className="mt-2 text-sm text-red-700">{remove.error.message}</p>}
+          {remove.error && <p role="alert" className="mt-2 text-sm text-red-700 dark:text-red-400">{remove.error.message}</p>}
         </div>
       </Card>
     </div>

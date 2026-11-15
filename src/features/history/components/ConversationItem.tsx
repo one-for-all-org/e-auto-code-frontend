@@ -92,7 +92,7 @@ export function ConversationItem({ conversation, active, onOpen }: Props) {
       >
         <MessageSquare size={15} className="shrink-0 opacity-50" />
         <span className="min-w-0 flex-1 truncate">{conversation.title}</span>
-        <span className="shrink-0 text-xs font-normal text-stone-400">{date}</span>
+        <span className="shrink-0 text-xs font-normal text-muted-foreground">{date}</span>
       </Link>
       <details className="relative shrink-0">
         <summary
