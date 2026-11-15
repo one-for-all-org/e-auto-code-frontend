@@ -62,7 +62,7 @@ export function ConversationItem({ conversation, active, onOpen }: Props) {
           onChange={(e) => setTitle(e.target.value)}
           maxLength={80}
           aria-label={t('history.newTitle')}
-          className="min-w-0 flex-1 rounded-md border border-input bg-white px-2 py-2 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-ring/30 dark:bg-stone-900"
+          className="min-w-0 flex-1 rounded-md border border-input px-2 py-2 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-ring/30"
         />
         <Button type="submit" size="icon" aria-label={t('history.save')} loading={rename.isPending}>
           <Check size={16} />
@@ -79,7 +79,7 @@ export function ConversationItem({ conversation, active, onOpen }: Props) {
       className={`group relative flex items-center border-l-2 transition-colors duration-200 ease-out ${
         active
           ? 'border-teal-600 bg-teal-50 dark:border-teal-400 dark:bg-teal-950/40'
-          : 'border-transparent hover:bg-stone-100 dark:hover:bg-stone-800'
+          : 'border-transparent hover:bg-stone-200/40 dark:hover:bg-stone-800/40'
       }`}
     >
       <Link
@@ -87,7 +87,7 @@ export function ConversationItem({ conversation, active, onOpen }: Props) {
         onClick={onOpen}
         aria-current={active ? 'page' : undefined}
         className={`flex min-w-0 flex-1 items-center gap-2.5 px-3 py-2.5 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-ring ${
-          active ? 'font-medium text-teal-800 dark:text-teal-200' : 'text-foreground dark:text-stone-100'
+          active ? 'font-medium text-teal-800 dark:text-teal-600' : 'text-foreground dark:text-stone-800'
         }`}
       >
         <MessageSquare size={15} className="shrink-0 text-muted-foreground" />
@@ -97,7 +97,7 @@ export function ConversationItem({ conversation, active, onOpen }: Props) {
       <details className="relative shrink-0">
         <summary
           aria-label={t('history.options')}
-          className="flex h-7 w-7 cursor-pointer list-none items-center justify-center rounded-md text-stone-400 dark:text-stone-300 transition-colors hover:bg-stone-200 hover:text-stone-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring dark:hover:bg-stone-700 dark:hover:text-stone-200 md:opacity-0 md:group-focus-within:opacity-100 md:group-hover:opacity-100 [&::-webkit-details-marker]:hidden"
+          className="flex h-7 w-7 cursor-pointer list-none items-center justify-center rounded-md text-stone-400 dark:text-stone-300 transition-colors hover:bg-stone-200 hover:text-stone-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring dark:hover:bg-stone-200 dark:hover:text-stone-200 md:opacity-0 md:group-focus-within:opacity-100 md:group-hover:opacity-100 [&::-webkit-details-marker]:hidden"
         >
           <MoreHorizontal size={15} />
         </summary>
