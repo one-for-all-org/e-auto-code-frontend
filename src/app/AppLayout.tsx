@@ -80,7 +80,6 @@ export default function AppLayout() {
             ) : null}
           </div>
           <div className="flex shrink-0 items-center gap-1 sm:gap-2">
-            <ThemeToggle />
             <LanguageSwitcher />
             {token && (
               <details className="group relative">
@@ -97,8 +96,8 @@ export default function AppLayout() {
                 </summary>
                 <div className="absolute right-0 z-50 mt-2 w-64 rounded-xl border border-border bg-card p-2 shadow-float">
                   <div className="border-b border-border px-3 py-2">
-                    <p className="truncate text-sm font-semibold text-foreground">{me.data?.name}</p>
-                    <p className="truncate text-xs text-stone-500">{me.data?.email}</p>
+                  <p className="truncate text-sm font-semibold text-foreground">{me.data?.name}</p>
+                  <p className="truncate text-xs text-stone-500 dark:text-stone-400">{me.data?.email}</p>
                   </div>
                   <NavLink
                     to="/profile"
@@ -130,6 +129,9 @@ export default function AppLayout() {
                   </NavLink>
                   <div className="mt-1 border-t border-border pt-1">
                     <LanguageSwitcher menuMode />
+                  </div>
+                  <div className="mt-1 border-t border-border pt-1">
+                    <ThemeToggle showLabel />
                   </div>
                   <button
                     type="button"
