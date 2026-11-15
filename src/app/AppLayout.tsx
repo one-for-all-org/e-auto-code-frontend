@@ -16,6 +16,7 @@ import { Toaster } from "@/components/ui/Toaster";
 import { getToken } from "@/lib/tokenStorage";
 import { useMe } from "@/features/profile/hooks/useProfile";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
+import { ThemeToggle } from "@/components/theme/ThemeToggle";
 import { useTranslation } from "react-i18next";
 import { cn } from "@/lib/utils";
 
@@ -79,6 +80,7 @@ export default function AppLayout() {
             ) : null}
           </div>
           <div className="flex shrink-0 items-center gap-1 sm:gap-2">
+            <ThemeToggle />
             <LanguageSwitcher />
             {token && (
               <details className="group relative">
