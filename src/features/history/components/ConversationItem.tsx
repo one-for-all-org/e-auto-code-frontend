@@ -87,7 +87,7 @@ export function ConversationItem({ conversation, active, onOpen }: Props) {
         onClick={onOpen}
         aria-current={active ? 'page' : undefined}
         className={`flex min-w-0 flex-1 items-center gap-2.5 px-3 py-2.5 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-ring ${
-          active ? 'font-medium text-teal-800 dark:text-teal-200' : 'text-foreground dark:text-stone-200'
+          active ? 'font-medium text-teal-800 dark:text-teal-200' : 'text-foreground dark:text-stone-100'
         }`}
       >
         <MessageSquare size={15} className="shrink-0 text-muted-foreground" />
