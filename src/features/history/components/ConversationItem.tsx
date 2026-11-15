@@ -87,17 +87,17 @@ export function ConversationItem({ conversation, active, onOpen }: Props) {
         onClick={onOpen}
         aria-current={active ? 'page' : undefined}
         className={`flex min-w-0 flex-1 items-center gap-2.5 px-3 py-2.5 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-ring ${
-          active ? 'font-medium text-teal-800 dark:text-teal-200' : 'text-stone-700 dark:text-stone-300'
+          active ? 'font-medium text-teal-800 dark:text-teal-200' : 'text-foreground dark:text-stone-200'
         }`}
       >
-        <MessageSquare size={15} className="shrink-0 opacity-50" />
+        <MessageSquare size={15} className="shrink-0 text-muted-foreground" />
         <span className="min-w-0 flex-1 truncate">{conversation.title}</span>
         <span className="shrink-0 text-xs font-normal text-muted-foreground">{date}</span>
       </Link>
       <details className="relative shrink-0">
         <summary
           aria-label={t('history.options')}
-          className="flex h-7 w-7 cursor-pointer list-none items-center justify-center rounded-md text-stone-400 transition-colors hover:bg-stone-200 hover:text-stone-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring dark:hover:bg-stone-700 dark:hover:text-stone-200 md:opacity-0 md:group-focus-within:opacity-100 md:group-hover:opacity-100 [&::-webkit-details-marker]:hidden"
+          className="flex h-7 w-7 cursor-pointer list-none items-center justify-center rounded-md text-stone-400 dark:text-stone-300 transition-colors hover:bg-stone-200 hover:text-stone-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring dark:hover:bg-stone-700 dark:hover:text-stone-200 md:opacity-0 md:group-focus-within:opacity-100 md:group-hover:opacity-100 [&::-webkit-details-marker]:hidden"
         >
           <MoreHorizontal size={15} />
         </summary>
